@@ -12,6 +12,24 @@ public class Servicio {
     
     private int id_servicio;
 
+    enum servicios 
+    {LIMPIEZA_COMPLETA, TRATAMIENTO_CERAMICO, LIMPIEZA_INTERIOR, TRATAMIENTO_CUERO} 
+    private float duracion;
+    private float precio;
+
+    public Servicio() {
+    }
+
+    public Servicio(int id_servicio) {
+        this.id_servicio = id_servicio;
+    }
+
+    public Servicio(int id_servicio, float duracion, float precio) {
+        this.id_servicio = id_servicio;
+        this.duracion = duracion;
+        this.precio = precio;
+    }
+    
     public int getId_servicio() {
         return id_servicio;
     }
@@ -35,22 +53,10 @@ public class Servicio {
     public void setPrecio(float precio) {
         this.precio = precio;
     }
-    enum servicios 
-    {LIMPIEZA_COMPLETA, TRATAMIENTO_CERAMICO, LIMPIEZA_INTERIOR, TRATAMIENTO_CUERO} 
-    private float duracion;
-    private float precio;
 
-    public Servicio() {
-    }
-
-    public Servicio(int id_servicio) {
-        this.id_servicio = id_servicio;
-    }
-
-    public Servicio(int id_servicio, float duracion, float precio) {
-        this.id_servicio = id_servicio;
-        this.duracion = duracion;
-        this.precio = precio;
+    @Override
+    public String toString() {
+        return "Servicio{" + "id_servicio=" + id_servicio + ", duracion=" + duracion + ", precio=" + precio + '}';
     }
     
     

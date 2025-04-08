@@ -10,4 +10,5 @@ package modelos;
  */
 public class Reserva {
     
+    int id_reserva;
 }

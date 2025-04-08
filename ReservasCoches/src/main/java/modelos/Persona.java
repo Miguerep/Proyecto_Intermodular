@@ -83,11 +83,7 @@ public abstract class Persona {
     @Override
     public String toString() {
         return "Persona{" + "id_usuario=" + id_usuario + ", nombre=" + nombre + ", apellidos=" + apellidos + ", telefono=" + telefono + ", correo=" + correo + ", contrase\u00f1a=" + contraseña + '}';
-    }
-    
-    
-    
-    
+    } 
     
     
 }
