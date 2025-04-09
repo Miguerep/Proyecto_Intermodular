@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package equipoverde.reservascoches.controlador;
+package controladores;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,17 +13,17 @@ import modelos.UsuariosAplicacion;
  *
  * @author Portatil
  */
-public class ControladorInicioSesion {
+public class ControladorBDOUsuarios {
 
     String nombreBDO = "Usuarios.odb";
-    String rutaBase = "$objectdb/db/";
+    String rutaBase = "db/Usuarios";
     String rutaBDO = rutaBase + nombreBDO;
     String jpql;
     EntityManager em;
      EntityManagerFactory emf;
 
     // Conexión a la BDO ---------------------------------------------------
-    public void ConectarBDO() {
+    public void conectarBDO() {
         try {
         emf = Persistence.createEntityManagerFactory(rutaBDO);
         em = emf.createEntityManager();
@@ -31,12 +31,12 @@ public class ControladorInicioSesion {
             System.err.println("\tError al ejecutar la conexión .");
         }
     }
-    public static void CerrarConexion(EntityManager em, EntityManagerFactory emf){
+    public void cerrarConexion(){
             em.close();
             emf.close();
     }
     
-    public void CrearUsuarios(EntityManager em) {
+    public void crearUsuariosEjemplo() {
         try {
             // inicio transacción bloque hacer datos persistentes -> uno por cada commit()
             em.getTransaction().begin();

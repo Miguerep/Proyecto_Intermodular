@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package equipoverde.reservascoches.vista;
+package vista;
 
-import equipoverde.reservascoches.controlador.ControladorInicioSesion;
+import controladores.ControladorBDOUsuarios;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,16 +13,15 @@ import equipoverde.reservascoches.controlador.ControladorInicioSesion;
  */
 public class InicioSesion extends javax.swing.JFrame {
 
-    String usuario;
-    String contraseña;
-    ControladorInicioSesion con = new ControladorInicioSesion();
+
+    ControladorBDOUsuarios controladorUsuarios = new ControladorBDOUsuarios();
 
     /**
      * Creates new form InicioSesion
      */
     public InicioSesion() {
         initComponents();
-        con.ConectarBDO();
+        controladorUsuarios.conectarBDO();
     }
 
     /**
@@ -36,10 +36,11 @@ public class InicioSesion extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jPasswordField2 = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelinicioSesion = new javax.swing.JLabel();
         jTextFieldUsuario = new javax.swing.JTextField();
         jTextFieldContraseña = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabelErrorContraseña = new javax.swing.JLabel();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -47,9 +48,9 @@ public class InicioSesion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setBackground(new java.awt.Color(0, 151, 90));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("INICIO DE SESION");
+        jLabelinicioSesion.setBackground(new java.awt.Color(0, 151, 90));
+        jLabelinicioSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelinicioSesion.setText("INICIO DE SESION");
 
         jTextFieldUsuario.setText("Usuario");
         jTextFieldUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -73,38 +74,50 @@ public class InicioSesion extends javax.swing.JFrame {
             }
         });
 
+        jLabelErrorContraseña.setText("Usuario o Contraseña incorrectos");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(159, 159, 159)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                    .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                    .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(123, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelErrorContraseña)
+                    .addComponent(jLabelinicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(97, 97, 97))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelinicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(jButton1)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelErrorContraseña)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,16 +129,27 @@ public class InicioSesion extends javax.swing.JFrame {
 
     private void jTextFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsuarioActionPerformed
 
-        usuario = jTextFieldUsuario.getText();
+        
     }//GEN-LAST:event_jTextFieldUsuarioActionPerformed
 
     private void jTextFieldContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldContraseñaActionPerformed
 
-        contraseña = jTextFieldContraseña.getText();
+        
     }//GEN-LAST:event_jTextFieldContraseñaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+    String usuario, contraseñaLeida, contraseñaRegistrada;
+       usuario = jTextFieldUsuario.getText();
+       contraseñaLeida = jTextFieldContraseña.getText();
+       contraseñaRegistrada = controladorUsuarios.obtenerClave(usuario);
+        
+       if (contraseñaLeida.equals(contraseñaRegistrada)) {
+            
+        }
+        else {
+            JOptionPane.showMessageDialog(rootPane, "Error en el inicio de sesión.");
+        } // sino
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -166,7 +190,8 @@ public class InicioSesion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelErrorContraseña;
+    private javax.swing.JLabel jLabelinicioSesion;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
