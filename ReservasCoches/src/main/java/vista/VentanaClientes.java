@@ -4,6 +4,7 @@
  */
 package vista;
 
+import controladores.ControladorClientes;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -14,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class VentanaClientes extends javax.swing.JFrame {
 
     String nomArchivo = "listadoDeportistas.dat";
-    controladorClientes = new ControladorBDOUsuarios();
+    ControladorClientes conClientes = new ControladorClientes();
     
     String[] nomColumnas = {"NOMBRE",
         "DEPORTE",
@@ -49,28 +50,28 @@ public class VentanaClientes extends javax.swing.JFrame {
 
         };
         // Establecimiento de los datos a la tabla
-
-        jDatos.setModel(dtm);
-
-        
-
-        // Configuración del tipo de selección de la tabla
-
-        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        
-
-        // Ajuste de anchos
-
-        jDatos.getColumn("NOMBRE").setPreferredWidth(260);
-
-        jDatos.getColumn("DEPORTE").setPreferredWidth(160);
-
-        jDatos.getColumn("AÑO NAC.").setPreferredWidth(100);
-
-        jDatos.getColumn("ALTURA").setPreferredWidth(200);
-
-        
+//
+//        jDatos.setModel(dtm);
+//
+//        
+//
+//        // Configuración del tipo de selección de la tabla
+//
+//        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+//
+//        
+//
+//        // Ajuste de anchos
+//
+//        jDatos.getColumn("NOMBRE").setPreferredWidth(260);
+//
+//        jDatos.getColumn("DEPORTE").setPreferredWidth(160);
+//
+//        jDatos.getColumn("AÑO NAC.").setPreferredWidth(100);
+//
+//        jDatos.getColumn("ALTURA").setPreferredWidth(200);
+//
+//        
 
         // Carga de los datos iniciales salvados previamente en fichero
         
@@ -81,7 +82,7 @@ public class VentanaClientes extends javax.swing.JFrame {
 
         // Mostrar los datos del TreeSet en la tabla
 
-        actualizaTabla();
+//        actualizaTabla();
 
     }
         
@@ -90,18 +91,18 @@ public class VentanaClientes extends javax.swing.JFrame {
     
     
     
-    private void actualizaTabla() {
-        //miniAgenda.añadir(new Deportista("Ana","Futbol",2011, 1.76f)); // registro de ejemplo directo
-        matrizDatos = controladorClientes.convertirAMatrizObject();
-        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
-            //para impedir edición de las celdas
-            @Override
-            public boolean isCellEditable(int fila, int columna) {
-                return false;
-            }
-        };
-        jDatos.setModel(dtm);
-    }
+//    private void actualizaTabla() {
+//        //miniAgenda.añadir(new Deportista("Ana","Futbol",2011, 1.76f)); // registro de ejemplo directo
+//        matrizDatos = controladorClientes.convertirAMatrizObject();
+//        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
+//            //para impedir edición de las celdas
+//            @Override
+//            public boolean isCellEditable(int fila, int columna) {
+//                return false;
+//            }
+//        };
+//        jDatos.setModel(dtm);
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
