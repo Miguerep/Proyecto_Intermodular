@@ -68,7 +68,7 @@ public class ControladorBDOUsuarios {
         String respuesta = "";
          u = em.find(UsuariosAplicacion.class, nombre);
          if (u!=null) {
-            respuesta = u.getNombre();
+            respuesta = u.getContraseña();
         }
         return respuesta;
     }

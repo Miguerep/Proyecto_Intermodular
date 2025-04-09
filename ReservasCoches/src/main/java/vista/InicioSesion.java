@@ -22,7 +22,7 @@ public class InicioSesion extends javax.swing.JFrame {
     public InicioSesion() {
         initComponents();
         controladorUsuarios.conectarBDO();
-        controladorUsuarios.crearUsuariosEjemplo();
+//        controladorUsuarios.crearUsuariosEjemplo();
     }
 
     /**

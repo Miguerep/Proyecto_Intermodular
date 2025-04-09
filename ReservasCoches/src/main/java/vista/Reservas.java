@@ -4,9 +4,8 @@
  */
 package vista;
 
-import controlador.MiniAgenda;
+import controladores.ControladorReservas;
 import javax.swing.table.DefaultTableModel;
-import model.Deportista;
 
 /**
  *
@@ -15,7 +14,7 @@ import model.Deportista;
 public class Reservas extends javax.swing.JFrame {
 
     String nomArchivo = "listadoDeportistas.dat";
-    MiniAgenda miniAgenda = new MiniAgenda();
+    ControladorReservas ctrlReservas = new ControladorReservas();
     
     String[] nomColumnas = {"NOMBRE",
         "DEPORTE",
@@ -27,7 +26,7 @@ public class Reservas extends javax.swing.JFrame {
 //        {"Rafa Nadal", "Tenis", 1986, 1.85},
     };
     
-    
+   
     DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas);
     
     /**
@@ -35,15 +34,12 @@ public class Reservas extends javax.swing.JFrame {
      */
     public Reservas() {
         initComponents();
-        
+        ctrlReservas.conectarBD();
         dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
 
             //para impedir edici�n de las celdas
-
             @Override
-
             public boolean isCellEditable(int fila, int columna) {
-
                 return false;
 
             }
@@ -53,13 +49,9 @@ public class Reservas extends javax.swing.JFrame {
 
         jDatos.setModel(dtm);
 
-        
-
         // Configuraci�n del tipo de selecci�n de la tabla
 
         jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        
 
         // Ajuste de anchos
 
@@ -71,19 +63,7 @@ public class Reservas extends javax.swing.JFrame {
 
         jDatos.getColumn("ALTURA").setPreferredWidth(200);
 
-        
-
-        // Carga de los datos iniciales salvados previamente en fichero
-        
-//        miniAgenda.cargarArchivoBin(nomArchivo);
-        //listadoDeportistas.dat
-
-        
-
-        // Mostrar los datos del TreeSet en la tabla
-
         actualizaTabla();
-
     }
         
         
@@ -93,7 +73,7 @@ public class Reservas extends javax.swing.JFrame {
     
     private void actualizaTabla() {
         //miniAgenda.a�adir(new Deportista("Ana","Futbol",2011, 1.76f)); // registro de ejemplo directo
-        matrizDatos = miniAgenda.convertirAMatrizObject();
+        matrizDatos = ctrlReservas.convertirAMatrizObject();
         dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
             //para impedir edici�n de las celdas
             @Override
@@ -117,12 +97,9 @@ public class Reservas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTF_NomYApell = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTF_Deporte = new javax.swing.JTextField();
+        jTF_Correo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTF_AnoNacimiento = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTF_Altura = new javax.swing.JTextField();
-        jCheck_Vaciar = new javax.swing.JCheckBox();
+        jTF_Telefono = new javax.swing.JTextField();
         jButton_VaciarCampos = new javax.swing.JButton();
         jButton_Anadir = new javax.swing.JButton();
         jButton_Actualizar = new javax.swing.JButton();
@@ -152,35 +129,17 @@ public class Reservas extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Deporte: ");
+        jLabel2.setText("Correo: ");
 
-        jTF_Deporte.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        jTF_Correo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Año nacimiento:");
+        jLabel3.setText("Telefono:");
 
-        jTF_AnoNacimiento.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
-        jTF_AnoNacimiento.addActionListener(new java.awt.event.ActionListener() {
+        jTF_Telefono.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        jTF_Telefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTF_AnoNacimientoActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Altura: ");
-
-        jTF_Altura.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
-        jTF_Altura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTF_AlturaActionPerformed(evt);
-            }
-        });
-
-        jCheck_Vaciar.setFont(new java.awt.Font("Alef", 1, 12)); // NOI18N
-        jCheck_Vaciar.setText("Vaciar después de añadir");
-        jCheck_Vaciar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheck_VaciarActionPerformed(evt);
+                jTF_TelefonoActionPerformed(evt);
             }
         });
 
@@ -219,27 +178,18 @@ public class Reservas extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel3)
-                    .addComponent(jCheck_Vaciar))
-                .addGap(28, 28, 28)
+                    .addComponent(jButton_VaciarCampos))
+                .addGap(59, 59, 59)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTF_NomYApell, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
-                    .addComponent(jTF_Deporte)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jTF_AnoNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(134, 134, 134)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(jButton_VaciarCampos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton_Anadir)
-                                .addGap(59, 59, 59)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTF_Altura, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jTF_Correo)
+                    .addComponent(jTF_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jButton_Anadir, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -251,17 +201,14 @@ public class Reservas extends javax.swing.JFrame {
                     .addComponent(jTF_NomYApell, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTF_Deporte, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(jTF_Correo, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(28, 28, 28)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTF_AnoNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTF_Altura, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                    .addComponent(jTF_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheck_Vaciar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_VaciarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Anadir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -424,17 +371,9 @@ public class Reservas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTF_NomYApellActionPerformed
 
-    private void jTF_AnoNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_AnoNacimientoActionPerformed
+    private void jTF_TelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_TelefonoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTF_AnoNacimientoActionPerformed
-
-    private void jTF_AlturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_AlturaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTF_AlturaActionPerformed
-
-    private void jCheck_VaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheck_VaciarActionPerformed
-       
-    }//GEN-LAST:event_jCheck_VaciarActionPerformed
+    }//GEN-LAST:event_jTF_TelefonoActionPerformed
 
     private void jButton_VaciarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_VaciarCamposActionPerformed
         // TODO add your handling code here:
@@ -445,7 +384,7 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
     private void jButton_BorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreActionPerformed
-        miniAgenda.borrarPorNombre(nomArchivo);
+        ctrlReservas.borrarPorNombre(nomArchivo);
         actualizaTabla();
     }//GEN-LAST:event_jButton_BorrarPorNombreActionPerformed
 
@@ -454,7 +393,7 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarSeleccionadoActionPerformed
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
-       miniAgenda.vaciar();
+       ctrlReservas.vaciar();
        actualizaTabla();
        
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
@@ -464,7 +403,7 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_GuardarFichreoActionPerformed
 
     private void jButton_BorrarPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreMouseClicked
-        miniAgenda.borrarPorNombre(nomArchivo);
+        ctrlReservas.borrarPorNombre(nomArchivo);
     }//GEN-LAST:event_jButton_BorrarPorNombreMouseClicked
 
     private void jButton_BorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoMouseClicked
@@ -473,7 +412,7 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarTodoMouseClicked
 
     private void jButton_CargarEjemplosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CargarEjemplosActionPerformed
-        miniAgenda.exportarEjemplos();
+        ctrlReservas.exportarEjemplos();
         actualizaTabla();
     }//GEN-LAST:event_jButton_CargarEjemplosActionPerformed
 
@@ -527,19 +466,16 @@ public class Reservas extends javax.swing.JFrame {
     private javax.swing.JButton jButton_CargarFichero;
     private javax.swing.JButton jButton_GuardarFichreo;
     private javax.swing.JButton jButton_VaciarCampos;
-    private javax.swing.JCheckBox jCheck_Vaciar;
     private javax.swing.JTable jDatos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTF_Altura;
-    private javax.swing.JTextField jTF_AnoNacimiento;
-    private javax.swing.JTextField jTF_Deporte;
+    private javax.swing.JTextField jTF_Correo;
     private javax.swing.JTextField jTF_NomYApell;
+    private javax.swing.JTextField jTF_Telefono;
     // End of variables declaration//GEN-END:variables
 }
