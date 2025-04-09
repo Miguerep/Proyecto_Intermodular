@@ -7,8 +7,6 @@ package equipoverde.reservascoches.controlador;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import modelos.UsuariosAplicacion;
 
 /**
@@ -21,15 +19,16 @@ public class ControladorInicioSesion {
     String rutaBase = "$objectdb/db/";
     String rutaBDO = rutaBase + nombreBDO;
     String jpql;
+    EntityManager em;
+     EntityManagerFactory emf;
 
     // Conexión a la BDO ---------------------------------------------------
     public void ConectarDB() {
-        EntityManagerFactory emf;
+       
         emf = Persistence.createEntityManagerFactory(rutaBDO);
-        EntityManager em;
         em = emf.createEntityManager();
     }
-    public void CerrarConexion(EntityManager em, EntityManagerFactory emf){
+    public static void CerrarConexion(EntityManager em, EntityManagerFactory emf){
             em.close();
             emf.close();
     }
