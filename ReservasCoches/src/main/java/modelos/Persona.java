@@ -84,8 +84,11 @@ public abstract class Persona {
     public String toString() {
         return "Persona{" + "id_usuario=" + id_usuario + ", nombre=" + nombre + ", apellidos=" + apellidos + ", telefono=" + telefono + ", correo=" + correo + ", contrase\u00f1a=" + contraseña + '}';
     } 
+
+    public int compareTo(Persona p){
     
-    
+        return this.nombre.compareTo(p.nombre);
+    }
 }
 
 

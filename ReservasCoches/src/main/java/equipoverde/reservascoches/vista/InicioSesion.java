@@ -11,13 +11,17 @@ import equipoverde.reservascoches.controlador.ControladorInicioSesion;
  * @author Portatil
  */
 public class InicioSesion extends javax.swing.JFrame {
+
+    String usuario;
+    String contraseña;
     ControladorInicioSesion con = new ControladorInicioSesion();
+
     /**
      * Creates new form InicioSesion
      */
     public InicioSesion() {
         initComponents();
-         con.ConectarDB();
+        con.ConectarBDO();
     }
 
     /**
@@ -63,6 +67,11 @@ public class InicioSesion extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(153, 153, 153));
         jButton1.setText("Iniciar Sesión");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,14 +115,18 @@ public class InicioSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsuarioActionPerformed
-       String usuario;
-      usuario = jTextFieldUsuario.getText();
+
+        usuario = jTextFieldUsuario.getText();
     }//GEN-LAST:event_jTextFieldUsuarioActionPerformed
 
     private void jTextFieldContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldContraseñaActionPerformed
-               String usuario;
-               usuario = jTextFieldUsuario.getText();
+
+        contraseña = jTextFieldContraseña.getText();
     }//GEN-LAST:event_jTextFieldContraseñaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,7 +159,7 @@ public class InicioSesion extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new InicioSesion().setVisible(true);
-              
+
             }
         });
     }

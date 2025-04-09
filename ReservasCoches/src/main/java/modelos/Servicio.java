@@ -51,7 +51,11 @@ public class Servicio {
     }
 
     public void setPrecio(float precio) {
+        if (precio > 0) {
         this.precio = precio;
+        }else{
+            precio = 0;
+        }
     }
 
     @Override

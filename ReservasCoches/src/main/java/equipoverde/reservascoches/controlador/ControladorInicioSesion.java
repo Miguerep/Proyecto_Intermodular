@@ -23,10 +23,13 @@ public class ControladorInicioSesion {
      EntityManagerFactory emf;
 
     // Conexión a la BDO ---------------------------------------------------
-    public void ConectarDB() {
-       
+    public void ConectarBDO() {
+        try {
         emf = Persistence.createEntityManagerFactory(rutaBDO);
         em = emf.createEntityManager();
+        } catch (Exception e) {
+            System.err.println("\tError al ejecutar la conexión .");
+        }
     }
     public static void CerrarConexion(EntityManager em, EntityManagerFactory emf){
             em.close();
@@ -53,6 +56,21 @@ public class ControladorInicioSesion {
             System.err.println("\tError al ejecutar la transacción.");
         }
 
+    }
+    /**
+     * Devuelve vacio si no esta el usuario como si el valor es vacio
+     * @param nombre
+     * @return 
+     */
+    
+    public String obtenerClave(String nombre){
+        UsuariosAplicacion u;
+        String respuesta = "";
+         u = em.find(UsuariosAplicacion.class, nombre);
+         if (u!=null) {
+            respuesta = u.getNombre();
+        }
+        return respuesta;
     }
     
 
