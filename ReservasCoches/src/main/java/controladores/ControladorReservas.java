@@ -21,9 +21,9 @@ public class ControladorReservas {
     Connection con;
     Statement sentencia;
     String sql;
-    String usuario = "prueba";
-    String clave = "1234";
-    String url = "jdbc:mysql://192.168.0.177/coches";
+    String usuario = "usuario";
+    String clave = "96WFjTsdglPkS!R(";
+    String url = "jdbc:mysql://192.168.0.30/coches";
 
     public void conectarBD() {
         /**
@@ -143,7 +143,7 @@ public class ControladorReservas {
 
         } catch (SQLException ex) {
 
-            Logger.getLogger(ControladorReservas.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.(ControladorReservas.class.getName()).log(Level.SEVERE, null, ex);
 
         }
         return tabla;

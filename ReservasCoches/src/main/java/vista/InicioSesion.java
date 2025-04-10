@@ -49,6 +49,11 @@ public class InicioSesion extends javax.swing.JFrame {
         jPasswordField2.setText("jPasswordField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabelinicioSesion.setBackground(new java.awt.Color(0, 151, 90));
         jLabelinicioSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -161,6 +166,10 @@ public class InicioSesion extends javax.swing.JFrame {
         } // sino
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+       controladorUsuarios.cerrarConexion();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

@@ -12,76 +12,18 @@ import javax.swing.table.DefaultTableModel;
  * @author USUARIO
  */
 public class Reservas extends javax.swing.JFrame {
+    
+    
 
-    String nomArchivo = "listadoDeportistas.dat";
+//    String nomArchivo = "listadoDeportistas.dat";
     ControladorReservas ctrlReservas = new ControladorReservas();
-    
-    String[] nomColumnas = {"NOMBRE",
-        "DEPORTE",
-        "A�O NAC.",
-        "ALTURA"};
-    Object[][] matrizDatos = {
-//        {"Carolina Mar�n", "B�dminton", 1993, 1.72},
-//        {"Pau Gasol", "Baloncesto", 1980, 2.15},
-//        {"Rafa Nadal", "Tenis", 1986, 1.85},
-    };
-    
-   
-    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas);
-    
-    /**
-     * Creates new form VentanaMiniAgenda
-     */
+  
+
     public Reservas() {
         initComponents();
         ctrlReservas.conectarBD();
-        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
+        ctrlReservas.desconectarBD();
 
-            //para impedir edici�n de las celdas
-            @Override
-            public boolean isCellEditable(int fila, int columna) {
-                return false;
-
-            }
-
-        };
-        // Establecimiento de los datos a la tabla
-
-        jDatos.setModel(dtm);
-
-        // Configuraci�n del tipo de selecci�n de la tabla
-
-        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        // Ajuste de anchos
-
-        jDatos.getColumn("NOMBRE").setPreferredWidth(260);
-
-        jDatos.getColumn("DEPORTE").setPreferredWidth(160);
-
-        jDatos.getColumn("A�O NAC.").setPreferredWidth(100);
-
-        jDatos.getColumn("ALTURA").setPreferredWidth(200);
-
-        actualizaTabla();
-    }
-        
-        
-    
-    
-    
-    
-    private void actualizaTabla() {
-        //miniAgenda.a�adir(new Deportista("Ana","Futbol",2011, 1.76f)); // registro de ejemplo directo
-        matrizDatos = ctrlReservas.convertirAMatrizObject();
-        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
-            //para impedir edici�n de las celdas
-            @Override
-            public boolean isCellEditable(int fila, int columna) {
-                return false;
-            }
-        };
-        jDatos.setModel(dtm);
     }
 
     /**
@@ -380,12 +322,12 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_VaciarCamposActionPerformed
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
-        actualizaTabla();
+//        actualizaTabla();
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
     private void jButton_BorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreActionPerformed
-        ctrlReservas.borrarPorNombre(nomArchivo);
-        actualizaTabla();
+//        ctrlReservas.borrarPorNombre(nomArchivo);
+//        actualizaTabla();
     }//GEN-LAST:event_jButton_BorrarPorNombreActionPerformed
 
     private void jButton_BorrarSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarSeleccionadoActionPerformed
@@ -393,8 +335,8 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarSeleccionadoActionPerformed
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
-       ctrlReservas.vaciar();
-       actualizaTabla();
+//       ctrlReservas.vaciar();
+//       actualizaTabla();
        
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
 
@@ -403,7 +345,7 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_GuardarFichreoActionPerformed
 
     private void jButton_BorrarPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreMouseClicked
-        ctrlReservas.borrarPorNombre(nomArchivo);
+//        ctrlReservas.borrarPorNombre(nomArchivo);
     }//GEN-LAST:event_jButton_BorrarPorNombreMouseClicked
 
     private void jButton_BorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoMouseClicked
@@ -412,8 +354,8 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarTodoMouseClicked
 
     private void jButton_CargarEjemplosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CargarEjemplosActionPerformed
-        ctrlReservas.exportarEjemplos();
-        actualizaTabla();
+//        ctrlReservas.exportarEjemplos();
+//        actualizaTabla();
     }//GEN-LAST:event_jButton_CargarEjemplosActionPerformed
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed

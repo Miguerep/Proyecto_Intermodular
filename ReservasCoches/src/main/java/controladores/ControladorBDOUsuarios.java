@@ -22,6 +22,12 @@ public class ControladorBDOUsuarios {
     EntityManager em;
      EntityManagerFactory emf;
 
+    public ControladorBDOUsuarios() {
+        conectarBDO();
+    }
+     
+     
+
     // Conexión a la BDO ---------------------------------------------------
     public void conectarBDO() {
         try {
