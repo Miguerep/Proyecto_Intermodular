@@ -153,6 +153,8 @@ public class InicioSesion extends javax.swing.JFrame {
        contraseñaRegistrada = controladorUsuarios.obtenerClave(usuario);
         
        if (contraseñaLeida.equals(contraseñaRegistrada)) {
+           
+           
             System.out.println("Sesion iniciada");
             JOptionPane.showMessageDialog(rootPane, "Inicio de sesión.");
         }
