@@ -77,8 +77,6 @@ public class VentanaClientes extends javax.swing.JFrame {
 
         // Carga de los datos iniciales salvados previamente en fichero
         
-        ControladorClientes.cargarArchivoBin(nomArchivo);
-        listadoClientes.cl
 
         
 

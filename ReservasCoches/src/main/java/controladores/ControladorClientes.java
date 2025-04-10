@@ -3,116 +3,94 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controladores;
-
-import java.util.TreeSet;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelos.Cliente;
 
 /**
  *
  * @author Portatil
  */
-public class ControladorClientes {
-    TreeSet<Cliente> listadoClientes = new TreeSet();
+public class ControladorClientes{
+      public Object[][] obtenerClientes() {
 
-    /**
-     * Exportar ejemplos para la tabla.
-     *
-     * @return
-     */
-//    public boolean exportarEjemplos() {
-////        listadoClientes.add ("jose ramon", "albacete", "2006", 1.6f);
-//        añadir("Lionel Messi", "Fútbol", "1987", 1.70f);
-//        añadir("Michael Jordan", "Baloncesto", "1963", 1.98f);
-//        añadir("Simone Biles", "Gimnasia", "1997", 1.42f);
-//        añadir("Usain Bolt", "Atletismo", "1986", 1.95f);
-//
-//        return false;
-//
-//    }
+        Object[][] tabla = null;
 
-    /**
-     * Vaciar completamente
-     *
-     */
-    public void vaciar() {
-        listadoClientes.clear(); // Elimina todos los elementos de la colección
-    }
+        ResultSet rs;
 
-    /**
-     * Añadir un nuevo deportista
-     *
-     * @param id_usuario
-     * @param nombre
-     * @param apellidos
-     * @param telefono
-     * @param correo
-     * @param contraseña
-     * @return
-     */
-   public boolean añadir(int id_usuario, String nombre, String apellidos, String telefono, String correo, String contraseña) {
-    if (listadoClientes == null) {
-        listadoClientes = new TreeSet<>();
-    }
-    try {
-        Cliente cliente1 = new Cliente(0,"Jose", "Martinez", "698712512", "josem@gmail.com","contraseña");
-        return listadoClientes.add(cliente1); 
-    } catch (NumberFormatException e) {
-        System.err.println();
-        return false; 
-    }
-}
+        String sql = "SELECT * FROM clientes";
 
-    /**
-     * Borrar por nombre
-     *
-     * @param nombre
-     * @return
-     */
-    public boolean borrarPorNombre(String nombre) {
-        if (listadoClientes == null || listadoClientes.isEmpty()) {
-            return false;//Si esta vacío no borra nada.
-        }
-        // Buscar el deportista
-        for (Cliente cl : listadoClientes) {
-            if (cl.getNombre().equalsIgnoreCase(nombre)) {
-//                return vaciar(nombre);
+        int numRegistros;
+
+        int contador = 0;
+
+        try {
+
+            rs = .executeQuery(sql);
+
+            //vamos al último registro y obtenemos su posición para saber cuantos registros hay
+
+            rs.last();
+
+            numRegistros = rs.getRow();
+
+
+
+            // damos tamaño a la matriz de objetos para almacenar lo leído de la BD
+
+            System.out.println("registros obtenidos:" + numRegistros);
+
+            tabla = new Object[numRegistros][4];
+
+
+
+            // recolocamos el puntero para recorrer el resultado
+
+            rs.beforeFirst();
+
+            System.out.println("Lista de deportistas:");
+
+            while (rs.next()) {
+
+                // preparamos los datos
+
+                nomYApe = rs.getString("nomYApe");
+
+                deporte = rs.getString("deporte");
+
+                añoNac = rs.getInt("añoNac");
+
+                altura = rs.getFloat("altura");
+
+                //mostramos los datos por el terminal para hacer seguimiento de la ejecución
+
+                System.out.println("Deportista: " + nomYApe + "\t Deporte: " + deporte + "\t Año nacimiento: " + añoNac + "\t Altura: " + altura);
+
+                // guardamos los datos en la tabla a devolver
+
+                tabla[contador][0] = nomYApe;
+
+                tabla[contador][1] = deporte;
+
+                tabla[contador][2] = añoNac;
+
+                tabla[contador][3] = altura;
+
+                // avanzamos posición en el array
+
+                contador++;
+
             }
-        }
 
-        return false;
-    }
+        } catch (SQLException ex) {
 
-    /**
-     * Convertir de objeto a matriz
-     *
-     * @return
-     */
-    public Object[][] convertirAMatrizObject() {
-
-        // creo matriz con tantas filas como deportistas hay en el treeSet y 
-        // columnas 4, pues son 4 datos a almacenar.
-        Object[][] matrizObj = new Object[listadoClientes.size()][6];
-
-        int id = 0;
-
-        for (Cliente cl : this.listadoClientes) {
-
-            matrizObj[id][0] = cl.getId_usuario();
-
-            matrizObj[id][1] = cl.getNombre();
-
-            matrizObj[id][2] = cl.getApellidos()+ ""; // como cadena
-
-            matrizObj[id][3] = cl.getTelefono()+ ""; // como cadena
-            
-            matrizObj[id][4] = cl.getCorreo()+ "";
-            
-            matrizObj[id][5] = cl.getContraseña()+ "";
-
-            id++;
+            Logger.getLogger(ControladorBDOUsuarios.class.getName()).log(Level.SEVERE, null, ex);
 
         }
-        return matrizObj;
+
+        return tabla;
 
     }
 }
