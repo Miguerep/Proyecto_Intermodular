@@ -7,8 +7,6 @@ package modelos;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 /**
  *
  * @author Portatil
@@ -19,14 +17,16 @@ public class UsuariosAplicacion implements Serializable {
     @Id
     private String nombre;
     private String contraseña;
+    private boolean esAdmin;
 
     public UsuariosAplicacion() {
     }
 
 
-    public UsuariosAplicacion(String nombre, String contraseña) {
+    public UsuariosAplicacion(String nombre, String contraseña, boolean esAdmin) {
         this.nombre = nombre;
         this.contraseña = contraseña;
+        this.esAdmin = esAdmin;
     }
 
     public String getContraseña() {
@@ -45,6 +45,16 @@ public class UsuariosAplicacion implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public boolean isEsAdmin() {
+        return esAdmin;
+    }
+
+    public void setEsAdmin(boolean esAdmin) {
+        this.esAdmin = esAdmin;
+    }
+    
+    
     
 }
 

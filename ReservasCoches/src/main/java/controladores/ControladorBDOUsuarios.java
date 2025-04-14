@@ -46,9 +46,9 @@ public class ControladorBDOUsuarios {
         try {
             // inicio transacción bloque hacer datos persistentes -> uno por cada commit()
             em.getTransaction().begin();
-            UsuariosAplicacion u1 = new UsuariosAplicacion("Juan", "1234");
-            UsuariosAplicacion u2 = new UsuariosAplicacion("Admin", "1234");
-            UsuariosAplicacion u3 = new UsuariosAplicacion("Pedro", "1234");
+            UsuariosAplicacion u1 = new UsuariosAplicacion("Pedro", "1234", true);
+            UsuariosAplicacion u2 = new UsuariosAplicacion("Admin", "1234", true);
+            UsuariosAplicacion u3 = new UsuariosAplicacion("Jesus", "1234", false);
        
             // indicación de hacer persistentes los objetos vehículo
             em.persist(u1);
@@ -79,5 +79,15 @@ public class ControladorBDOUsuarios {
         return respuesta;
     }
     
-
+    public boolean comprobarAdmin(String nombre){
+        UsuariosAplicacion u;
+        boolean respuesta = false;
+        u = em.find(UsuariosAplicacion.class, nombre);
+         if (u!=null) {
+            respuesta = u.isEsAdmin();
+        }
+        return respuesta;
+        
+    
+    }
 }

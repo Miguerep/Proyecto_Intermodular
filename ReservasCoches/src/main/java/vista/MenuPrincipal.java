@@ -17,9 +17,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         initComponents();
 
         // Oculta el botón si el usuario no es "Admin"
-        if (!nombreUsuario.equalsIgnoreCase("Admin")) {
-            jButton4.setVisible(false); // o setEnabled(false) si solo quieres desactivarlo
-        }
+
     }
     public MenuPrincipal() {
         this(""); // por defecto no mostrar el boton

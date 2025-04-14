@@ -16,6 +16,8 @@ public abstract class Persona {
     private String correo;
     private String contraseña;
 
+    
+
     public Persona() {
     }
 
@@ -30,6 +32,7 @@ public abstract class Persona {
         this.telefono = telefono;
         this.correo = correo;
         this.contraseña = contraseña;
+        
     }
 
     public String getContraseña() {
@@ -79,6 +82,8 @@ public abstract class Persona {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    
 
     @Override
     public String toString() {
