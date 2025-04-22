@@ -4,6 +4,11 @@
  */
 package controladores;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -121,5 +126,91 @@ public class ControladorBDRClientes {
                 System.out.println(e.getMessage());
         }
         return tabla;
+    }
+    public boolean añadir(int idCliente, String nombre, String apellidos, String telefono, String correo){
+        String sql;
+        boolean correcto = false;
+        int resultado;
+        try {
+            sent = con.createStatement();
+            sql = "INSERT INTO clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('" + idCliente + "', '" + nombre + "', '" + apellidos + "', '" + telefono + "', '" + correo + "')";
+            resultado = sent.executeUpdate(sql);
+            if (resultado >= 0) {
+                correcto = true;
+            }
+            System.out.println("Se ha insertado la ciudad");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
+    }
+    public boolean borrarPorNombre(String nombre) {
+        String sql;
+        boolean correcto = false;
+        int resultado;
+        try {
+            sent = con.createStatement();
+            sql = "DELETE FROM clientes WHERE nombre = " + "'" + nombre + "'";
+            resultado = sent.executeUpdate(sql);
+            if (resultado == 1) {
+                correcto = true;
+            }
+            System.out.println("Se ha borrado el cliente");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
+    }
+    public boolean borrarTodo() {
+        String sql;
+        boolean correcto = false;
+        int resultado;
+        try {
+            sent = con.createStatement();
+            sql = "DELETE FROM clientes ";
+            resultado = sent.executeUpdate(sql);
+            if (resultado == 1) {
+                correcto = true;
+            }
+            System.out.println("Se han borrado todos los clientes");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
+    }
+    public Object[][] cargarArchivoXML() {
+        FileInputStream fis;
+        XMLDecoder xmld;
+        Object[][] tabla = null;
+        try {
+            fis = new FileInputStream("listadoClientes.xml");
+            xmld = new XMLDecoder(fis);
+            tabla = (Object[][]) xmld.readObject();
+            String sql;
+            int contador = 0;
+            
+            for (Object[] objects : tabla) {
+                sql = "INSERT INTO clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
+                sent.executeUpdate(sql);
+                contador++;
+            }
+            xmld.close();
+        } catch (Exception e) {
+            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoClientes.xml");
+        }
+        return tabla;
+    }
+    public void guardarArchivoXML(Object[][] datos) {
+        FileOutputStream fos;
+        XMLEncoder xmle;
+
+        try {
+            fos = new FileOutputStream("listadoClientes.xml");
+            xmle = new XMLEncoder(new BufferedOutputStream(fos));
+            xmle.writeObject(datos);
+            xmle.close();
+        } catch (Exception e) {
+            System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoClientes.xml");
+        }
     }
 }
