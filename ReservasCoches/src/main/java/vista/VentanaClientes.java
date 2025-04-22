@@ -4,9 +4,9 @@
  */
 package vista;
 
-import controladores.ControladorClientes;
 import javax.swing.table.DefaultTableModel;
 import modelos.Cliente;
+import controladores.ControladorBDRClientes;
 
 
 /**
@@ -14,96 +14,37 @@ import modelos.Cliente;
  * @author USUARIO
  */
 public class VentanaClientes extends javax.swing.JFrame {
-
     String nomArchivo = "listadoClientes.dat";
-    ControladorClientes conClientes = new ControladorClientes();
     
-    String[] nomColumnas = {"ID_CLIENTE",
-        "NOMBRE",
-        "APELLIDOS",
-        "TELEFONO",
-        "CORREO",
-        "CONTRASEÑA"};
-    Object[][] matrizDatos = {
-//        {"Carolina Marín", "Bádminton", 1993, 1.72},
-//        {"Pau Gasol", "Baloncesto", 1980, 2.15},
-//        {"Rafa Nadal", "Tenis", 1986, 1.85},
-    };
+    ControladorBDRClientes controladorBDRClientes = new ControladorBDRClientes();
+    String [] numColumnas = {"ID_CLIENTE", "NOMBRE", "APELLIDOS", "TELEFONO", "CORREO"};
+    Object[][] matrizDatos;
     
-    
-    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas);
-    
-    /**
-     * Creates new form VentanaMiniAgenda
-     */
-    public VentanaClientes() {
-        initComponents();
-        
-        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
-
-            //para impedir edición de las celdas
-
-            @Override
-
-            public boolean isCellEditable(int fila, int columna) {
-
-                return false;
-
-            }
-
-        };
-        // Establecimiento de los datos a la tabla
-        
-        jDatos.setModel(dtm);
-
-        
-
-        // Configuración del tipo de selección de la tabla
-
-        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        
-
-        // Ajuste de anchos
-
-        jDatos.getColumn("NOMBRE").setPreferredWidth(260);
-
-        jDatos.getColumn("DEPORTE").setPreferredWidth(160);
-
-        jDatos.getColumn("AÑO NAC.").setPreferredWidth(100);
-
-        jDatos.getColumn("ALTURA").setPreferredWidth(200);
-        
-
-        // Carga de los datos iniciales salvados previamente en fichero
-        
-
-        
-
-        // Mostrar los datos del TreeSet en la tabla
-
-        actualizaTabla();
-
-    }
-        
-        
-    
-    
-    
+    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, numColumnas);
     
     private void actualizaTabla() {
-        //miniAgenda.añadir(new Deportista("Ana","Futbol",2011, 1.76f)); // registro de ejemplo directo
-        matrizDatos = ControladorClientes.convertirAMatrizObject();
-        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
-            //para impedir edición de las celdas
-            @Override
-            public boolean isCellEditable(int fila, int columna) {
-                return false;
-            }
-        };
-        jDatos.setModel(dtm);
-    }
+        int id = 0;
+        //agenda.a�adir(new Contacto("Ana","S�nchez","999333888", "ana@gmail.com"));
+        matrizDatos = controladorBDRClientes.objetenerTodo();
+        dtm = new DefaultTableModel(matrizDatos, numColumnas);
+//        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
+//            //para impedir edici�n de las celdas
+//            @Override
+//            public boolean isCellEditable(int fila, int columna) {
+//                return false;
+//            }
+//        };
+        tDatos.setModel(dtm);
+        tDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tDatos.getColumn("NOMBRE").setPreferredWidth(70);
+        tDatos.getColumn("PAIS").setPreferredWidth(70);
+        tDatos.getColumn("CODIGO POSTAL").setPreferredWidth(100);
+        tDatos.getColumn("COMUNIDAD AUTONOMA").setPreferredWidth(150);
+//        tDatos.getColumn("DEPORTE").setPreferredWidth(160);
+//        tDatos.getColumn("A�O NAC.").setPreferredWidth(100);
+//        tDatos.getColumn("ALTURA").setPreferredWidth(100);
 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -446,12 +387,11 @@ public class VentanaClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_BorrarPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreMouseClicked
-        ControladorClientes.borrarPorNombre(nomArchivo);
+
     }//GEN-LAST:event_jButton_BorrarPorNombreMouseClicked
 
     private void jButton_BorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreActionPerformed
-        ControladorClientes.borrarPorNombre(nomArchivo);
-        actualizaTabla();
+
     }//GEN-LAST:event_jButton_BorrarPorNombreActionPerformed
 
     private void jButton_BorrarSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarSeleccionadoActionPerformed
@@ -464,8 +404,6 @@ public class VentanaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarTodoMouseClicked
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
-        ControladorClientes.vaciar();
-        actualizaTabla();
 
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
 
@@ -474,12 +412,11 @@ public class VentanaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_GuardarFichreoActionPerformed
 
     private void jButton_CargarEjemplosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CargarEjemplosActionPerformed
-        ControladorClientes.exportarEjemplos();
-        actualizaTabla();
+
     }//GEN-LAST:event_jButton_CargarEjemplosActionPerformed
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
-        actualizaTabla();
+
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed
@@ -506,9 +443,6 @@ public class VentanaClientes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_Actualizar1ActionPerformed
                  
-
-    private javax.swing.JTable jDatos;
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Actualizar;
     private javax.swing.JButton jButton_Actualizar1;
