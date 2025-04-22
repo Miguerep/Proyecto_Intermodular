@@ -24,6 +24,11 @@ public class ControladorReservas {
     String usuario = "usuario";
     String clave = "96WFjTsdglPkS!R(";
     String url = "jdbc:mysql://192.168.0.30/coches";
+    
+    
+    public  ControladorReservas(){
+    conectarBD();
+    }
 
     public void conectarBD() {
         /**
@@ -43,6 +48,7 @@ public class ControladorReservas {
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
+        String sql;
     }
     /**
      * Desconectar de la base de datos
@@ -51,8 +57,7 @@ public class ControladorReservas {
     public void desconectarBD() {
         // cierre de la conexión
         try {
-        con.close();
-            
+            con.close();    
         } catch (SQLException e) {
             // Información del Error
             System.err.println("SQL Error mensaje: " + e.getMessage());
@@ -64,101 +69,119 @@ public class ControladorReservas {
     }
 
  public Object[][] obtenerTodo() {
-
         Object[][] tabla = null;
-
         ResultSet rs;
-
-        String sql = "SELECT * FROM deportistas";
-
+        String sql = "SELECT * FROM reservas";
         int numRegistros;
-
         int contador = 0;
-
-        String nomYApe, deporte;
-
-        int añoNac;
-
-        float altura;
-
-
+        String estado;
+        int id_reserva, id_cliente, id_empleado, id_servicio , fecha_hora;
 
         try {
 
             rs = sentencia.executeQuery(sql);
-
-            //vamos al último registro y obtenemos su posición para saber cuantos registros hay
-
+            //vamos al último registro y obtenemos su posición para saber cuantos registros ha
             rs.last();
-
             numRegistros = rs.getRow();
-
-
-
             // damos tamaño a la matriz de objetos para almacenar lo leído de la BD
-
             System.out.println("registros obtenidos:" + numRegistros);
-
-            tabla = new Object[numRegistros][4];
-
-
-
+            tabla = new Object[numRegistros][6];
             // recolocamos el puntero para recorrer el resultado
 
             rs.beforeFirst();
 
-            System.out.println("Lista de deportistas:");
+            System.out.println("Lista de reservas:");
 
             while (rs.next()) {
 
                 // preparamos los datos
 
-                nomYApe = rs.getString("nomYApe");
-
-                deporte = rs.getString("deporte");
-
-                añoNac = rs.getInt("añoNac");
-
-                altura = rs.getFloat("altura");
-
-                //mostramos los datos por el terminal para hacer seguimiento de la ejecución
-
-                System.out.println("Deportista: " + nomYApe + "\t Deporte: " + deporte + "\t Año nacimiento: " + añoNac + "\t Altura: " + altura);
+                id_reserva = rs.getInt("id_reserva");
+                id_cliente = rs.getInt("id_cliente");
+                id_empleado = rs.getInt("id_empleado");
+                id_servicio = rs.getInt("id_servicio");
+                estado = rs.getString("estado");
+                fecha_hora = rs.getInt("fecha_hora");
 
                 // guardamos los datos en la tabla a devolver
+                tabla[contador][0] = id_reserva;
+                tabla[contador][1] = id_cliente;
+                tabla[contador][2] = id_empleado;
+                tabla[contador][3] = id_servicio;
+                tabla[contador][4] = estado;
+                tabla[contador][5] = fecha_hora;
 
-                tabla[contador][0] = nomYApe;
-
-                tabla[contador][1] = deporte;
-
-                tabla[contador][2] = añoNac;
-
-                tabla[contador][3] = altura;
-
-                // avanzamos posición en el array
-
+               
                 contador++;
 
             }
 
         } catch (SQLException ex) {
-
-//            Logger.(ControladorReservas.class.getName()).log(Level.SEVERE, null, ex);
-
+            System.out.println("Ha ocurrido algun error");
         }
         return tabla;
 
     }
 
-    public void borrarPorNombre(String nomArchivo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean borrarPorID(int id) {
+        String sql;
+        boolean correcto = false;
+        int resultado;
+        try {
+            sentencia = con.createStatement();
+            sql = "DELETE FROM reserva WHERE id_reserva = " + "'" + id + "'";
+            resultado = sentencia.executeUpdate(sql);
+            if (resultado == 1) {
+                correcto = true;
+            }
+            System.out.println("Se ha borrado la reserva");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
     }
 
-    public void vaciar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean borrarTodo() {
+        String sql;
+        boolean correcto = false;
+        int resultado;
+        try {
+            sentencia = con.createStatement();
+            sql = "DELETE FROM reservas ";
+            resultado = sentencia.executeUpdate(sql);
+            if (resultado == 1) {
+                correcto = true;
+            }
+            System.out.println("Se han borrado todas las reservas");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
     }
 
-    public void exportarEjemplos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean añadirEjemplos() {
+
+        String sql, sql2;
+        boolean correcto = false;
+        int resultado;
+
+        try {
+            //Inserto dos ejemplos de reservas.
+            sentencia = con.createStatement();
+            sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 1, '2025-04-22 15:30:00', 2, 3, 4) ;";
+            resultado = sentencia.executeUpdate(sql);
+            
+            sentencia = con.createStatement();
+            sql2 = "INSERT INTO ciudades (nombre, pais, codigoPostal, poblacion, superficieKM2, comunidadAutonoma, Patron) VALUES ('Barcelona', 'España', '18001', '1680782', '101.35', 'Cataluña', 'Santa Eulalia');";
+            resultado = sentencia.executeUpdate(sql2);
+            
+            if (resultado >= 0) {
+                correcto = true;
+            }
+            System.out.println("Se ha insertado la reserva");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
     }
 }

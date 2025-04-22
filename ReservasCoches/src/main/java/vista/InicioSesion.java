@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -152,17 +152,17 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldContraseñaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String usuario, contraseñaLeida, contraseñaRegistrada;
+    String usuario, usuarioRegistrado, contraseñaLeida, contraseñaRegistrada;
        usuario = jTextFieldUsuario.getText();
        contraseñaLeida = jTextFieldContraseña.getText();
+       usuarioRegistrado = controladorUsuarios.obtenerUsuario(usuario);
        contraseñaRegistrada = controladorUsuarios.obtenerClave(usuario);
         
-       if (contraseñaLeida.equals(contraseñaRegistrada)) {
+       if (contraseñaLeida.equals(contraseñaRegistrada) && usuarioRegistrado.equalsIgnoreCase(usuario)) {
 
-           
             System.out.println("Sesion iniciada");
 
-            JOptionPane.showMessageDialog(rootPane, "Inicio de sesión.");
+           MenuPrincipal men1;
         }
         else {
             JOptionPane.showMessageDialog(rootPane, "Error en el inicio de sesión.");

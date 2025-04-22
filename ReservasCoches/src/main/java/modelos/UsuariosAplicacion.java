@@ -17,13 +17,13 @@ public class UsuariosAplicacion implements Serializable {
     @Id
     private String nombre;
     private String contraseña;
-    private boolean esAdmin;
+    private String esAdmin;
 
     public UsuariosAplicacion() {
     }
 
 
-    public UsuariosAplicacion(String nombre, String contraseña, boolean esAdmin) {
+    public UsuariosAplicacion(String nombre, String contraseña, String esAdmin) {
         this.nombre = nombre;
         this.contraseña = contraseña;
         this.esAdmin = esAdmin;
@@ -46,13 +46,15 @@ public class UsuariosAplicacion implements Serializable {
         this.nombre = nombre;
     }
 
-    public boolean isEsAdmin() {
+    public String getEsAdmin() {
         return esAdmin;
     }
 
-    public void setEsAdmin(boolean esAdmin) {
+    public void setEsAdmin(String esAdmin) {
         this.esAdmin = esAdmin;
     }
+
+    
     
     
     

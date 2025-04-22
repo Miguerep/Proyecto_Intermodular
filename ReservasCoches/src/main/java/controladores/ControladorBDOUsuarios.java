@@ -78,6 +78,15 @@ public class ControladorBDOUsuarios {
         }
         return respuesta;
     }
+        public String obtenerUsuario(String nombre){
+        UsuariosAplicacion u;
+        String respuesta = "";
+         u = em.find(UsuariosAplicacion.class, nombre);
+         if (u!=null) {
+            respuesta = u.getNombre();
+        }
+        return respuesta;
+    }
     
     public boolean comprobarAdmin(String nombre){
         UsuariosAplicacion u;

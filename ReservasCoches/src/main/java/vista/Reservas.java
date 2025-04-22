@@ -5,6 +5,8 @@
 package vista;
 
 import controladores.ControladorReservas;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,12 +19,40 @@ public class Reservas extends javax.swing.JFrame {
 
 //    String nomArchivo = "listadoDeportistas.dat";
     ControladorReservas ctrlReservas = new ControladorReservas();
+    String nomArchivo = "listadoEstilos.dat";    
+    String[] nomColumnas = {"ID", "TITULO", "USUARIO", "FECHA CREACION", "COLOR FONDO", "COLOR BOTONES"};
+    Object[][] matrizDatos;
+    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas);
+    DefaultListModel listaColores = new DefaultListModel();
+    
   
 
     public Reservas() {
         initComponents();
         ctrlReservas.conectarBD();
-        ctrlReservas.desconectarBD();
+        
+
+    }
+        private void actualizaTabla() {
+        int id = 0;
+        
+        matrizDatos = ctrlReservas.obtenerTodo();
+        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
+            //para impedir edici�n de las celdas
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        jDatos.setModel(dtm);
+        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jDatos.getColumn("ID Reserva").setPreferredWidth(70);
+        jDatos.getColumn("ID Cliente").setPreferredWidth(70);
+        jDatos.getColumn("ID Empleado").setPreferredWidth(100);
+        jDatos.getColumn("ID Servicio").setPreferredWidth(150);
+        jDatos.getColumn("Estado").setPreferredWidth(150);
+ 
+
 
     }
 
@@ -57,11 +87,16 @@ public class Reservas extends javax.swing.JFrame {
         jDatos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Nombre y apellidos: ");
+        jLabel1.setText("ID Reserva");
 
         jTF_NomYApell.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
         jTF_NomYApell.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +106,7 @@ public class Reservas extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Correo: ");
+        jLabel2.setText("Estado");
 
         jTF_Correo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
@@ -116,11 +151,10 @@ public class Reservas extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jButton_VaciarCampos))
+                    .addComponent(jButton_VaciarCampos)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(59, 59, 59)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTF_NomYApell, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
@@ -264,13 +298,13 @@ public class Reservas extends javax.swing.JFrame {
 
         jDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         jScrollPane1.setViewportView(jDatos);
@@ -287,7 +321,7 @@ public class Reservas extends javax.swing.JFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,22 +379,38 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_GuardarFichreoActionPerformed
 
     private void jButton_BorrarPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreMouseClicked
-//        ctrlReservas.borrarPorNombre(nomArchivo);
+        String aux;
+        int id;
+        boolean borrado;
+        try {
+        aux = JOptionPane.showInputDialog(rootPane, "Introduce el ID de la reserva a borrar:");
+        id = Integer.parseInt(aux);
+        borrado = ctrlReservas.borrarPorID(id);
+        if (borrado)
+            actualizaTabla();
+        else
+            JOptionPane.showMessageDialog(rootPane, "No existe dicho deportista.");
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jButton_BorrarPorNombreMouseClicked
 
     private void jButton_BorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoMouseClicked
-//        miniAgenda.vaciar(dep);
+
           
     }//GEN-LAST:event_jButton_BorrarTodoMouseClicked
 
     private void jButton_CargarEjemplosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CargarEjemplosActionPerformed
-//        ctrlReservas.exportarEjemplos();
-//        actualizaTabla();
+        ctrlReservas.añadirEjemplos();
+        actualizaTabla();
     }//GEN-LAST:event_jButton_CargarEjemplosActionPerformed
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed
 //        miniAgenda.
     }//GEN-LAST:event_jButton_AnadirActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+       ctrlReservas.desconectarBD();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
