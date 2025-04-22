@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import modelos.Cliente;
 
 /**
@@ -100,7 +101,7 @@ public class ControladorBDRClientes {
             
             //Recolocamos el puntero para recorrer el resultado.
             rs.beforeFirst();
-            System.out.println("Lista de ciudades");
+            System.out.println("Lista de clientes");
             while (rs.next()) {
                 //Preparamos los datos
                 idCliente = rs.getInt("idCliente");
@@ -127,18 +128,64 @@ public class ControladorBDRClientes {
         }
         return tabla;
     }
+    
+    public boolean vaciar() {
+        boolean correcto = false;
+        String sql;
+        int resultado;
+        try {
+            sent =con.createStatement();
+            sql = "DELETE FROM Clientes";
+            resultado = sent.executeUpdate(sql);
+            if (resultado >= 0) {
+                correcto = true;
+            }
+            System.out.println("Se han eliminado " + resultado + " clientes.");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error.");
+        }
+        return correcto;
+    }
+    
+    public boolean añadirEjemplos() {
+
+        String sql, sql2;
+        boolean correcto = false;
+        int resultado;
+
+        try {
+            //Inserto dos ejemplos de ciudades.
+            sent = con.createStatement();
+            sql = "INSERT INTO Clientes (id_Cliente, nombre, apellidos, telefono, correo) VALUES ('0', Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
+            resultado = sent.executeUpdate(sql);
+            
+            sent = con.createStatement();
+            sql2 = "INSERT INTO Clientes (id_Cliente, nombre, apellidos, telefono, correo) VALUES ('1', Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
+            resultado = sent.executeUpdate(sql2);
+            
+            if (resultado >= 0) {
+                correcto = true;
+            }
+            System.out.println("Se ha insertado el cliente");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
+    }
+    
+    
     public boolean añadir(int idCliente, String nombre, String apellidos, String telefono, String correo){
         String sql;
         boolean correcto = false;
         int resultado;
         try {
             sent = con.createStatement();
-            sql = "INSERT INTO clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('" + idCliente + "', '" + nombre + "', '" + apellidos + "', '" + telefono + "', '" + correo + "')";
+            sql = "INSERT INTO Clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('" + idCliente + "', '" + nombre + "', '" + apellidos + "', '" + telefono + "', '" + correo + "')";
             resultado = sent.executeUpdate(sql);
             if (resultado >= 0) {
                 correcto = true;
             }
-            System.out.println("Se ha insertado la ciudad");
+            System.out.println("Se ha insertado el cliente");
         } catch (SQLException e) {
             System.out.println("Ha ocurrido algun error");
         }
@@ -150,7 +197,7 @@ public class ControladorBDRClientes {
         int resultado;
         try {
             sent = con.createStatement();
-            sql = "DELETE FROM clientes WHERE nombre = " + "'" + nombre + "'";
+            sql = "DELETE FROM Clientes WHERE nombre = " + "'" + nombre + "'";
             resultado = sent.executeUpdate(sql);
             if (resultado == 1) {
                 correcto = true;
@@ -167,7 +214,7 @@ public class ControladorBDRClientes {
         int resultado;
         try {
             sent = con.createStatement();
-            sql = "DELETE FROM clientes ";
+            sql = "DELETE FROM Clientes ";
             resultado = sent.executeUpdate(sql);
             if (resultado == 1) {
                 correcto = true;
@@ -190,7 +237,7 @@ public class ControladorBDRClientes {
             int contador = 0;
             
             for (Object[] objects : tabla) {
-                sql = "INSERT INTO clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
+                sql = "INSERT INTO Clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
                 sent.executeUpdate(sql);
                 contador++;
             }
