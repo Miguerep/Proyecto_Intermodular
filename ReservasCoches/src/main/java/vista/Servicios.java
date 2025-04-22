@@ -5,6 +5,12 @@
 package vista;
 
 import controladores.ControladorReservas;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,18 +24,45 @@ public class Servicios extends javax.swing.JFrame {
 //    String nomArchivo = "listadoDeportistas.dat";
     ControladorReservas ctrlReservas = new ControladorReservas();
   
-
+     private final Map<String, String[]> servicios = new HashMap<>();
+    
     public Servicios() {
         initComponents();
         jDatos.setEnabled(true);
         jTextField1.setEnabled(true);
         jTextField2.setEnabled(true);
 
+        // Conectar y desconectar BD (solo para ejemplo)
         ctrlReservas.conectarBD();
         ctrlReservas.desconectarBD();
 
+        // Configurar los tipos de servicio
+        configurarTiposDeServicio();
     }
+    private void configurarTiposDeServicio() {
+        // Agregar tipos de servicio con sus duraciones y precios
+        servicios.put("Limpieza Interna", new String[]{"60 minutos", "50 €"});
+        servicios.put("Limpieza Externa", new String[]{"45 minutos", "35 €"});
+        servicios.put("Lavado Completo", new String[]{"90 minutos", "75 €"});
+        servicios.put("Pulido de Tapicería", new String[]{"120 minutos", "100 €"});
+        servicios.put("Tratamiento de Piel", new String[]{"30 minutos", "25 €"});
 
+        // Establecer los elementos del JComboBox
+        tipoServicios.setModel(new DefaultComboBoxModel<>(servicios.keySet().toArray(new String[0])));
+
+        // Agregar ActionListener para actualizar los campos de texto
+        tipoServicios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String tipoSeleccionado = (String) tipoServicios.getSelectedItem();
+                if (servicios.containsKey(tipoSeleccionado)) {
+                    String[] detalles = servicios.get(tipoSeleccionado);
+                    jTextField1.setText(detalles[0]); // Duración
+                    jTextField2.setText(detalles[1]); // Precio
+                }
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -325,7 +358,22 @@ public class Servicios extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_CargarEjemplosActionPerformed
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed
-//        miniAgenda.
+        
+        String duracion = jTextField1.getText();
+        String precio = jTextField2.getText();
+
+        String tipo = (String) tipoServicios.getSelectedItem();
+       
+    
+    // Validaciones básicas
+        if (tipo.isEmpty() || duracion.isEmpty() || precio.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos deben estar completos.");
+            return;
+    }
+    
+    // Aquí puedes hacer lo que quieras con esos valores, por ejemplo:
+        System.out.println("Servicio: " + tipo + ", Duración: " + duracion + ", Precio: " + precio);
+    
     }//GEN-LAST:event_jButton_AnadirActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -390,3 +438,4 @@ public class Servicios extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> tipoServicios;
     // End of variables declaration//GEN-END:variables
 }
+
