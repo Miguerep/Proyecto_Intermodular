@@ -27,10 +27,9 @@ import modelos.Cliente;
  * @author Portatil
  */
 public class ControladorBDRClientes {
-
-    String nombreBDR = "Clientes.odb";
-    String rutaBase = "db/Clientes";
-    String rutaBDR = rutaBase + nombreBDR;
+    String usuario = "usuario";
+    String clave = "96WFjTsdglPkS!R(";
+    String url = "jdbc:mysql://192.168.0.30/proyecto_final";
     String jpql;
     Connection con;
     Statement sent;
@@ -39,36 +38,25 @@ public class ControladorBDRClientes {
         conectarBDR();
     }
 
-    public boolean conectarBDR() {
-        boolean creaConexion = false;
+    public void conectarBDR() {
+        /**
+         * Conectar con la base de datos
+         */
         try {
-            //Se conecta con la base de datos, con la url, el usuario y la contraseña que hemos indicado antes.
-            con = DriverManager.getConnection(rutaBDR);
-            System.out.println("Conexión establecida con " + rutaBDR);
-            creaConexion = true;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+            // conexión con la BD
+            con = DriverManager.getConnection(url, usuario, clave);
+            System.out.println("Conexión establecida con " + url);
 
+            
+        } catch (SQLException e) {
+            // Información del Error
+            System.err.println("SQL Error mensaje: " + e.getMessage());
+            System.err.println("SQL Estado: " + e.getSQLState());
+            System.err.println("SQL código específico: " + e.getErrorCode());
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
         String sql;
-
-        try {
-            sent = con.createStatement();
-            sql = "CREATE TABLE IF NOT EXISTS `Clientes`(\n"
-                    + "    `id_cliente` INT NOT NULL,\n"
-                    + "    `nombre` VARCHAR(40) NOT NULL,\n"
-                    + "    `apellidos` VARCHAR(50),\n"
-                    + "    `telefono` VARCHAR(10) NOT NULL UNIQUE,,\n"
-                    + "    `correo` VARCHAR(40) UNIQUE,\n"
-                    + "    PRIMARY KEY (`id_cliente`)\n"
-                    + "  );";
-            sent.executeUpdate(sql);
-
-        } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
-        }
-
-        return creaConexion;
     }
     public void cerrarConexionBD() {
         try {
@@ -104,7 +92,7 @@ public class ControladorBDRClientes {
             System.out.println("Lista de clientes");
             while (rs.next()) {
                 //Preparamos los datos
-                idCliente = rs.getInt("idCliente");
+                idCliente = rs.getInt("id_cliente");
                 nombre = rs.getString("nombre");
                 apellidos = rs.getString("apellidos");
                 telefono = rs.getString("telefono");
@@ -156,11 +144,11 @@ public class ControladorBDRClientes {
         try {
             //Inserto dos ejemplos de ciudades.
             sent = con.createStatement();
-            sql = "INSERT INTO Clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('0', Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
+            sql = "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('0', 'Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
             resultado = sent.executeUpdate(sql);
             
             sent = con.createStatement();
-            sql2 = "INSERT INTO Clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('1', Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
+            sql2 = "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('1', 'Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
             resultado = sent.executeUpdate(sql2);
             
             if (resultado >= 0) {
@@ -180,7 +168,7 @@ public class ControladorBDRClientes {
         int resultado;
         try {
             sent = con.createStatement();
-            sql = "INSERT INTO Clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('" + idCliente + "', '" + nombre + "', '" + apellidos + "', '" + telefono + "', '" + correo + "')";
+            sql = "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('" + idCliente + "', '" + nombre + "', '" + apellidos + "', '" + telefono + "', '" + correo + "')";
             resultado = sent.executeUpdate(sql);
             if (resultado >= 0) {
                 correcto = true;
@@ -216,7 +204,7 @@ public class ControladorBDRClientes {
             sent = con.createStatement();
             sql = "DELETE FROM Clientes ";
             resultado = sent.executeUpdate(sql);
-            if (resultado == 1) {
+            if (resultado >= 0) {
                 correcto = true;
             }
             System.out.println("Se han borrado todos los clientes");
@@ -237,7 +225,7 @@ public class ControladorBDRClientes {
             int contador = 0;
             
             for (Object[] objects : tabla) {
-                sql = "INSERT INTO Clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
+                sql = "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
                 sent.executeUpdate(sql);
                 contador++;
             }
