@@ -31,6 +31,7 @@ public class Servicios extends javax.swing.JFrame {
         jDatos.setEnabled(true);
         jTextField1.setEnabled(true);
         jTextField2.setEnabled(true);
+        jTextField3.setEditable(false);
 
         // Conectar y desconectar BD (solo para ejemplo)
         ctrlReservas.conectarBD();
@@ -41,11 +42,11 @@ public class Servicios extends javax.swing.JFrame {
     }
     private void configurarTiposDeServicio() {
         // Agregar tipos de servicio con sus duraciones y precios
-        servicios.put("Limpieza Interna", new String[]{"60 minutos", "50 €"});
-        servicios.put("Limpieza Externa", new String[]{"45 minutos", "35 €"});
-        servicios.put("Lavado Completo", new String[]{"90 minutos", "75 €"});
-        servicios.put("Pulido de Tapicería", new String[]{"120 minutos", "100 €"});
-        servicios.put("Tratamiento de Piel", new String[]{"30 minutos", "25 €"});
+        servicios.put("Limpieza Interna", new String[]{"1","60 minutos", "50 €"});
+        servicios.put("Limpieza Externa", new String[]{"2","45 minutos", "35 €"});
+        servicios.put("Lavado Completo", new String[]{"3","90 minutos", "75 €"});
+        servicios.put("Pulido de Tapicería", new String[]{"4","120 minutos", "100 €"});
+        servicios.put("Tratamiento de Piel", new String[]{"5","30 minutos", "25 €"});
 
         // Establecer los elementos del JComboBox
         tipoServicios.setModel(new DefaultComboBoxModel<>(servicios.keySet().toArray(new String[0])));
@@ -57,8 +58,9 @@ public class Servicios extends javax.swing.JFrame {
                 String tipoSeleccionado = (String) tipoServicios.getSelectedItem();
                 if (servicios.containsKey(tipoSeleccionado)) {
                     String[] detalles = servicios.get(tipoSeleccionado);
-                    jTextField1.setText(detalles[0]); // Duración
-                    jTextField2.setText(detalles[1]); // Precio
+                    jTextField3.setText(detalles[0]); // ID
+                    jTextField1.setText(detalles[1]); // Duracion
+                    jTextField2.setText(detalles[2]); // Precio
                 }
             }
         });
@@ -79,6 +81,7 @@ public class Servicios extends javax.swing.JFrame {
         tipoServicios = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jButton_BorrarPorNombre = new javax.swing.JButton();
         jButton_BorrarSeleccionado = new javax.swing.JButton();
@@ -129,6 +132,8 @@ public class Servicios extends javax.swing.JFrame {
             }
         });
 
+        jTextField3.setText("txtId");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -137,8 +142,11 @@ public class Servicios extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton_VaciarCampos)
-                    .addComponent(tipoServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(147, 147, 147)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(tipoServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(62, 62, 62)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_Anadir, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -155,7 +163,8 @@ public class Servicios extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tipoServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_VaciarCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -277,9 +286,17 @@ public class Servicios extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Servicio", "IDServicio", "Duracion", "Precio"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jDatos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -435,6 +452,7 @@ public class Servicios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JComboBox<String> tipoServicios;
     // End of variables declaration//GEN-END:variables
 }
