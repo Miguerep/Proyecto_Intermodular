@@ -18,7 +18,7 @@ import modelos.UsuariosAplicacion;
 public class ControladorBDOUsuarios {
 
     String nombreBDO = "Usuarios.odb";
-    String rutaBase = "db/Usuarios";
+    String rutaBase = "$db/Usuarios";
     String rutaBDO = rutaBase + nombreBDO;
     String jpql;
     EntityManager em;
@@ -37,7 +37,7 @@ public class ControladorBDOUsuarios {
             System.err.println("\tError al ejecutar la conexión .");
         }
     }
-
+ // Cerrar conexion a la BDO ---------------------------------------------------
     public void cerrarConexion() {
         em.close();
         emf.close();
@@ -47,9 +47,9 @@ public class ControladorBDOUsuarios {
         try {
             // inicio transacción bloque hacer datos persistentes -> uno por cada commit()
             em.getTransaction().begin();
-            UsuariosAplicacion u1 = new UsuariosAplicacion("Pedro", "1234", "Admin");
-            UsuariosAplicacion u2 = new UsuariosAplicacion("Admin", "1234", "Admin");
-            UsuariosAplicacion u3 = new UsuariosAplicacion("Jesus", "1234", "");
+            UsuariosAplicacion u1 = new UsuariosAplicacion("Pedro", "1234", true);
+            UsuariosAplicacion u2 = new UsuariosAplicacion("Admin", "1234", true);
+            UsuariosAplicacion u3 = new UsuariosAplicacion("Jesus", "1234", false);
 
             // indicación de hacer persistentes los objetos vehículo
             em.persist(u1);
@@ -91,53 +91,20 @@ public class ControladorBDOUsuarios {
         return respuesta;
     }
 
-    public boolean comprobarAdmin(String nombre, String contraseña) {
-        boolean respuesta = false;
-        Object[][] usuarios = obtenerTodoInicioSesion();
-
-        for (Object[] fila : usuarios) {
-            String nombreUsuario = (String) fila[0];
-            String contraseñaUsuario = (String) fila[1];
-            String permisosUsuario = (String) fila[2];
-
-            if (nombre.equalsIgnoreCase(nombreUsuario) && contraseña.equals(contraseñaUsuario)) {
-                if (permisosUsuario.equals("Admin")) {
-                    respuesta = true;
-                }
-
-            }
-
-        }
-        return respuesta;
-    }
-
     public Object[][] obtenerTodoInicioSesion() {
         Object[][] tabla = null;
-        int numRegistros;
-        int contador = 0;
-        String nombre, contraseña, permisos;
 
-        Query query1 = em.createQuery("SELECT u FROM Usuario u");
         try {
-            List<UsuariosAplicacion> listaUsuarios = query1.getResultList();
-            numRegistros = listaUsuarios.size();
+            Query query = em.createQuery("SELECT u FROM UsuariosAplicacion u");
+            List<UsuariosAplicacion> listaUsuarios = query.getResultList();
 
-            tabla = new Object[numRegistros][3];
+            tabla = new Object[listaUsuarios.size()][3];
 
-//            System.out.println("Lista usuarios");
-            for (UsuariosAplicacion usu : listaUsuarios) {
-//                System.out.println(usu);
-
-                nombre = usu.getNombre();
-                contraseña = usu.getContraseña();
-                permisos = usu.getEsAdmin();
-
-                tabla[contador][0] = nombre;
-                tabla[contador][1] = contraseña;
-                tabla[contador][2] = permisos;
-
-                //avanzamos posicion en el array
-                contador++;
+            for (int i = 0; i < listaUsuarios.size(); i++) {
+                UsuariosAplicacion u = listaUsuarios.get(i);
+                tabla[i][0] = u.getNombre();
+                tabla[i][1] = u.getContraseña();
+                tabla[i][2] = u.isEsAdmin();
             }
 
         } catch (Exception e) {

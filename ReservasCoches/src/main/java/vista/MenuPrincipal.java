@@ -13,14 +13,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form MenuPrincipal
      */
-     public MenuPrincipal(String nombreUsuario) {
+     public MenuPrincipal(boolean admin) {
         initComponents();
 
         // Oculta el botón si el usuario no es "Admin"
 
     }
     public MenuPrincipal() {
-        this(""); // por defecto no mostrar el boton
+       
     } 
             
     /**
@@ -135,7 +135,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             public void run() {
                 // Simula que el usuario es "Admin" o "OtroUsuario"
                 String usuario = "Admin"; // CAMBIA ESTO según el usuario que inicie sesión
-                new MenuPrincipal(usuario).setVisible(true);
+                new MenuPrincipal().setVisible(true);
             }
         });
     }

@@ -15,36 +15,36 @@ import controladores.ControladorBDRClientes;
  */
 public class VentanaClientes extends javax.swing.JFrame {
     String nomArchivo = "listadoClientes.dat";
-    
-    ControladorBDRClientes controladorBDRClientes = new ControladorBDRClientes();
-    String [] numColumnas = {"ID_CLIENTE", "NOMBRE", "APELLIDOS", "TELEFONO", "CORREO"};
-    Object[][] matrizDatos;
-    
-    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, numColumnas);
-    
-    private void actualizaTabla() {
-        int id = 0;
-        //agenda.a�adir(new Contacto("Ana","S�nchez","999333888", "ana@gmail.com"));
-        matrizDatos = controladorBDRClientes.objetenerTodo();
-        dtm = new DefaultTableModel(matrizDatos, numColumnas);
-//        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
-//            //para impedir edici�n de las celdas
-//            @Override
-//            public boolean isCellEditable(int fila, int columna) {
-//                return false;
-//            }
-//        };
-        tDatos.setModel(dtm);
-        tDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tDatos.getColumn("NOMBRE").setPreferredWidth(70);
-        tDatos.getColumn("PAIS").setPreferredWidth(70);
-        tDatos.getColumn("CODIGO POSTAL").setPreferredWidth(100);
-        tDatos.getColumn("COMUNIDAD AUTONOMA").setPreferredWidth(150);
-//        tDatos.getColumn("DEPORTE").setPreferredWidth(160);
-//        tDatos.getColumn("A�O NAC.").setPreferredWidth(100);
-//        tDatos.getColumn("ALTURA").setPreferredWidth(100);
-
-    }
+//    
+//    ControladorBDRClientes controladorBDRClientes = new ControladorBDRClientes();
+//    String [] numColumnas = {"ID_CLIENTE", "NOMBRE", "APELLIDOS", "TELEFONO", "CORREO"};
+//    Object[][] matrizDatos;
+//    
+//    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, numColumnas);
+//    
+//    private void actualizaTabla() {
+//        int id = 0;
+//        //agenda.a�adir(new Contacto("Ana","S�nchez","999333888", "ana@gmail.com"));
+//        matrizDatos = controladorBDRClientes.objetenerTodo();
+//        dtm = new DefaultTableModel(matrizDatos, numColumnas);
+////        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
+////            //para impedir edici�n de las celdas
+////            @Override
+////            public boolean isCellEditable(int fila, int columna) {
+////                return false;
+////            }
+////        };
+//        tDatos.setModel(dtm);
+//        tDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+//        tDatos.getColumn("NOMBRE").setPreferredWidth(70);
+//        tDatos.getColumn("PAIS").setPreferredWidth(70);
+//        tDatos.getColumn("CODIGO POSTAL").setPreferredWidth(100);
+//        tDatos.getColumn("COMUNIDAD AUTONOMA").setPreferredWidth(150);
+////        tDatos.getColumn("DEPORTE").setPreferredWidth(160);
+////        tDatos.getColumn("A�O NAC.").setPreferredWidth(100);
+////        tDatos.getColumn("ALTURA").setPreferredWidth(100);
+//
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

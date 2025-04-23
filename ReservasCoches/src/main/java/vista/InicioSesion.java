@@ -1,4 +1,4 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class InicioSesion extends javax.swing.JFrame {
 
-
+    boolean admin;
     ControladorBDOUsuarios controladorUsuarios = new ControladorBDOUsuarios();
 
     /**
@@ -21,8 +21,30 @@ public class InicioSesion extends javax.swing.JFrame {
      */
     public InicioSesion() {
         initComponents();
-        controladorUsuarios.conectarBDO();
+
 //        controladorUsuarios.crearUsuariosEjemplo();
+    }
+
+    MenuPrincipal ven1;
+
+    public boolean comprobarAdmin(String nombre, String contraseña) {
+        boolean respuesta = false;
+        Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
+
+        for (Object[] fila : usuarios) {
+            String nombreUsuario = (String) fila[0];
+            String contraseñaUsuario = (String) fila[1];
+            boolean permisosUsuario = (boolean) fila[2];
+
+            if (nombre.equalsIgnoreCase(nombreUsuario) && contraseña.equals(contraseñaUsuario)) {
+                if (permisosUsuario) {
+                    respuesta = true;
+                }
+
+            }
+
+        }
+        return respuesta;
     }
 
     /**
@@ -143,35 +165,32 @@ public class InicioSesion extends javax.swing.JFrame {
 
     private void jTextFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsuarioActionPerformed
 
-        
+
     }//GEN-LAST:event_jTextFieldUsuarioActionPerformed
 
     private void jTextFieldContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldContraseñaActionPerformed
 
-        
+
     }//GEN-LAST:event_jTextFieldContraseñaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String usuario, usuarioRegistrado, contraseñaLeida, contraseñaRegistrada;
-       usuario = jTextFieldUsuario.getText();
-       contraseñaLeida = jTextFieldContraseña.getText();
-       usuarioRegistrado = controladorUsuarios.obtenerUsuario(usuario);
-       contraseñaRegistrada = controladorUsuarios.obtenerClave(usuario);
-        
-       if (contraseñaLeida.equals(contraseñaRegistrada) && usuarioRegistrado.equalsIgnoreCase(usuario)) {
-
-            System.out.println("Sesion iniciada");
-
-           MenuPrincipal men1;
-        }
-        else {
+        String usuario, contraseñaLeida;
+        usuario = jTextFieldUsuario.getText();
+        contraseñaLeida = jTextFieldContraseña.getText();
+        admin = comprobarAdmin(usuario, contraseñaLeida);
+        if (admin) {
+            System.out.println("Inicio de sesión exitoso");
+            ven1 = new MenuPrincipal(admin);
+            ven1.setVisible(true);
+            this.dispose(); // cerrar ventana actual
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Error en el inicio de sesión.");
         } // sino
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-       controladorUsuarios.cerrarConexion();
+        controladorUsuarios.cerrarConexion();
     }//GEN-LAST:event_formWindowClosed
 
     /**

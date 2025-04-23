@@ -17,13 +17,13 @@ public class UsuariosAplicacion implements Serializable {
     @Id
     private String nombre;
     private String contraseña;
-    private String esAdmin;
+    private boolean esAdmin;
 
     public UsuariosAplicacion() {
     }
 
 
-    public UsuariosAplicacion(String nombre, String contraseña, String esAdmin) {
+    public UsuariosAplicacion(String nombre, String contraseña, boolean esAdmin) {
         this.nombre = nombre;
         this.contraseña = contraseña;
         this.esAdmin = esAdmin;
@@ -46,14 +46,19 @@ public class UsuariosAplicacion implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getEsAdmin() {
+
+    public boolean isEsAdmin() {
         return esAdmin;
     }
 
-    public void setEsAdmin(String esAdmin) {
+    public void setEsAdmin(boolean esAdmin) {
         this.esAdmin = esAdmin;
     }
 
+    @Override
+    public String toString() {
+        return "UsuariosAplicacion{" + "nombre=" + nombre + ", esAdmin=" + esAdmin + '}';
+    }
     
     
     
