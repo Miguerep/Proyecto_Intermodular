@@ -156,11 +156,11 @@ public class ControladorBDRClientes {
         try {
             //Inserto dos ejemplos de ciudades.
             sent = con.createStatement();
-            sql = "INSERT INTO Clientes (id_Cliente, nombre, apellidos, telefono, correo) VALUES ('0', Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
+            sql = "INSERT INTO Clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('0', Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
             resultado = sent.executeUpdate(sql);
             
             sent = con.createStatement();
-            sql2 = "INSERT INTO Clientes (id_Cliente, nombre, apellidos, telefono, correo) VALUES ('1', Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
+            sql2 = "INSERT INTO Clientes (idCliente, nombre, apellidos, telefono, correo) VALUES ('1', Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
             resultado = sent.executeUpdate(sql2);
             
             if (resultado >= 0) {
