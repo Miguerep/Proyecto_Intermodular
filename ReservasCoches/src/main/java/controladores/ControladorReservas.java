@@ -4,6 +4,11 @@
  */
 package controladores;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.lang.System.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,10 +29,9 @@ public class ControladorReservas {
     String usuario = "usuario";
     String clave = "96WFjTsdglPkS!R(";
     String url = "jdbc:mysql://192.168.0.30/proyecto_final";
-    
-    
-    public  ControladorReservas(){
-    conectarBD();
+
+    public ControladorReservas() {
+        conectarBD();
     }
 
     public void conectarBD() {
@@ -39,7 +43,6 @@ public class ControladorReservas {
             con = DriverManager.getConnection(url, usuario, clave);
             System.out.println("Conexión establecida con " + url);
 
-            
         } catch (SQLException e) {
             // Información del Error
             System.err.println("SQL Error mensaje: " + e.getMessage());
@@ -50,6 +53,7 @@ public class ControladorReservas {
         }
         String sql;
     }
+
     /**
      * Desconectar de la base de datos
      */
@@ -57,7 +61,7 @@ public class ControladorReservas {
     public void desconectarBD() {
         // cierre de la conexión
         try {
-            con.close();    
+            con.close();
         } catch (SQLException e) {
             // Información del Error
             System.err.println("SQL Error mensaje: " + e.getMessage());
@@ -68,14 +72,14 @@ public class ControladorReservas {
         }
     }
 
- public Object[][] obtenerTodo() {
+    public Object[][] obtenerTodo() {
         Object[][] tabla = null;
         ResultSet rs;
         String sql = "SELECT * FROM reservas";
         int numRegistros;
         int contador = 0;
         String estado;
-        int id_reserva, id_cliente, id_empleado, id_servicio , fecha_hora;
+        int id_reserva, id_cliente, id_empleado, id_servicio, fecha_hora;
 
         try {
 
@@ -95,7 +99,6 @@ public class ControladorReservas {
             while (rs.next()) {
 
                 // preparamos los datos
-
                 id_reserva = rs.getInt("id_reserva");
                 id_cliente = rs.getInt("id_cliente");
                 id_empleado = rs.getInt("id_empleado");
@@ -111,7 +114,6 @@ public class ControladorReservas {
                 tabla[contador][4] = estado;
                 tabla[contador][5] = fecha_hora;
 
-               
                 contador++;
 
             }
@@ -170,11 +172,11 @@ public class ControladorReservas {
             sentencia = con.createStatement();
             sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 1, '2025-04-22 15:30:00', 2, 3, 4) ;";
             resultado = sentencia.executeUpdate(sql);
-            
+
             sentencia = con.createStatement();
             sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 2, '2025-04-22 15:30:00', 2, 3, 4) ;";
-             resultado = sentencia.executeUpdate(sql2);
-            
+            resultado = sentencia.executeUpdate(sql2);
+
             if (resultado >= 0) {
                 correcto = true;
             }
@@ -184,4 +186,60 @@ public class ControladorReservas {
         }
         return correcto;
     }
+
+    public boolean añadir(int id_reserva, int id_cliente, int id_empleado, int id_servicio, String estado) {
+        String sql;
+        boolean correcto = false;
+        int resultado;
+        try {
+            sentencia = con.createStatement();
+            sql = "INSERT INTO Reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES ('" + id_reserva + "', '" + id_cliente + "', '" + id_empleado + "', '" + id_servicio + "', '" + estado + "', '" + "' TIMESTAMP DEFAULT CURRENT_TIMESTAMP'" + "')";
+            resultado = sentencia.executeUpdate(sql);
+            if (resultado >= 0) {
+                correcto = true;
+            }
+            System.out.println("Se ha insertado el cliente");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
+    }
+
+    public Object[][] cargarArchivoXML() {
+        FileInputStream fis;
+        XMLDecoder xmld;
+        Object[][] tabla = null;
+        try {
+            fis = new FileInputStream("listadoReservas.xml");
+            xmld = new XMLDecoder(fis);
+            tabla = (Object[][]) xmld.readObject();
+            String sql;
+            int contador = 0;
+
+            for (Object[] objects : tabla) {
+                sql = "INSERT INTO Reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
+                sentencia.executeUpdate(sql);
+                contador++;
+            }
+            xmld.close();
+        } catch (Exception e) {
+            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoClientes.xml");
+        }
+        return tabla;
+    }
+
+    public void guardarArchivoXML(Object[][] datos) {
+        FileOutputStream fos;
+        XMLEncoder xmle;
+
+        try {
+            fos = new FileOutputStream("listadoClientes.xml");
+            xmle = new XMLEncoder(new BufferedOutputStream(fos));
+            xmle.writeObject(datos);
+            xmle.close();
+        } catch (Exception e) {
+            System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoClientes.xml");
+        }
+    }
+
 }

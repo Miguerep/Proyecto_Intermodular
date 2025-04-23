@@ -113,4 +113,68 @@ public class ControladorBDOUsuarios {
         }
         return tabla;
     }
+
+ public Object[][] objetenerTodo() {
+        Object[][] tabla = null;
+        int numRegistros;
+        int contador = 0;
+        String nombre, contraseña;
+        boolean esAdmin;
+
+        Query query1 = em.createQuery("SELECT u FROM Usuario u");
+        try {
+            List<UsuariosAplicacion> listaUsuarios = query1.getResultList();
+            numRegistros = listaUsuarios.size();
+
+            tabla = new Object[numRegistros][3];
+
+            System.out.println("Lista usuarios");
+            for (UsuariosAplicacion usu : listaUsuarios) {
+                System.out.println(usu);
+
+                nombre = usu.getNombre();
+                contraseña = usu.getContraseña();
+                esAdmin  = usu.isEsAdmin();
+
+                System.out.println("Usuario: " + nombre + "\t Contraseña: " + contraseña + "\t Admin: " + esAdmin);
+                tabla[contador][0] = nombre;
+                tabla[contador][1] = contraseña;
+                tabla[contador][2] = esAdmin;
+
+//                avanzamos posicion en el array
+                contador++;
+            }
+
+        } catch (Exception e) {
+            //Falta el logger
+            System.out.println("Error");
+        }
+        return tabla;
+    }
+
+    public void borrar(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public boolean vaciar() {
+        boolean correcto = false;
+        Query qEliminar;
+        em.getTransaction().begin();
+        qEliminar = em.createQuery("DELETE FROM Usuario");
+        int numObjModificados = qEliminar.executeUpdate();
+        em.getTransaction().commit();
+        System.out.println("Eliminados " + numObjModificados);
+        if (numObjModificados > 0) {
+            correcto = true;
+        }
+        return correcto;
+    }
+
+    public void añadir(String nombre, String contraseña, boolean esAdmin) {
+        em.getTransaction().begin();
+        em.persist(new UsuariosAplicacion(nombre, contraseña, esAdmin));
+
+        em.getTransaction().commit();
+        
+    }
 }

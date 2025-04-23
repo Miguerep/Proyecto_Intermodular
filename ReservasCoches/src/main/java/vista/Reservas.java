@@ -14,29 +14,23 @@ import javax.swing.table.DefaultTableModel;
  * @author USUARIO
  */
 public class Reservas extends javax.swing.JFrame {
-    
-    
-    
 
 //    String nomArchivo = "listadoDeportistas.dat";
     ControladorReservas ctrlReservas = new ControladorReservas();
-    String nomArchivo = "listadoEstilos.dat";    
+    String nomArchivo = "listadoEstilos.dat";
     String[] nomColumnas = {"ID Reserva", "ID Cliente", "ID Empleado", "ID Servicio", "Estado"};
     Object[][] matrizDatos;
-    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas){
+    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
         @Override
         public boolean isCellEditable(int fila, int columna) {
             return false; // Tabla no editable
         }
     };
 
-    
-  
-
     public Reservas() {
         initComponents();
-        ctrlReservas.conectarBD(); 
-        
+        ctrlReservas.conectarBD();
+
         jDatos.setModel(dtm);
 //        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jDatos.getColumn("ID Reserva").setPreferredWidth(70);
@@ -45,9 +39,9 @@ public class Reservas extends javax.swing.JFrame {
         jDatos.getColumn("ID Servicio").setPreferredWidth(150);
         jDatos.getColumn("Estado").setPreferredWidth(150);
 
-
     }
-       private void actualizaTabla() {
+
+    private void actualizaTabla() {
         matrizDatos = ctrlReservas.obtenerTodo();
 
 //    if (matrizDatos != null) {
@@ -58,11 +52,11 @@ public class Reservas extends javax.swing.JFrame {
 //        System.err.println("Error: No se pudieron obtener los datos de la base de datos.");
 //    }
     }
-        
- 
 
-
-    
+    private void vaciar() {
+        jTF_ID.setText("");
+        jTF_Estado.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,14 +69,14 @@ public class Reservas extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTF_NomYApell = new javax.swing.JTextField();
+        jTF_ID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTF_Correo = new javax.swing.JTextField();
+        jTF_Estado = new javax.swing.JTextField();
         jButton_VaciarCampos = new javax.swing.JButton();
         jButton_Anadir = new javax.swing.JButton();
         jButton_Actualizar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jButton_BorrarPorNombre = new javax.swing.JButton();
+        jButton_BorrarPorID = new javax.swing.JButton();
         jButton_BorrarSeleccionado = new javax.swing.JButton();
         jButton_BorrarTodo = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -104,17 +98,22 @@ public class Reservas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("ID Reserva");
 
-        jTF_NomYApell.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
-        jTF_NomYApell.addActionListener(new java.awt.event.ActionListener() {
+        jTF_ID.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        jTF_ID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTF_NomYApellActionPerformed(evt);
+                jTF_IDActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Estado");
 
-        jTF_Correo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        jTF_Estado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        jTF_Estado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTF_EstadoActionPerformed(evt);
+            }
+        });
 
         jButton_VaciarCampos.setFont(new java.awt.Font("Alef", 1, 12)); // NOI18N
         jButton_VaciarCampos.setText("Vaciar campos");
@@ -159,8 +158,8 @@ public class Reservas extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTF_Correo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                            .addComponent(jTF_NomYApell, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(jTF_Estado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                            .addComponent(jTF_ID, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -168,11 +167,11 @@ public class Reservas extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTF_NomYApell, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTF_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTF_Correo, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(jTF_Estado, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -184,16 +183,16 @@ public class Reservas extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
-        jButton_BorrarPorNombre.setText("Borrar por nombre");
-        jButton_BorrarPorNombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
-        jButton_BorrarPorNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButton_BorrarPorID.setText("Borrar por ID");
+        jButton_BorrarPorID.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        jButton_BorrarPorID.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton_BorrarPorNombreMouseClicked(evt);
+                jButton_BorrarPorIDMouseClicked(evt);
             }
         });
-        jButton_BorrarPorNombre.addActionListener(new java.awt.event.ActionListener() {
+        jButton_BorrarPorID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_BorrarPorNombreActionPerformed(evt);
+                jButton_BorrarPorIDActionPerformed(evt);
             }
         });
 
@@ -224,7 +223,7 @@ public class Reservas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(jButton_BorrarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_BorrarPorID, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(jButton_BorrarSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
@@ -236,7 +235,7 @@ public class Reservas extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_BorrarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_BorrarPorID, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_BorrarSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_BorrarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(27, Short.MAX_VALUE))
@@ -338,38 +337,55 @@ public class Reservas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTF_NomYApellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_NomYApellActionPerformed
+    private void jTF_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_IDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTF_NomYApellActionPerformed
+    }//GEN-LAST:event_jTF_IDActionPerformed
 
     private void jButton_VaciarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_VaciarCamposActionPerformed
-        // TODO add your handling code here:
+        vaciar();
     }//GEN-LAST:event_jButton_VaciarCamposActionPerformed
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
 //        actualizaTabla();
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
-    private void jButton_BorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreActionPerformed
-//        ctrlReservas.borrarPorNombre(nomArchivo);
-//        actualizaTabla();
-    }//GEN-LAST:event_jButton_BorrarPorNombreActionPerformed
+    private void jButton_BorrarPorIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarPorIDActionPerformed
+        int id;
+        boolean borrado;
+        id = Integer.parseInt(JOptionPane.showInputDialog(rootPane, "Introduce el ID de la reserva que quiere borrar:"));
+
+        borrado = ctrlReservas.borrarPorID(id);
+        if (borrado) {
+            actualizaTabla();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No fue posible borrar la reserva.");
+        }
+
+
+    }//GEN-LAST:event_jButton_BorrarPorIDActionPerformed
 
     private void jButton_BorrarSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarSeleccionadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_BorrarSeleccionadoActionPerformed
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
-//       ctrlReservas.vaciar();
-//       actualizaTabla();
-       
+        int resp;
+
+        // tipo 0 : s�, no
+        resp = JOptionPane.showConfirmDialog(rootPane, "�Est�s seguro de eliminar todo?", "Confirmar", 0);
+        // si se ha contestado S� = 0
+        if (resp == 0) {
+
+            ctrlReservas.borrarTodo();
+            actualizaTabla();
+        }
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
 
     private void jButton_GuardarFichreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GuardarFichreoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_GuardarFichreoActionPerformed
 
-    private void jButton_BorrarPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreMouseClicked
+    private void jButton_BorrarPorIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorIDMouseClicked
 //        String aux;
 //        int id;
 //        boolean borrado;
@@ -383,11 +399,11 @@ public class Reservas extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(rootPane, "No existe dicho deportista.");
 //        } catch (Exception e) {
 //        }
-    }//GEN-LAST:event_jButton_BorrarPorNombreMouseClicked
+    }//GEN-LAST:event_jButton_BorrarPorIDMouseClicked
 
     private void jButton_BorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoMouseClicked
 
-          
+
     }//GEN-LAST:event_jButton_BorrarTodoMouseClicked
 
     private void jButton_CargarEjemplosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CargarEjemplosActionPerformed
@@ -400,8 +416,12 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_AnadirActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-       ctrlReservas.desconectarBD();
+        ctrlReservas.desconectarBD();
     }//GEN-LAST:event_formWindowClosed
+
+    private void jTF_EstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_EstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTF_EstadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -442,7 +462,7 @@ public class Reservas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Actualizar;
     private javax.swing.JButton jButton_Anadir;
-    private javax.swing.JButton jButton_BorrarPorNombre;
+    private javax.swing.JButton jButton_BorrarPorID;
     private javax.swing.JButton jButton_BorrarSeleccionado;
     private javax.swing.JButton jButton_BorrarTodo;
     private javax.swing.JButton jButton_CargarEjemplos;
@@ -456,7 +476,7 @@ public class Reservas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTF_Correo;
-    private javax.swing.JTextField jTF_NomYApell;
+    private javax.swing.JTextField jTF_Estado;
+    private javax.swing.JTextField jTF_ID;
     // End of variables declaration//GEN-END:variables
 }
