@@ -10,42 +10,40 @@ import controladores.ControladorBDRClientes;
 import javax.swing.JOptionPane;
 import javax.swing.SingleSelectionModel;
 
-
 /**
  *
  * @author USUARIO
  */
-public class VentanaClientes extends javax.swing.JFrame {
+public class Clientes extends javax.swing.JFrame {
+
     String nomArchivo = "listadoClientes.dat";
-    
+
     ControladorBDRClientes controladorBDRClientes = new ControladorBDRClientes();
-    String [] numColumnas = {"ID_CLIENTE", "NOMBRE", "APELLIDOS", "TELEFONO", "CORREO"};
+    String[] numColumnas = {"ID_CLIENTE", "NOMBRE", "APELLIDOS", "TELEFONO", "CORREO"};
     Object[][] matrizDatos;
-    
+
     DefaultTableModel dtm = new DefaultTableModel(matrizDatos, numColumnas);
-    
-    private void actualizaTabla() {
-        int id = 0;
-        matrizDatos = controladorBDRClientes.objetenerTodo();
-        dtm = new DefaultTableModel(matrizDatos, numColumnas);
-//        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
-//            //para impedir edici�n de las celdas
-//            @Override
-//            public boolean isCellEditable(int fila, int columna) {
-//                return false;
-//            }
-//        };
+
+    public Clientes() {
+        initComponents();
+        controladorBDRClientes.conectarBDR();
         jDatos.setModel(dtm);
-        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+//        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jDatos.getColumn("ID_CLIENTE").setPreferredWidth(70);
         jDatos.getColumn("NOMBRE").setPreferredWidth(70);
         jDatos.getColumn("APELLIDOS").setPreferredWidth(100);
         jDatos.getColumn("TELEFONO").setPreferredWidth(70);
         jDatos.getColumn("CORREO").setPreferredWidth(100);
-        
-
     }
-    
+
+    private void actualizaTabla() {
+        int id = 0;
+        matrizDatos = controladorBDRClientes.objetenerTodo();
+        dtm = new DefaultTableModel(matrizDatos, numColumnas);
+        
+        jDatos.setModel(dtm);
+    }
+
     private void vaciar() {
         jTF_idCliente.setText("");
         jTF_Nombre.setText("");
@@ -53,6 +51,7 @@ public class VentanaClientes extends javax.swing.JFrame {
         jTF_Telefono.setText("");
         jTF_Correo.setText("");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -427,24 +426,24 @@ public class VentanaClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_BorrarPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreMouseClicked
-        
+
     }//GEN-LAST:event_jButton_BorrarPorNombreMouseClicked
 
     private void jButton_BorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreActionPerformed
-       String nombre;
+        String nombre;
         boolean borrado;
         nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre y apellido exacto del cliente que quiere borrar:");
-        
+
         borrado = controladorBDRClientes.borrarPorNombre(nombre);
         if (borrado) {
             actualizaTabla();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "No existe ese cliente.");
         }
     }//GEN-LAST:event_jButton_BorrarPorNombreActionPerformed
 
     private void jButton_BorrarSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarSeleccionadoActionPerformed
-        
+
     }//GEN-LAST:event_jButton_BorrarSeleccionadoActionPerformed
 
     private void jButton_BorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoMouseClicked
@@ -453,7 +452,7 @@ public class VentanaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarTodoMouseClicked
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
-       int resp;
+        int resp;
 
         // tipo 0 : s�, no
         resp = JOptionPane.showConfirmDialog(rootPane, "�Est�s seguro de eliminar todo?", "Confirmar", 0);
@@ -462,7 +461,7 @@ public class VentanaClientes extends javax.swing.JFrame {
 
             controladorBDRClientes.borrarTodo();
             actualizaTabla();
-        } 
+        }
 
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
 
@@ -476,13 +475,28 @@ public class VentanaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_CargarEjemplosActionPerformed
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed
-        if (jTF_idCliente.getText().isEmpty()) {
+        if (jTF_idCliente.getText().isEmpty()
+                || jTF_Nombre.getText().isEmpty()
+                || jTF_Apellidos.getText().isEmpty()
+                || jTF_Telefono.getText().isEmpty()
+                || jTF_Correo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
         } else {
-            // se a�ade a la agenda un nuevo deportista a partir de los datos de los campos de texto
+            try {
+                int id = Integer.parseInt(jTF_idCliente.getText());
 
-            controladorBDRClientes.añadir(Integer.parseInt(jTF_idCliente.getText()), jTF_Nombre.getText(), jTF_Apellidos.getText(),jTF_Telefono.getText(),jTF_Correo.getText());
-            actualizaTabla();
+                controladorBDRClientes.añadir(
+                        id,
+                        jTF_Nombre.getText(),
+                        jTF_Apellidos.getText(),
+                        jTF_Telefono.getText(),
+                        jTF_Correo.getText()
+                );
+                actualizaTabla();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(rootPane, "El ID del cliente debe ser un número válido.", "Error", HEIGHT);
+            }
 
         }
     }//GEN-LAST:event_jButton_AnadirActionPerformed
@@ -495,15 +509,16 @@ public class VentanaClientes extends javax.swing.JFrame {
         id = jDatos.getSelectedRow();
 
         if (id >= 0) {
-            idClienteAux = (int) matrizDatos[jDatos.getSelectedRow()][2];
-            nomAux = (String) matrizDatos[jDatos.getSelectedRow()][0];
-            apellidosAux = (String) matrizDatos[jDatos.getSelectedRow()][1];
+            idClienteAux = (int) matrizDatos[jDatos.getSelectedRow()][0];
+            nomAux = (String) matrizDatos[jDatos.getSelectedRow()][1];
+            apellidosAux = (String) matrizDatos[jDatos.getSelectedRow()][2];
             telAux = (String) matrizDatos[jDatos.getSelectedRow()][3];
             correoAux = (String) matrizDatos[jDatos.getSelectedRow()][4];
 
             idClienteString = Integer.toString(idClienteAux);
 
-            jTF_idCliente.setText(nomAux);
+            jTF_idCliente.setText(idClienteString);
+            jTF_Nombre.setText(nomAux);
             jTF_Apellidos.setText(apellidosAux);
             jTF_Telefono.setText(telAux);
             jTF_Correo.setText(correoAux);
@@ -511,7 +526,7 @@ public class VentanaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_MostrarClientesActionPerformed
 
     private void jTF_ApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_ApellidosActionPerformed
-        
+
     }//GEN-LAST:event_jTF_ApellidosActionPerformed
 
     private void jButton_VaciarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_VaciarCamposActionPerformed
@@ -519,15 +534,15 @@ public class VentanaClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_VaciarCamposActionPerformed
 
     private void jTF_idClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_idClienteActionPerformed
-        
+
     }//GEN-LAST:event_jTF_idClienteActionPerformed
 
     private void jTF_NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_NombreActionPerformed
-        
+
     }//GEN-LAST:event_jTF_NombreActionPerformed
 
     private void jTF_CorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_CorreoActionPerformed
-        
+
     }//GEN-LAST:event_jTF_CorreoActionPerformed
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
@@ -538,7 +553,39 @@ public class VentanaClientes extends javax.swing.JFrame {
         controladorBDRClientes.cargarArchivoXML();
         actualizaTabla();
     }//GEN-LAST:event_jButton_CargarFicheroActionPerformed
-   
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Reservas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Reservas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Reservas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Reservas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Clientes().setVisible(true);
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Actualizar;
     private javax.swing.JButton jButton_Anadir;
