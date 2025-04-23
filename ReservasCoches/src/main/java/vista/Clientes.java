@@ -38,7 +38,7 @@ public class Clientes extends javax.swing.JFrame {
 
     private void actualizaTabla() {
         int id = 0;
-        matrizDatos = controladorBDRClientes.objetenerTodo();
+        matrizDatos = controladorBDRClientes.obtenerTodo();
         dtm = new DefaultTableModel(matrizDatos, numColumnas);
         
         jDatos.setModel(dtm);

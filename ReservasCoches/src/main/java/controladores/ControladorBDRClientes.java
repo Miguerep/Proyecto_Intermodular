@@ -27,9 +27,9 @@ import modelos.Cliente;
  * @author Portatil
  */
 public class ControladorBDRClientes {
-    String usuario = "usuario";
-    String clave = "96WFjTsdglPkS!R(";
-    String url = "jdbc:mysql://192.168.0.30/proyecto_final";
+    String usuario = "root";
+    String clave = "";
+    String url = "jdbc:mysql://localhost:3306/proyecto_final";
     String jpql;
     Connection con;
     Statement sent;
@@ -65,7 +65,7 @@ public class ControladorBDRClientes {
             System.out.println("Ha ocurrido algun error");
         }
     }
-    public Object[][] objetenerTodo() {
+    public Object[][] obtenerTodo() {
         Object[][] tabla = null;
         ResultSet rs;
         String sql = "Select  * FROM clientes";
@@ -202,12 +202,12 @@ public class ControladorBDRClientes {
         int resultado;
         try {
             sent = con.createStatement();
-            sql = "DELETE FROM Clientes ";
+            sql = "DELETE FROM clientes ";
             resultado = sent.executeUpdate(sql);
-            if (resultado >= 0) {
+            if (resultado == 1) {
                 correcto = true;
             }
-            System.out.println("Se han borrado todos los clientes");
+            System.out.println("Se han borrado todos los clientes.");
         } catch (SQLException e) {
             System.out.println("Ha ocurrido algun error");
         }
