@@ -8,60 +8,33 @@ package modelos;
  *
  * @author Portatil
  */
+
 public class Servicio {
-    
-    private int id_servicio;
+    private int id;
+    private String tipo;
+    private String duracion;
+    private String precio;
 
-    enum servicios 
-    {LIMPIEZA_COMPLETA, TRATAMIENTO_CERAMICO, LIMPIEZA_INTERIOR, TRATAMIENTO_CUERO} 
-    private float duracion;
-    private float precio;
-
-    public Servicio() {
-    }
-
-    public Servicio(int id_servicio) {
-        this.id_servicio = id_servicio;
-    }
-
-    public Servicio(int id_servicio, float duracion, float precio) {
-        this.id_servicio = id_servicio;
+    public Servicio(int id, String tipo, String duracion, String precio) {
+        this.id = id;
+        this.tipo = tipo;
         this.duracion = duracion;
         this.precio = precio;
     }
-    
-    public int getId_servicio() {
-        return id_servicio;
+
+    public int getId() {
+        return id;
     }
 
-    public void setId_servicio(int id_servicio) {
-        this.id_servicio = id_servicio;
+    public String getTipo() {
+        return tipo;
     }
 
-    public float getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(float duracion) {
-        this.duracion = duracion;
-    }
-
-    public float getPrecio() {
+    public String getPrecio() {
         return precio;
     }
-
-    public void setPrecio(float precio) {
-        if (precio > 0) {
-        this.precio = precio;
-        }else{
-            precio = 0;
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Servicio{" + "id_servicio=" + id_servicio + ", duracion=" + duracion + ", precio=" + precio + '}';
-    }
-    
-    
 }

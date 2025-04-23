@@ -5,6 +5,7 @@
 package vista;
 
 import controladores.ControladorReservas;
+import controladores.ControladorServicios;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class Servicios extends javax.swing.JFrame {
     
 
 //    String nomArchivo = "listadoDeportistas.dat";
-    ControladorReservas ctrlReservas = new ControladorReservas();
+    ControladorServicios ctrlServicios = new ControladorServicios();
   
      private final Map<String, String[]> servicios = new HashMap<>();
     
@@ -34,8 +35,8 @@ public class Servicios extends javax.swing.JFrame {
         jTextField3.setEditable(false);
 
         // Conectar y desconectar BD (solo para ejemplo)
-        ctrlReservas.conectarBD();
-        ctrlReservas.desconectarBD();
+        ctrlServicios.conectarBD();
+        
 
         // Configurar los tipos de servicio
         configurarTiposDeServicio();
