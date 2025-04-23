@@ -13,7 +13,8 @@ import javax.swing.JOptionPane;
  */
 public class InicioSesion extends javax.swing.JFrame {
 
-    boolean admin;
+    boolean admin, credenciales;
+    
     ControladorBDOUsuarios controladorUsuarios = new ControladorBDOUsuarios();
 
     /**
@@ -27,26 +28,37 @@ public class InicioSesion extends javax.swing.JFrame {
 
     MenuPrincipal ven1;
 
-    public boolean comprobarAdmin(String nombre, String contraseña) {
-        boolean respuesta = false;
-        Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
+// Comprueba si el usuario y la contraseña coinciden
+public boolean comprobarCredenciales(String nombre, String contraseña) {
+    boolean credendciales = false;
+    Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
 
-        for (Object[] fila : usuarios) {
-            String nombreUsuario = (String) fila[0];
-            String contraseñaUsuario = (String) fila[1];
-            boolean permisosUsuario = (boolean) fila[2];
+    for (Object[] fila : usuarios) {
+        String nombreUsuario = (String) fila[0];
+        String contraseñaUsuario = (String) fila[1];
 
-            if (nombre.equalsIgnoreCase(nombreUsuario) && contraseña.equals(contraseñaUsuario)) {
-                if (permisosUsuario) {
-                    respuesta = true;
-                }
-
-            }
-
+        if (nombre.equalsIgnoreCase(nombreUsuario) && contraseña.equals(contraseñaUsuario)) {
+            credendciales = true;
         }
-        return respuesta;
     }
+    return credendciales;
+}
 
+// Comprueba si el usuario tiene permisos de administrador
+public boolean esAdmin(String nombre) {
+    boolean esAdmin = false;
+    Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
+
+    for (Object[] fila : usuarios) {
+        String nombreUsuario = (String) fila[0];
+        boolean permisosUsuario = (boolean) fila[2];
+
+        if (nombre.equalsIgnoreCase(nombreUsuario)) {
+            esAdmin = permisosUsuario;
+        }
+    }
+    return esAdmin;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -177,14 +189,22 @@ public class InicioSesion extends javax.swing.JFrame {
         String usuario, contraseñaLeida;
         usuario = jTextFieldUsuario.getText();
         contraseñaLeida = jTextFieldContraseña.getText();
-        admin = comprobarAdmin(usuario, contraseñaLeida);
-        if (admin) {
-            System.out.println("Inicio de sesión exitoso");
+        credenciales = comprobarCredenciales(usuario, contraseñaLeida);
+        admin = esAdmin(usuario);
+        
+        // Abrir menu ADMIN
+        if (credenciales && admin) {
             ven1 = new MenuPrincipal(admin);
             ven1.setVisible(true);
             this.dispose(); // cerrar ventana actual
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Error en el inicio de sesión.");
+            
+        // Abrir menu NO ADMIN
+        } else if (credenciales) {
+             ven1 = new MenuPrincipal();
+            ven1.setVisible(true);
+            this.dispose();
+        }
+        else{ JOptionPane.showMessageDialog(rootPane, "Error en el inicio de sesión.");
         } // sino
 
     }//GEN-LAST:event_jButton1ActionPerformed
