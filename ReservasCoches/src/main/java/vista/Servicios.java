@@ -24,7 +24,11 @@ public class Servicios extends javax.swing.JFrame {
 
 //    String nomArchivo = "listadoDeportistas.dat";
     ControladorServicios ctrlServicios = new ControladorServicios();
-  
+    String[] numColumnas = {"id_servicio", "tipo", "duracion", "precio"};
+    Object[][] matrizDatos;
+
+    DefaultTableModel dtm = new DefaultTableModel(matrizDatos, numColumnas);
+    
      private final Map<String, String[]> servicios = new HashMap<>();
     
     public Servicios() {
@@ -40,6 +44,13 @@ public class Servicios extends javax.swing.JFrame {
 
         // Configurar los tipos de servicio
         configurarTiposDeServicio();
+    }
+    private void actualizaTabla() {
+        int id = 0;
+        matrizDatos = ctrlServicios.objetenerTodo();
+        dtm = new DefaultTableModel(matrizDatos, numColumnas);
+        
+        jDatos.setModel(dtm);
     }
     private void configurarTiposDeServicio() {
         // Agregar tipos de servicio con sus duraciones y precios
@@ -392,22 +403,30 @@ public class Servicios extends javax.swing.JFrame {
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed
         
-        String id = jTextField3.getText();
-        String duracion = jTextField1.getText();
-        String precio = jTextField2.getText();
+    if (jTextField3.getText().isEmpty()
+                || jTextField1.getText().isEmpty()
+                || jTextField2.getText().isEmpty()
+            )
+            {
+            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
+        } else {
+            try {
+                int id = Integer.parseInt(jTextField3.getText());
 
-        String tipo = (String) tipoServicios.getSelectedItem();
-       
-    
-    // Validaciones básicas
-        if (tipo.isEmpty() || duracion.isEmpty() || precio.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos los campos deben estar completos.");
-            return;
-    }
-    
-    // Aquí puedes hacer lo que quieras con esos valores, por ejemplo:
-        System.out.println("Servicio: " + tipo + ", Duración: " + duracion + ", Precio: " + precio);
-    
+                ctrlServicios.añadirServicio(
+                        id,
+                        jTextField3.getText(),
+                        jTextField1.getText(),
+                        jTextField2.getText())
+                        
+                ;
+                actualizaTabla();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(rootPane, "El ID del cliente debe ser un número válido.", "Error", HEIGHT);
+            }
+
+        }
     }//GEN-LAST:event_jButton_AnadirActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
