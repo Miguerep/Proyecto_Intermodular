@@ -23,7 +23,7 @@ public class ControladorReservas {
     String sql;
     String usuario = "usuario";
     String clave = "96WFjTsdglPkS!R(";
-    String url = "jdbc:mysql://192.168.0.30/coches";
+    String url = "jdbc:mysql://192.168.0.30/proyecto_final";
     
     
     public  ControladorReservas(){
@@ -172,8 +172,8 @@ public class ControladorReservas {
             resultado = sentencia.executeUpdate(sql);
             
             sentencia = con.createStatement();
-            sql2 = "INSERT INTO ciudades (nombre, pais, codigoPostal, poblacion, superficieKM2, comunidadAutonoma, Patron) VALUES ('Barcelona', 'España', '18001', '1680782', '101.35', 'Cataluña', 'Santa Eulalia');";
-            resultado = sentencia.executeUpdate(sql2);
+            sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 2, '2025-04-22 15:30:00', 2, 3, 4) ;";
+             resultado = sentencia.executeUpdate(sql2);
             
             if (resultado >= 0) {
                 correcto = true;

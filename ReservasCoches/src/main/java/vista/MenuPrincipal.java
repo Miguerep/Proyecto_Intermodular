@@ -20,7 +20,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     }
     public MenuPrincipal() {
-       
+       initComponents();
     } 
             
     /**
@@ -120,11 +120,17 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+//                Servicios vent;     
+//        vent = new Servicios();
+//            vent.setVisible(true);
+//            this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Reservas vent;     
+        vent = new Reservas();
+            vent.setVisible(true);
+            this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -133,8 +139,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                // Simula que el usuario es "Admin" o "OtroUsuario"
-                String usuario = "Admin"; // CAMBIA ESTO según el usuario que inicie sesión
+
                 new MenuPrincipal().setVisible(true);
             }
         });
