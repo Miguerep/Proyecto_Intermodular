@@ -81,8 +81,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButton_VaciarCampos" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="tipoServicios" min="-2" pref="90" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                          <Component id="tipoServicios" min="-2" pref="132" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Component id="jTextField3" min="-2" pref="90" max="-2" attributes="0"/>
                       </Group>
                   </Group>

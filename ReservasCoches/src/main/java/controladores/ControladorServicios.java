@@ -91,4 +91,41 @@ public class ControladorServicios {
         }
         return listaServicios;
     }
+    public boolean añadirServicio(int id,String tipo,String duracion, String precio) {
+    String sql;
+    boolean correcto = false;
+    int resultado;
+
+    try {
+        // Crear la sentencia SQL para insertar una nueva reserva
+        sql = "INSERT INTO Servicios (id_servicio, tipo, duracion, precio) VALUES (?, ?, ?, ?)";
+
+        // Usar PreparedStatement para evitar inyecciones SQL y manejar valores dinámicos
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, tipo);       // ID de la reserva
+        pstmt.setInt(2, id);       // ID del cliente
+        pstmt.setString(3, duracion);      // ID del servicio
+        pstmt.setString(4, precio);        // Fecha de la reserva
+               // Estado de la reserva
+
+        // Ejecutar la consulta
+        resultado = pstmt.executeUpdate();
+
+        // Verificar si la inserción fue exitosa
+        if (resultado > 0) {
+            correcto = true;
+            System.out.println("Se ha insertado el servicio correctamente.");
+        } else {
+            System.out.println("No se pudo insertar el servicio.");
+        }
+
+        // Cerrar la sentencia
+        pstmt.close();
+    } catch (SQLException e) {
+        // Manejar errores de SQL
+        System.err.println("Error al insertar el servicio: " + e.getMessage());
+    }
+
+    return correcto;
+}
 }
