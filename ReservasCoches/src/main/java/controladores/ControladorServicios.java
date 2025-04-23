@@ -14,7 +14,7 @@ public class ControladorServicios {
     private Connection con;
     private String usuario = "usuario";
     private String clave = "96WFjTsdglPkS!R(";
-    private String url = "jdbc:mysql://192.168.0.30/coches";
+    private String url = "jdbc:mysql://192.168.0.30/proyecto_final";
 
     public ControladorServicios() {
         conectarBD();
