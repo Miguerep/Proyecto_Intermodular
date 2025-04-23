@@ -15,6 +15,7 @@ public class ControladorServicios {
     private String usuario = "usuario";
     private String clave = "96WFjTsdglPkS!R(";
     private String url = "jdbc:mysql://192.168.0.30/proyecto_final";
+    Statement sent;
 
     public ControladorServicios() {
         conectarBD();
@@ -91,6 +92,8 @@ public class ControladorServicios {
         }
         return listaServicios;
     }
+    
+    
     public boolean añadirServicio(int id,String tipo,String duracion, String precio) {
     String sql;
     boolean correcto = false;
@@ -128,4 +131,54 @@ public class ControladorServicios {
 
     return correcto;
 }
+
+    public Object[][] objetenerTodo() {
+        
+    Object[][] tabla = null;
+    ResultSet rs;
+    String sql = "SELECT * FROM Servicios";
+    int numRegistros;
+    int contador = 0;
+    int idServicio;
+    String tipo, duracion, precio;
+
+    try {
+        sent = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        rs = sent.executeQuery(sql);
+
+        // Vamos al último registro para determinar cuántos registros hay.
+        rs.last();
+        numRegistros = rs.getRow();
+
+        // Damos tamaño a la matriz de objetos para almacenar lo leído de la BD.
+        System.out.println("Registros obtenidos: " + numRegistros);
+        tabla = new Object[numRegistros][4];
+
+        // Recolocamos el puntero para recorrer el resultado.
+        rs.beforeFirst();
+        System.out.println("Lista de servicios");
+        while (rs.next()) {
+            // Preparamos los datos
+            idServicio = rs.getInt("id_servicio");
+            tipo = rs.getString("tipo");
+            duracion = rs.getString("duracion");
+            precio = rs.getString("precio");
+
+            // Mostramos los datos por terminal para hacer seguimiento de la ejecución.
+            System.out.println("ID Servicio: " + idServicio + "\t Tipo: " + tipo + "\t Duración: " + duracion + "\t Precio: " + precio);
+
+            // Guardamos los datos en la tabla a devolver.
+            tabla[contador][0] = idServicio;
+            tabla[contador][1] = tipo;
+            tabla[contador][2] = duracion;
+            tabla[contador][3] = precio;
+
+            // Avanzamos posición en el array.
+            contador++;
+        }
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+    return tabla;
 }
+    }
