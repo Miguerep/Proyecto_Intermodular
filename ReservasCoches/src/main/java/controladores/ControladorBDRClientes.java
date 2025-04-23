@@ -204,7 +204,7 @@ public class ControladorBDRClientes {
             sent = con.createStatement();
             sql = "DELETE FROM clientes ";
             resultado = sent.executeUpdate(sql);
-            if (resultado == 1) {
+            if (resultado >=0) {
                 correcto = true;
             }
             System.out.println("Se han borrado todos los clientes.");
