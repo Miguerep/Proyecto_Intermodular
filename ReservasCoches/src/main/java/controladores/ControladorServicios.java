@@ -92,7 +92,23 @@ public class ControladorServicios {
         }
         return listaServicios;
     }
-    
+    public boolean vaciar() {
+        boolean correcto = false;
+        String sql;
+        int resultado;
+        try {
+            sent =con.createStatement();
+            sql = "DELETE FROM servicios";
+            resultado = sent.executeUpdate(sql);
+            if (resultado >= 0) {
+                correcto = true;
+            }
+            System.out.println("Se han eliminado " + resultado + " servicios.");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error.");
+        }
+        return correcto;
+    }
     
     public boolean añadirServicio(int id,String tipo,String duracion, String precio) {
     String sql;
@@ -181,4 +197,21 @@ public class ControladorServicios {
     }
     return tabla;
 }
+    public boolean borrarPorNombre(String tipo) {
+        String sql;
+        boolean correcto = false;
+        int resultado;
+        try {
+            sent = con.createStatement();
+            sql = "DELETE FROM servicio WHERE tipo = " + "'" + tipo + "'";
+            resultado = sent.executeUpdate(sql);
+            if (resultado == 1) {
+                correcto = true;
+            }
+            System.out.println("Se ha borrado el servicio");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
+    }
     }
