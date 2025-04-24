@@ -53,7 +53,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
 ////        tDatos.getColumn("ALTURA").setPreferredWidth(100);
 //
 //    }
-<<<<<<< HEAD
+
     private void actualizaTabla() {
         int id = 0;
         //agenda.a�adir(new Contacto("Ana","S�nchez","999333888", "ana@gmail.com"));
@@ -74,8 +74,6 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
 //        tDatos.getColumn("ALTURA").setPreferredWidth(100);
 
     }
-=======
->>>>>>> a09b4d0727a9734e21e90f524f93a9441a83b094
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -396,10 +394,9 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     private void chVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chVaciarActionPerformed
         tfNombre.setText("");
         tfContraseña.setText("");
-<<<<<<< HEAD
+
     //    tfPermisos.setText("");
-=======
->>>>>>> a09b4d0727a9734e21e90f524f93a9441a83b094
+
     }//GEN-LAST:event_chVaciarActionPerformed
 
     private void bCargarDeFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCargarDeFicheroActionPerformed
@@ -444,17 +441,17 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     private void bBorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarPorNombreActionPerformed
         String nombre;
         boolean borrado = false;
-<<<<<<< HEAD
+
         nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre y apellido exacto del deportista a borrar:");
 
    //     borrado = ctrlBDO.borrar(nombre);
         actualizaTabla();
-=======
+
         nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre del usuario a borrar:");
 //
 //        borrado = ctrlBDO.borrar(nombre);
 //        actualizaTabla();
->>>>>>> a09b4d0727a9734e21e90f524f93a9441a83b094
+
         if (borrado)
             System.out.println("Borrado");
         else
@@ -464,10 +461,9 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     private void bVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVaciarActionPerformed
         tfNombre.setText("");
         tfContraseña.setText("");
-<<<<<<< HEAD
+
   //      tfPermisos.setText("");
-=======
->>>>>>> a09b4d0727a9734e21e90f524f93a9441a83b094
+
     }//GEN-LAST:event_bVaciarActionPerformed
 
     private void tDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tDatosMouseClicked
@@ -482,10 +478,8 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
             permisos = (String) matrizDatos[tDatos.getSelectedRow()][2];
             tfNombre.setText(nombre);
             tfContraseña.setText(contraseña);
-<<<<<<< HEAD
+
     //        tfPermisos.setText(permisos);
-=======
->>>>>>> a09b4d0727a9734e21e90f524f93a9441a83b094
         }
     }//GEN-LAST:event_tDatosMouseClicked
 
@@ -504,13 +498,13 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
                 nomAux = (String) matrizDatos[tDatos.getSelectedRow()][0];
                 ctrlBDO.borrar(nomAux);
                 // se a�ade a la agenda un nuevo deportista a partir de los datos de los campos de texto
-<<<<<<< HEAD
+
   //              ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
                 actualizaTabla();
-=======
+
 //                ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
 //                actualizaTabla();
->>>>>>> a09b4d0727a9734e21e90f524f93a9441a83b094
+
                 if (chVaciar.isSelected()) {
                     tfNombre.setText("");
                     tfContraseña.setText("");
@@ -530,13 +524,13 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         } else {
             // se a�ade a la agenda un nuevo deportista a partir de los datos de los campos de texto
 
-<<<<<<< HEAD
+
     //        ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
             actualizaTabla();
-=======
+
 //            ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
 //            actualizaTabla();
->>>>>>> a09b4d0727a9734e21e90f524f93a9441a83b094
+
         }
     }//GEN-LAST:event_bAñadirActionPerformed
 
