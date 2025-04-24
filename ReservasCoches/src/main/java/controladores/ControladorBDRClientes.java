@@ -29,7 +29,7 @@ import modelos.Cliente;
 public class ControladorBDRClientes {
     String usuario = "root";
     String clave = "";
-    String url = "jdbc:mysql://localhost:3306/proyecto_final";
+    String url = "jdbc:mysql://192.168.0.30/proyecto_final";
     String jpql;
     Connection con;
     Statement sent;
@@ -123,7 +123,7 @@ public class ControladorBDRClientes {
         int resultado;
         try {
             sent =con.createStatement();
-            sql = "DELETE FROM Clientes";
+            sql = "DELETE FROM clientes";
             resultado = sent.executeUpdate(sql);
             if (resultado >= 0) {
                 correcto = true;
@@ -144,11 +144,11 @@ public class ControladorBDRClientes {
         try {
             //Inserto dos ejemplos de ciudades.
             sent = con.createStatement();
-            sql = "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('0', 'Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
+            sql = "INSERT INTO clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('0', 'Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
             resultado = sent.executeUpdate(sql);
             
             sent = con.createStatement();
-            sql2 = "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('1', 'Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
+            sql2 = "INSERT INTO clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('1', 'Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
             resultado = sent.executeUpdate(sql2);
             
             if (resultado >= 0) {
@@ -168,7 +168,7 @@ public class ControladorBDRClientes {
         int resultado;
         try {
             sent = con.createStatement();
-            sql = "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('" + idCliente + "', '" + nombre + "', '" + apellidos + "', '" + telefono + "', '" + correo + "')";
+            sql = "INSERT INTO clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('" + idCliente + "', '" + nombre + "', '" + apellidos + "', '" + telefono + "', '" + correo + "')";
             resultado = sent.executeUpdate(sql);
             if (resultado >= 0) {
                 correcto = true;
@@ -179,13 +179,13 @@ public class ControladorBDRClientes {
         }
         return correcto;
     }
-    public boolean borrarPorNombre(String nombre) {
+    public boolean borrar(String nombre) {
         String sql;
         boolean correcto = false;
         int resultado;
         try {
             sent = con.createStatement();
-            sql = "DELETE FROM Clientes WHERE nombre = " + "'" + nombre + "'";
+            sql = "DELETE FROM clientes WHERE nombre = " + "'" + nombre + "'";
             resultado = sent.executeUpdate(sql);
             if (resultado == 1) {
                 correcto = true;
@@ -225,7 +225,7 @@ public class ControladorBDRClientes {
             int contador = 0;
             
             for (Object[] objects : tabla) {
-                sql = "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
+                sql = "INSERT INTO clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
                 sent.executeUpdate(sql);
                 contador++;
             }

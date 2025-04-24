@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="23.0.1" class="java.beans.XMLDecoder">
- <array class="[Ljava.lang.Object;" length="4">
+ <array class="[Ljava.lang.Object;" length="2">
   <void index="0">
    <array class="java.lang.Object" length="5">
     <void index="0">
@@ -36,44 +36,6 @@
     </void>
     <void index="4">
      <string>luis.martinez@example.com</string>
-    </void>
-   </array>
-  </void>
-  <void index="2">
-   <array class="java.lang.Object" length="5">
-    <void index="0">
-     <int>4</int>
-    </void>
-    <void index="1">
-     <string>Jose</string>
-    </void>
-    <void index="2">
-     <string>Lopez Perez</string>
-    </void>
-    <void index="3">
-     <string>654123789</string>
-    </void>
-    <void index="4">
-     <string>jose@gmail.com</string>
-    </void>
-   </array>
-  </void>
-  <void index="3">
-   <array class="java.lang.Object" length="5">
-    <void index="0">
-     <int>5</int>
-    </void>
-    <void index="1">
-     <string>Juan</string>
-    </void>
-    <void index="2">
-     <string>Martinez Nuñez</string>
-    </void>
-    <void index="3">
-     <string>987456321</string>
-    </void>
-    <void index="4">
-     <string>juan@gmail.com</string>
     </void>
    </array>
   </void>
