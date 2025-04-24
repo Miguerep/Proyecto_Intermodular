@@ -92,7 +92,23 @@ public class ControladorServicios {
         }
         return listaServicios;
     }
-    
+    public boolean vaciar() {
+        boolean correcto = false;
+        String sql;
+        int resultado;
+        try {
+            sent =con.createStatement();
+            sql = "DELETE FROM servicios";
+            resultado = sent.executeUpdate(sql);
+            if (resultado >= 0) {
+                correcto = true;
+            }
+            System.out.println("Se han eliminado " + resultado + " servicios.");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error.");
+        }
+        return correcto;
+    }
     
     public boolean añadirServicio(int id,String tipo,String duracion, String precio) {
     String sql;
@@ -100,13 +116,13 @@ public class ControladorServicios {
     int resultado;
 
     try {
-        // Crear la sentencia SQL para insertar una nueva reserva
-        sql = "INSERT INTO Servicios (id_servicio, tipo, duracion, precio) VALUES (?, ?, ?, ?)";
+        // Crear la sentencia SQL para insertar un nuevo servicio
+        sql = "INSERT INTO servicio (id_servicio, tipo, duracion, precio) VALUES (?, ?, ?, ?)";
 
         // Usar PreparedStatement para evitar inyecciones SQL y manejar valores dinámicos
         PreparedStatement pstmt = con.prepareStatement(sql);
-        pstmt.setString(1, tipo);       // ID de la reserva
-        pstmt.setInt(2, id);       // ID del cliente
+        pstmt.setString(1, tipo);       // Tipo de la reserva
+        pstmt.setInt(2, id);       // ID de la reserva
         pstmt.setString(3, duracion);      // ID del servicio
         pstmt.setString(4, precio);        // Fecha de la reserva
                // Estado de la reserva
@@ -136,7 +152,7 @@ public class ControladorServicios {
         
     Object[][] tabla = null;
     ResultSet rs;
-    String sql = "SELECT * FROM Servicios";
+    String sql = "SELECT * FROM servicio";
     int numRegistros;
     int contador = 0;
     int idServicio;
@@ -181,4 +197,21 @@ public class ControladorServicios {
     }
     return tabla;
 }
+    public boolean borrarPorNombre(String tipo) {
+        String sql;
+        boolean correcto = false;
+        int resultado;
+        try {
+            sent = con.createStatement();
+            sql = "DELETE FROM servicio WHERE tipo = " + "'" + tipo + "'";
+            resultado = sent.executeUpdate(sql);
+            if (resultado == 1) {
+                correcto = true;
+            }
+            System.out.println("Se ha borrado el servicio");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
+    }
     }

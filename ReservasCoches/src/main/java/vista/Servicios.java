@@ -22,7 +22,7 @@ public class Servicios extends javax.swing.JFrame {
     
     
 
-//    String nomArchivo = "listadoDeportistas.dat";
+
     ControladorServicios ctrlServicios = new ControladorServicios();
     String[] numColumnas = {"id_servicio", "tipo", "duracion", "precio"};
     Object[][] matrizDatos;
@@ -45,15 +45,15 @@ public class Servicios extends javax.swing.JFrame {
         // Configurar los tipos de servicio
         configurarTiposDeServicio();
     }
-//    private void actualizaTabla() {
-//        int id = 0;
-//        matrizDatos = ctrlServicios.objetenerTodo();
-//        dtm = new DefaultTableModel(matrizDatos, numColumnas);
-//        
-//        jDatos.setModel(dtm);
-//    }
+    private void actualizaTabla() {
+        int id = 0;
+        matrizDatos = ctrlServicios.objetenerTodo();
+        dtm = new DefaultTableModel(matrizDatos, numColumnas);
+        
+        jDatos.setModel(dtm);
+    }
     private void configurarTiposDeServicio() {
-        // Agregar tipos de servicio con sus duraciones y precios
+        // Agregar tipos de servicio con sus id, duraciones y precios
         servicios.put("Limpieza Interna", new String[]{"1","60 minutos", "50 €"});
         servicios.put("Limpieza Externa", new String[]{"2","45 minutos", "35 €"});
         servicios.put("Lavado Completo", new String[]{"3","90 minutos", "75 €"});
@@ -365,12 +365,12 @@ public class Servicios extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_VaciarCamposActionPerformed
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
-//        actualizaTabla();
+        actualizaTabla();
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
     private void jButton_BorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreActionPerformed
-//        ctrlReservas.borrarPorNombre(nomArchivo);
-//        actualizaTabla();
+    //    ctrlServicios.borrarPorNombre(nomArchivo);
+      //  actualizaTabla();
     }//GEN-LAST:event_jButton_BorrarPorNombreActionPerformed
 
     private void jButton_BorrarSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarSeleccionadoActionPerformed
@@ -378,8 +378,8 @@ public class Servicios extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarSeleccionadoActionPerformed
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
-//       ctrlReservas.vaciar();
-//       actualizaTabla();
+       ctrlServicios.vaciar();
+       actualizaTabla();
        
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
 
@@ -389,6 +389,16 @@ public class Servicios extends javax.swing.JFrame {
 
     private void jButton_BorrarPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreMouseClicked
 //        ctrlReservas.borrarPorNombre(nomArchivo);
+String nombre;
+        boolean borrado;
+        nombre = JOptionPane.showInputDialog(rootPane, "Introduce el tipo de servicio exacto que quiere borrar:");
+
+        borrado = ctrlServicios.borrarPorNombre(nombre);
+        if (borrado) {
+            actualizaTabla();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No existe ese servicio.");
+        }
     }//GEN-LAST:event_jButton_BorrarPorNombreMouseClicked
 
     private void jButton_BorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoMouseClicked
@@ -403,30 +413,30 @@ public class Servicios extends javax.swing.JFrame {
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed
         
-//    if (jTextField3.getText().isEmpty()
-//                || jTextField1.getText().isEmpty()
-//                || jTextField2.getText().isEmpty()
-//            )
-//            {
-//            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
-//        } else {
-//            try {
-//                int id = Integer.parseInt(jTextField3.getText());
-//
-//                ctrlServicios.añadirServicio(
-//                        id,
-//                        jTextField3.getText(),
-//                        jTextField1.getText(),
-//                        jTextField2.getText())
-//                        
-//                ;
-//                actualizaTabla();
-//
-//            } catch (NumberFormatException e) {
-//                JOptionPane.showMessageDialog(rootPane, "El ID del cliente debe ser un número válido.", "Error", HEIGHT);
-//            }
-//
-//        }
+    if (jTextField3.getText().isEmpty()
+                || jTextField1.getText().isEmpty()
+                || jTextField2.getText().isEmpty()
+            )
+            {
+            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
+        } else {
+            try {
+                int id = Integer.parseInt(jTextField3.getText());
+
+                ctrlServicios.añadirServicio(
+                        id,
+                        jTextField3.getText(),
+                        jTextField1.getText(),
+                        jTextField2.getText())
+                        
+                ;
+                actualizaTabla();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(rootPane, "El ID del cliente debe ser un número válido.", "Error", HEIGHT);
+            }
+
+        }
     }//GEN-LAST:event_jButton_AnadirActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
