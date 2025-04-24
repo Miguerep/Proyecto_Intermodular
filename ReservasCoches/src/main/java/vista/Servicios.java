@@ -45,13 +45,13 @@ public class Servicios extends javax.swing.JFrame {
         // Configurar los tipos de servicio
         configurarTiposDeServicio();
     }
-//    private void actualizaTabla() {
-//        int id = 0;
-//        matrizDatos = ctrlServicios.objetenerTodo();
-//        dtm = new DefaultTableModel(matrizDatos, numColumnas);
-//        
-//        jDatos.setModel(dtm);
-//    }
+    private void actualizaTabla() {
+        int id = 0;
+        matrizDatos = ctrlServicios.objetenerTodo();
+        dtm = new DefaultTableModel(matrizDatos, numColumnas);
+        
+        jDatos.setModel(dtm);
+    }
     private void configurarTiposDeServicio() {
         // Agregar tipos de servicio con sus duraciones y precios
         servicios.put("Limpieza Interna", new String[]{"1","60 minutos", "50 €"});
@@ -403,30 +403,30 @@ public class Servicios extends javax.swing.JFrame {
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed
         
-//    if (jTextField3.getText().isEmpty()
-//                || jTextField1.getText().isEmpty()
-//                || jTextField2.getText().isEmpty()
-//            )
-//            {
-//            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
-//        } else {
-//            try {
-//                int id = Integer.parseInt(jTextField3.getText());
-//
-//                ctrlServicios.añadirServicio(
-//                        id,
-//                        jTextField3.getText(),
-//                        jTextField1.getText(),
-//                        jTextField2.getText())
-//                        
-//                ;
-//                actualizaTabla();
-//
-//            } catch (NumberFormatException e) {
-//                JOptionPane.showMessageDialog(rootPane, "El ID del cliente debe ser un número válido.", "Error", HEIGHT);
-//            }
-//
-//        }
+    if (jTextField3.getText().isEmpty()
+                || jTextField1.getText().isEmpty()
+                || jTextField2.getText().isEmpty()
+            )
+            {
+            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
+        } else {
+            try {
+                int id = Integer.parseInt(jTextField3.getText());
+
+                ctrlServicios.añadirServicio(
+                        id,
+                        jTextField3.getText(),
+                        jTextField1.getText(),
+                        jTextField2.getText())
+                        
+                ;
+                actualizaTabla();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(rootPane, "El ID del cliente debe ser un número válido.", "Error", HEIGHT);
+            }
+
+        }
     }//GEN-LAST:event_jButton_AnadirActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed

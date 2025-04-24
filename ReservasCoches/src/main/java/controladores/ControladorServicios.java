@@ -100,13 +100,13 @@ public class ControladorServicios {
     int resultado;
 
     try {
-        // Crear la sentencia SQL para insertar una nueva reserva
-        sql = "INSERT INTO Servicios (id_servicio, tipo, duracion, precio) VALUES (?, ?, ?, ?)";
+        // Crear la sentencia SQL para insertar un nuevo servicio
+        sql = "INSERT INTO servicio (id_servicio, tipo, duracion, precio) VALUES (?, ?, ?, ?)";
 
         // Usar PreparedStatement para evitar inyecciones SQL y manejar valores dinámicos
         PreparedStatement pstmt = con.prepareStatement(sql);
-        pstmt.setString(1, tipo);       // ID de la reserva
-        pstmt.setInt(2, id);       // ID del cliente
+        pstmt.setString(1, tipo);       // Tipo de la reserva
+        pstmt.setInt(2, id);       // ID de la reserva
         pstmt.setString(3, duracion);      // ID del servicio
         pstmt.setString(4, precio);        // Fecha de la reserva
                // Estado de la reserva
@@ -136,7 +136,7 @@ public class ControladorServicios {
         
     Object[][] tabla = null;
     ResultSet rs;
-    String sql = "SELECT * FROM Servicios";
+    String sql = "SELECT * FROM servicio";
     int numRegistros;
     int contador = 0;
     int idServicio;
