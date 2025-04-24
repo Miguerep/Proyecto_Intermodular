@@ -1,5 +1,10 @@
 package controladores;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -58,11 +63,12 @@ public class ControladorServicios {
      * @param duracion Duración del servicio
      * @param precio   Precio del servicio
      */
-    public void insertarServicio(String tipo, String duracion, String precio) {
-        String sql = "INSERT INTO SERVICIO (tipo, duracion, precio) VALUES (?, ?, ?)";
+    public void insertarServicio(int id_cliente, String tipo, int duracion, String precio) {
+        String sql = "INSERT INTO servicio (id_servicio,tipo, duracion, precio) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(0, id_cliente);
             pstmt.setString(1, tipo);
-            pstmt.setString(2, duracion);
+            pstmt.setInt(2, duracion);
             pstmt.setString(3, precio);
             pstmt.executeUpdate();
             System.out.println("Servicio insertado correctamente.");
@@ -78,12 +84,12 @@ public class ControladorServicios {
      */
     public List<Servicio> obtenerServicios() {
         List<Servicio> listaServicios = new ArrayList<>();
-        String sql = "SELECT id, tipo, duracion, precio FROM SERVICIO";
+        String sql = "SELECT id_servicio, tipo, duracion, precio FROM SERVICIO";
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String tipo = rs.getString("tipo");
-                String duracion = rs.getString("duracion");
+                int duracion = rs.getInt("duracion");
                 String precio = rs.getString("precio");
                 listaServicios.add(new Servicio(id, tipo, duracion, precio));
             }
@@ -110,7 +116,7 @@ public class ControladorServicios {
         return correcto;
     }
     
-    public boolean añadirServicio(int id,String tipo,String duracion, String precio) {
+    public boolean añadirServicio(int id_servicio, int duracion, String tipo, String precio) {
     String sql;
     boolean correcto = false;
     int resultado;
@@ -121,9 +127,9 @@ public class ControladorServicios {
 
         // Usar PreparedStatement para evitar inyecciones SQL y manejar valores dinámicos
         PreparedStatement pstmt = con.prepareStatement(sql);
-        pstmt.setString(1, tipo);       // Tipo de la reserva
-        pstmt.setInt(2, id);       // ID de la reserva
-        pstmt.setString(3, duracion);      // ID del servicio
+        pstmt.setInt(1, id_servicio);       // ID de la reserva
+        pstmt.setString(2, tipo);       // Tipo de la reserva
+        pstmt.setInt(3, duracion);      // ID del servicio
         pstmt.setString(4, precio);        // Fecha de la reserva
                // Estado de la reserva
 
@@ -209,6 +215,66 @@ public class ControladorServicios {
                 correcto = true;
             }
             System.out.println("Se ha borrado el servicio");
+        } catch (SQLException e) {
+            System.out.println("Ha ocurrido algun error");
+        }
+        return correcto;
+    }
+    public Object[][] cargarArchivoXML() {
+        FileInputStream fis;
+        XMLDecoder xmld;
+        Object[][] tabla = null;
+        try {
+            fis = new FileInputStream("listadoServicios.xml");
+            xmld = new XMLDecoder(fis);
+            tabla = (Object[][]) xmld.readObject();
+            String sql;
+            int contador = 0;
+            
+            for (Object[] objects : tabla) {
+                sql = "INSERT INTO servicio (id_servicio, tipo, duracion, precio) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '";
+                sent.executeUpdate(sql);
+                contador++;
+            }
+            xmld.close();
+        } catch (Exception e) {
+            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoServicios.xml");
+        }
+        return tabla;
+    }
+    public void guardarArchivoXML(Object[][] datos) {
+        FileOutputStream fos;
+        XMLEncoder xmle;
+
+        try {
+            fos = new FileOutputStream("listadoServicios.xml");
+            xmle = new XMLEncoder(new BufferedOutputStream(fos));
+            xmle.writeObject(datos);
+            xmle.close();
+        } catch (Exception e) {
+            System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoServicios.xml");
+        }
+    }
+    public boolean añadirEjemplos() {
+
+        String sql, sql2;
+        boolean correcto = false;
+        int resultado;
+
+        try {
+            //Inserto dos ejemplos de ciudades.
+            sent = con.createStatement();
+            sql = "INSERT INTO servicio (id_servicio, tipo, duracion, precio) VALUES ('1', 'Limpieza Interna', '60 minutos', '50€');";
+            resultado = sent.executeUpdate(sql);
+            
+            sent = con.createStatement();
+            sql2 = "INSERT INTO servicio (id_servicio, tipo, duracion, precio) VALUES ('3', 'Lavado Completo', '90 minutos', '75€');";
+            resultado = sent.executeUpdate(sql2);
+            
+            if (resultado >= 0) {
+                correcto = true;
+            }
+            System.out.println("Se ha insertado el servicio");
         } catch (SQLException e) {
             System.out.println("Ha ocurrido algun error");
         }

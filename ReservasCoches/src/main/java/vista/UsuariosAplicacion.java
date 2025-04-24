@@ -37,7 +37,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     private void actualizaTabla() {
         int id = 0;
         //agenda.a�adir(new Contacto("Ana","S�nchez","999333888", "ana@gmail.com"));
-        matrizDatos = ctrlBDO.obtenerTodo();
+ //       matrizDatos = ctrlBDO.obtenerTodo();
         dtm = new DefaultTableModel(matrizDatos, nomColumnas);
 //        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
 //            //para impedir edici�n de las celdas
@@ -374,7 +374,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     private void chVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chVaciarActionPerformed
         tfNombre.setText("");
         tfContraseña.setText("");
-        tfPermisos.setText("");
+    //    tfPermisos.setText("");
     }//GEN-LAST:event_chVaciarActionPerformed
 
     private void bCargarDeFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCargarDeFicheroActionPerformed
@@ -421,7 +421,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         boolean borrado = false;
         nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre y apellido exacto del deportista a borrar:");
 
-        borrado = ctrlBDO.borrar(nombre);
+   //     borrado = ctrlBDO.borrar(nombre);
         actualizaTabla();
         if (borrado)
             System.out.println("Borrado");
@@ -432,7 +432,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     private void bVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVaciarActionPerformed
         tfNombre.setText("");
         tfContraseña.setText("");
-        tfPermisos.setText("");
+  //      tfPermisos.setText("");
     }//GEN-LAST:event_bVaciarActionPerformed
 
     private void tDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tDatosMouseClicked
@@ -447,7 +447,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
             permisos = (String) matrizDatos[tDatos.getSelectedRow()][2];
             tfNombre.setText(nombre);
             tfContraseña.setText(contraseña);
-            tfPermisos.setText(permisos);
+    //        tfPermisos.setText(permisos);
         }
     }//GEN-LAST:event_tDatosMouseClicked
 
@@ -466,7 +466,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
                 nomAux = (String) matrizDatos[tDatos.getSelectedRow()][0];
                 ctrlBDO.borrar(nomAux);
                 // se a�ade a la agenda un nuevo deportista a partir de los datos de los campos de texto
-                ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
+  //              ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
                 actualizaTabla();
                 if (chVaciar.isSelected()) {
                     tfNombre.setText("");
@@ -487,7 +487,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         } else {
             // se a�ade a la agenda un nuevo deportista a partir de los datos de los campos de texto
 
-            ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
+    //        ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
             actualizaTabla();
         }
     }//GEN-LAST:event_bAñadirActionPerformed

@@ -34,9 +34,10 @@ public class Servicios extends javax.swing.JFrame {
     public Servicios() {
         initComponents();
         jDatos.setEnabled(true);
-        jTextField1.setEnabled(true);
-        jTextField2.setEnabled(true);
-        jTextField3.setEditable(false);
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        jTextField3.setEnabled(true);
+        
 
         // Conectar y desconectar BD (solo para ejemplo)
         ctrlServicios.conectarBD();
@@ -54,11 +55,11 @@ public class Servicios extends javax.swing.JFrame {
     }
     private void configurarTiposDeServicio() {
         // Agregar tipos de servicio con sus id, duraciones y precios
-        servicios.put("Limpieza Interna", new String[]{"1","60 minutos", "50 €"});
-        servicios.put("Limpieza Externa", new String[]{"2","45 minutos", "35 €"});
-        servicios.put("Lavado Completo", new String[]{"3","90 minutos", "75 €"});
-        servicios.put("Pulido de Tapicería", new String[]{"4","120 minutos", "100 €"});
-        servicios.put("Tratamiento de Piel", new String[]{"5","30 minutos", "25 €"});
+        servicios.put("Limpieza Interna", new String[]{"1","60 minutos", "50 "});
+        servicios.put("Limpieza Externa", new String[]{"2","45 minutos", "35 "});
+        servicios.put("Lavado Completo", new String[]{"3","90 minutos", "75 "});
+        servicios.put("Pulido de Tapicería", new String[]{"4","120 minutos", "100 "});
+        servicios.put("Tratamiento de Piel", new String[]{"5","30 minutos", "25 "});
 
         // Establecer los elementos del JComboBox
         tipoServicios.setModel(new DefaultComboBoxModel<>(servicios.keySet().toArray(new String[0])));
@@ -384,7 +385,7 @@ public class Servicios extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
 
     private void jButton_GuardarFichreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GuardarFichreoActionPerformed
-        // TODO add your handling code here:
+        ctrlServicios.guardarArchivoXML(matrizDatos);
     }//GEN-LAST:event_jButton_GuardarFichreoActionPerformed
 
     private void jButton_BorrarPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreMouseClicked
@@ -407,36 +408,45 @@ String nombre;
     }//GEN-LAST:event_jButton_BorrarTodoMouseClicked
 
     private void jButton_CargarEjemplosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CargarEjemplosActionPerformed
-//        ctrlReservas.exportarEjemplos();
-//        actualizaTabla();
+        ctrlServicios.añadirEjemplos();
+        actualizaTabla();
     }//GEN-LAST:event_jButton_CargarEjemplosActionPerformed
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed
         
-    if (jTextField3.getText().isEmpty()
-                || jTextField1.getText().isEmpty()
-                || jTextField2.getText().isEmpty()
-            )
-            {
-            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
-        } else {
-            try {
-                int id = Integer.parseInt(jTextField3.getText());
+   if (jTextField3.getText().isEmpty()
+            || jTextField1.getText().isEmpty()
+            || jTextField2.getText().isEmpty()
+    ) {
+        JOptionPane.showMessageDialog(rootPane, "Ningún campo puede estar vacío.", "No añadido", HEIGHT);
+    } else {
+        try {
+            int id_servicio = Integer.parseInt(jTextField3.getText());
 
-                ctrlServicios.añadirServicio(
-                        id,
-                        jTextField3.getText(),
-                        jTextField1.getText(),
-                        jTextField2.getText())
-                        
-                ;
-                actualizaTabla();
+            // Limpiar el texto de duración (por ejemplo "60 minutos" -> "60")
+            String duracionTexto = jTextField1.getText().toLowerCase().replace("minutos", "").trim();
+            int duracion = Integer.parseInt(duracionTexto);
 
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(rootPane, "El ID del cliente debe ser un número válido.", "Error", HEIGHT);
-            }
+            // Obtener tipo del ComboBox
+            String tipo = tipoServicios.getSelectedItem().toString();
 
+
+            // Convertir precio a número (mejor que sea double, aunque lo estés usando como String ahora)
+            String precio = jTextField2.getText().replace("€", "").trim();
+
+            ctrlServicios.añadirServicio(
+                    id_servicio,
+                    duracion,
+                    tipo,
+                    precio
+            );
+
+            actualizaTabla();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, "El ID del servicio y la duración deben ser números válidos.", "Error", HEIGHT);
         }
+    }
     }//GEN-LAST:event_jButton_AnadirActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed

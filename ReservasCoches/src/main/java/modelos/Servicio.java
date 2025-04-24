@@ -12,10 +12,10 @@ package modelos;
 public class Servicio {
     private int id;
     private String tipo;
-    private String duracion;
+    private int duracion;
     private String precio;
 
-    public Servicio(int id, String tipo, String duracion, String precio) {
+    public Servicio(int id, String tipo, int duracion, String precio) {
         this.id = id;
         this.tipo = tipo;
         this.duracion = duracion;
@@ -30,7 +30,7 @@ public class Servicio {
         return tipo;
     }
 
-    public String getDuracion() {
+    public int getDuracion() {
         return duracion;
     }
 
