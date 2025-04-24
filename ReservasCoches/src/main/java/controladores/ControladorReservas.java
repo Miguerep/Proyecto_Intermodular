@@ -57,7 +57,6 @@ public class ControladorReservas {
     /**
      * Desconectar de la base de datos
      */
-
     public void desconectarBD() {
         // cierre de la conexión
         try {
@@ -138,7 +137,7 @@ public class ControladorReservas {
             }
             System.out.println("Se ha borrado la reserva");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algún error: " + e.getMessage());
         }
         return correcto;
     }
@@ -170,11 +169,13 @@ public class ControladorReservas {
         try {
             //Inserto dos ejemplos de reservas.
             sentencia = con.createStatement();
-            sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 1, '2025-04-22 15:30:00', 2, 3, 4) ;";
+            sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 0, '2025-04-22 15:30:00', 2, 3, 4);";
+//                + "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('0', 'Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
             resultado = sentencia.executeUpdate(sql);
 
             sentencia = con.createStatement();
-            sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 2, '2025-04-22 15:30:00', 2, 3, 4) ;";
+            sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 1, '2025-04-22 15:30:00', 2, 3, 4) ;";
+//                    + "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('1', 'Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
             resultado = sentencia.executeUpdate(sql2);
 
             if (resultado >= 0) {
@@ -191,17 +192,23 @@ public class ControladorReservas {
         String sql;
         boolean correcto = false;
         int resultado;
+
         try {
             sentencia = con.createStatement();
-            sql = "INSERT INTO Reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES ('" + id_reserva + "', '" + id_cliente + "', '" + id_empleado + "', '" + id_servicio + "', '" + estado + "', '" + "' TIMESTAMP DEFAULT CURRENT_TIMESTAMP'" + "')";
+            sql = "INSERT INTO Reservas (id_reserva, estado, fecha_hora, id_cliente, id_empleado, id_servicio) "
+                    + "VALUES (" + id_reserva + ", '" + estado + "', CURRENT_TIMESTAMP, " + id_cliente + ", " + id_empleado + ", " + id_servicio + ")";
+
             resultado = sentencia.executeUpdate(sql);
-            if (resultado >= 0) {
+
+            if (resultado > 0) {
                 correcto = true;
             }
-            System.out.println("Se ha insertado el cliente");
+
+            System.out.println("Se ha insertado la reserva");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algún error: " + e.getMessage());
         }
+
         return correcto;
     }
 
