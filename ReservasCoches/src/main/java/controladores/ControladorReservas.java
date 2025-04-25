@@ -130,7 +130,7 @@ public class ControladorReservas {
         int resultado;
         try {
             sentencia = con.createStatement();
-            sql = "DELETE FROM reserva WHERE id_reserva = " + "'" + id + "'";
+            sql = "DELETE FROM reservas WHERE id_reserva = " + "'" + id + "'";
             resultado = sentencia.executeUpdate(sql);
             if (resultado == 1) {
                 correcto = true;
