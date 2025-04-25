@@ -169,19 +169,19 @@ public class ControladorReservas {
         try {
             //Inserto dos ejemplos de reservas.
             sentencia = con.createStatement();
-            sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 0, '2025-04-22 15:30:00', 2, 3, 4);";
+            sql = "INSERT INTO servicio (`id_servicio`, `tipo`, `duracion`, `precio`) VALUES (12, Lavado Completo, '90', 75);";
 //                + "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('0', 'Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
             resultado = sentencia.executeUpdate(sql);
 
             sentencia = con.createStatement();
-            sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 1, '2025-04-22 15:30:00', 2, 3, 4) ;";
-//                    + "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('1', 'Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
+            sql2 = "INSERT INTO servicio (`id_servicio`, `tipo`, `duracion`, `precio`) VALUES (13, Limpieza Externa, '45', 35);";//                    
+ //           + "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('1', 'Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
             resultado = sentencia.executeUpdate(sql2);
 
             if (resultado >= 0) {
                 correcto = true;
             }
-            System.out.println("Se ha insertado la reserva");
+            System.out.println("Se ha insertado el servicio");
         } catch (SQLException e) {
             System.out.println("Ha ocurrido algun error");
         }
@@ -217,14 +217,14 @@ public class ControladorReservas {
         XMLDecoder xmld;
         Object[][] tabla = null;
         try {
-            fis = new FileInputStream("listadoReservas.xml");
+            fis = new FileInputStream("listadoServicios.xml");
             xmld = new XMLDecoder(fis);
             tabla = (Object[][]) xmld.readObject();
             String sql;
             int contador = 0;
 
             for (Object[] objects : tabla) {
-                sql = "INSERT INTO Reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
+                sql = "INSERT INTO Reservas (`id_servicio`, `tipo`, `duracion`, `precio`) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3]+ " )";
                 sentencia.executeUpdate(sql);
                 contador++;
             }
