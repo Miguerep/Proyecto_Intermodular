@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -34,7 +35,7 @@ public class ControladorBDOUsuarios {
             emf = Persistence.createEntityManagerFactory(rutaBDO);
             em = emf.createEntityManager();
         } catch (Exception e) {
-            System.err.println("\tError al ejecutar la conexión .");
+            System.err.println("\tError al ejecutar la conexión ." + e.getMessage());
         }
     }
  // Cerrar conexion a la BDO ---------------------------------------------------
@@ -60,7 +61,7 @@ public class ControladorBDOUsuarios {
             em.getTransaction().commit();
 
         } catch (Exception e) {
-            System.err.println("\tError al ejecutar la transacción.");
+            System.err.println("\tError al ejecutar la transacción." + e.getMessage());
         }
 
     }
@@ -109,19 +110,19 @@ public class ControladorBDOUsuarios {
 
         } catch (Exception e) {
             //Falta el logger
-            System.out.println("Error");
+            System.err.println("Error" + e.getMessage());
         }
         return tabla;
     }
 
- public Object[][] objetenerTodo() {
+ public Object[][] obtenerTodo() {
         Object[][] tabla = null;
         int numRegistros;
         int contador = 0;
         String nombre, contraseña;
         boolean esAdmin;
 
-        Query query1 = em.createQuery("SELECT u FROM Usuario u");
+        Query query1 = em.createQuery("SELECT u FROM UsuariosAplicacion u");
         try {
             List<UsuariosAplicacion> listaUsuarios = query1.getResultList();
             numRegistros = listaUsuarios.size();
@@ -147,20 +148,45 @@ public class ControladorBDOUsuarios {
 
         } catch (Exception e) {
             //Falta el logger
-            System.out.println("Error");
+            System.err.println("Error" + e.getMessage());
         }
         return tabla;
     }
+  public boolean borrar(String nombre) {
+       boolean borrado = false;
+       Query qBorrar;
+       int resultado = 0;
+       
+        UsuariosAplicacion u;
+        String respuesta = "";
+        u = em.find(UsuariosAplicacion.class, nombre);
+       try {
 
-    public void borrar(String nombre) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        em.getTransaction().begin();
+        jpql = "DELETE FROM UsuariosAplicacion "
+                    + "WHERE nombre = " + "'" + nombre + "'";
+        System.out.println("");
+        System.out.println("Borrando UsuariosAplicacion con jpql [" + jpql + "]");
+        qBorrar = em.createQuery(jpql);
+        resultado = qBorrar.executeUpdate();
+        em.getTransaction().commit();
+         if (resultado == 1) {
+                borrado = true;
+            }
+        } catch (Exception e) {
+            borrado = false;
+            //Falta el logger
+            System.out.println(e.getMessage());
+        }
+       return borrado;
+    
     }
 
     public boolean vaciar() {
         boolean correcto = false;
         Query qEliminar;
         em.getTransaction().begin();
-        qEliminar = em.createQuery("DELETE FROM Usuario");
+        qEliminar = em.createQuery("DELETE FROM UsuariosAplicacion");
         int numObjModificados = qEliminar.executeUpdate();
         em.getTransaction().commit();
         System.out.println("Eliminados " + numObjModificados);
@@ -173,7 +199,6 @@ public class ControladorBDOUsuarios {
     public void añadir(String nombre, String contraseña, boolean esAdmin) {
         em.getTransaction().begin();
         em.persist(new UsuariosAplicacion(nombre, contraseña, esAdmin));
-
         em.getTransaction().commit();
         
     }

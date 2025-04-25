@@ -110,6 +110,7 @@ public class Servicios extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel2.setBackground(new java.awt.Color(204, 255, 204));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
         jButton_VaciarCampos.setFont(new java.awt.Font("Alef", 1, 12)); // NOI18N
@@ -150,6 +151,7 @@ public class Servicios extends javax.swing.JFrame {
         jTextField3.setText("txtId");
 
         jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(51, 255, 51));
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jTextArea1.setText("                                                                            SELECCIONA EL TIPO DE SERVICIO QUE PREFIERA");
@@ -204,6 +206,7 @@ public class Servicios extends javax.swing.JFrame {
                 .addGap(40, 40, 40))
         );
 
+        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
         jButton_BorrarPorNombre.setText("Borrar por ID");
@@ -264,6 +267,7 @@ public class Servicios extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(new java.awt.Color(51, 255, 0));
         jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
         jButton_GuardarFichreo.setText("Guardar en fichero");

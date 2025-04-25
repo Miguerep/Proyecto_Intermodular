@@ -130,7 +130,7 @@ public class ControladorReservas {
         int resultado;
         try {
             sentencia = con.createStatement();
-            sql = "DELETE FROM reserva WHERE id_reserva = " + "'" + id + "'";
+            sql = "DELETE FROM reservas WHERE id_reserva = " + "'" + id + "'";
             resultado = sentencia.executeUpdate(sql);
             if (resultado == 1) {
                 correcto = true;
@@ -155,7 +155,7 @@ public class ControladorReservas {
             }
             System.out.println("Se han borrado todas las reservas");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algun error" + e.getMessage());
         }
         return correcto;
     }
@@ -169,6 +169,7 @@ public class ControladorReservas {
         try {
             //Inserto dos ejemplos de reservas.
             sentencia = con.createStatement();
+<<<<<<< HEAD
             sql = "INSERT INTO servicio (`id_servicio`, `tipo`, `duracion`, `precio`) VALUES (12, Lavado Completo, '90', 75);";
 //                + "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('0', 'Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
             resultado = sentencia.executeUpdate(sql);
@@ -176,6 +177,13 @@ public class ControladorReservas {
             sentencia = con.createStatement();
             sql2 = "INSERT INTO servicio (`id_servicio`, `tipo`, `duracion`, `precio`) VALUES (13, Limpieza Externa, '45', 35);";//                    
  //           + "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('1', 'Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
+=======
+            sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 0, '2025-04-22 15:30:00', 1, 1, 1);";
+            resultado = sentencia.executeUpdate(sql);
+
+            sentencia = con.createStatement();
+            sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 1, '2025-04-22 15:30:00', 1, 1, 1) ;";
+>>>>>>> 3d01aad67ae3c5cc21dbe08f0126b4a279780267
             resultado = sentencia.executeUpdate(sql2);
 
             if (resultado >= 0) {
@@ -183,7 +191,7 @@ public class ControladorReservas {
             }
             System.out.println("Se ha insertado el servicio");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algun error" + e.getMessage());
         }
         return correcto;
     }
@@ -230,7 +238,7 @@ public class ControladorReservas {
             }
             xmld.close();
         } catch (Exception e) {
-            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoClientes.xml");
+            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoReservas.xml " + e.getMessage());
         }
         return tabla;
     }
@@ -240,12 +248,12 @@ public class ControladorReservas {
         XMLEncoder xmle;
 
         try {
-            fos = new FileOutputStream("listadoClientes.xml");
+            fos = new FileOutputStream("listadoReservas.xml");
             xmle = new XMLEncoder(new BufferedOutputStream(fos));
             xmle.writeObject(datos);
             xmle.close();
         } catch (Exception e) {
-            System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoClientes.xml");
+            System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoReservas.xml" + e.getMessage());
         }
     }
 
