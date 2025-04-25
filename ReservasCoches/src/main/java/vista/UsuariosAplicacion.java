@@ -342,7 +342,12 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
+    @Override
+    public void setTitle(String title) {
+        super.setTitle("Gestor BDO");
+    }
 
     private void bBorrarPorIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarPorIDActionPerformed
         int id;

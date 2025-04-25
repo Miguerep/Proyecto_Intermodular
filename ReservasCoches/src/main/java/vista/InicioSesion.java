@@ -28,6 +28,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
     MenuPrincipal ven1;
 
+
 // Comprueba si el usuario y la contraseña coinciden
 public boolean comprobarCredenciales(String nombre, String contraseña) {
     boolean credendciales = false;
@@ -83,6 +84,7 @@ public boolean esAdmin(String nombre) {
         jPasswordField2.setText("jPasswordField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("INICIO DE SESION");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -175,6 +177,7 @@ public boolean esAdmin(String nombre) {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
 
     private void jTextFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsuarioActionPerformed
 

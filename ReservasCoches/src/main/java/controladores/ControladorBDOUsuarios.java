@@ -67,31 +67,9 @@ public class ControladorBDOUsuarios {
     }
 
     /**
-     * Devuelve vacio si no esta el usuario como si el valor es vacio
-     *
-     * @param nombre
-     * @return
+     * Obtiene los Objetos completos almacenados en la BDO
+     * @return 
      */
-    public String obtenerClave(String nombre) {
-        UsuariosAplicacion u;
-        String respuesta = "";
-        u = em.find(UsuariosAplicacion.class, nombre);
-        if (u != null) {
-            respuesta = u.getContraseña();
-        }
-        return respuesta;
-    }
-
-    public String obtenerUsuario(String nombre) {
-        UsuariosAplicacion u;
-        String respuesta = "";
-        u = em.find(UsuariosAplicacion.class, nombre);
-        if (u != null) {
-            respuesta = u.getNombre();
-        }
-        return respuesta;
-    }
-
     public Object[][] obtenerTodoInicioSesion() {
         Object[][] tabla = null;
 
@@ -130,12 +108,12 @@ public class ControladorBDOUsuarios {
             tabla = new Object[numRegistros][3];
 
             System.out.println("Lista usuarios");
-            for (UsuariosAplicacion usu : listaUsuarios) {
-                System.out.println(usu);
+            for (UsuariosAplicacion u : listaUsuarios) {
+                System.out.println(u);
 
-                nombre = usu.getNombre();
-                contraseña = usu.getContraseña();
-                esAdmin  = usu.isEsAdmin();
+                nombre = u.getNombre();
+                contraseña = u.getContraseña();
+                esAdmin  = u.isEsAdmin();
 
                 System.out.println("Usuario: " + nombre + "\t Contraseña: " + contraseña + "\t Admin: " + esAdmin);
                 tabla[contador][0] = nombre;
