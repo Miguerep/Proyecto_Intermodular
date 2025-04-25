@@ -181,7 +181,7 @@ public class ControladorReservas {
             if (resultado >= 0) {
                 correcto = true;
             }
-            System.out.println("Se ha insertado la reserva");
+            System.out.println("Se ha insertado el servicio");
         } catch (SQLException e) {
             System.err.println("Ha ocurrido algun error" + e.getMessage());
         }
@@ -217,14 +217,14 @@ public class ControladorReservas {
         XMLDecoder xmld;
         Object[][] tabla = null;
         try {
-            fis = new FileInputStream("listadoReservas.xml");
+            fis = new FileInputStream("listadoServicios.xml");
             xmld = new XMLDecoder(fis);
             tabla = (Object[][]) xmld.readObject();
             String sql;
             int contador = 0;
 
             for (Object[] objects : tabla) {
-                sql = "INSERT INTO Reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
+                sql = "INSERT INTO Reservas (`id_servicio`, `tipo`, `duracion`, `precio`) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3]+ " )";
                 sentencia.executeUpdate(sql);
                 contador++;
             }

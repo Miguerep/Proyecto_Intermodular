@@ -63,10 +63,10 @@ public class ControladorServicios {
      * @param duracion Duración del servicio
      * @param precio   Precio del servicio
      */
-    public void insertarServicio(int id_cliente, String tipo, int duracion, String precio) {
+    public void insertarServicio(int id_servicio, String tipo, int duracion, String precio) {
         String sql = "INSERT INTO servicio (id_servicio,tipo, duracion, precio) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setInt(0, id_cliente);
+            pstmt.setInt(0, id_servicio);
             pstmt.setString(1, tipo);
             pstmt.setInt(2, duracion);
             pstmt.setString(3, precio);
@@ -84,7 +84,7 @@ public class ControladorServicios {
      */
     public List<Servicio> obtenerServicios() {
         List<Servicio> listaServicios = new ArrayList<>();
-        String sql = "SELECT id_servicio, tipo, duracion, precio FROM SERVICIO";
+        String sql = "SELECT id_servicio, tipo, duracion, precio FROM servicio";
         try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -98,6 +98,7 @@ public class ControladorServicios {
         }
         return listaServicios;
     }
+    
     public boolean vaciar() {
         boolean correcto = false;
         String sql;
@@ -203,13 +204,32 @@ public class ControladorServicios {
     }
     return tabla;
 }
-    public boolean borrarPorNombre(String tipo) {
+    public boolean borrarPorId(int id) {
+    String sql = "DELETE FROM servicio WHERE id_servicio = ?";
+    boolean correcto = false;
+
+    try {
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setInt(1, id);
+
+        int filas = pstmt.executeUpdate();
+        correcto = filas > 0;
+
+        pstmt.close();
+    } catch (SQLException e) {
+        System.err.println("Error al borrar el servicio por ID: " + e.getMessage());
+    }
+
+    return correcto;
+}
+
+    public boolean borrarPorNombre(int id_servicio) {
         String sql;
         boolean correcto = false;
         int resultado;
         try {
             sent = con.createStatement();
-            sql = "DELETE FROM servicio WHERE tipo = " + "'" + tipo + "'";
+            sql = "DELETE FROM servicio WHERE id = " + "'" + id_servicio + "'";
             resultado = sent.executeUpdate(sql);
             if (resultado == 1) {
                 correcto = true;
