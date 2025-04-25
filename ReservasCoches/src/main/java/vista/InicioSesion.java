@@ -23,7 +23,7 @@ public class InicioSesion extends javax.swing.JFrame {
     public InicioSesion() {
         initComponents();
 
-//        controladorUsuarios.crearUsuariosEjemplo();
+        controladorUsuarios.crearUsuariosEjemplo();
     }
 
     MenuPrincipal ven1;
@@ -73,10 +73,10 @@ public boolean esAdmin(String nombre) {
         jPanel1 = new javax.swing.JPanel();
         jLabelinicioSesion = new javax.swing.JLabel();
         jTextFieldUsuario = new javax.swing.JTextField();
-        jTextFieldContraseña = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jPF = new javax.swing.JPasswordField();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -99,12 +99,6 @@ public boolean esAdmin(String nombre) {
             }
         });
 
-        jTextFieldContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldContraseñaActionPerformed(evt);
-            }
-        });
-
         jButton1.setBackground(new java.awt.Color(153, 153, 153));
         jButton1.setText("Iniciar Sesión");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +111,12 @@ public boolean esAdmin(String nombre) {
 
         jLabel2.setText("Contraseña");
 
+        jPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -127,18 +127,19 @@ public boolean esAdmin(String nombre) {
                         .addGap(103, 103, 103)
                         .addComponent(jLabelinicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(169, 169, 169)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(158, 158, 158)
                         .addComponent(jLabel2)))
                 .addContainerGap(117, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPF)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldUsuario))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,9 +152,9 @@ public boolean esAdmin(String nombre) {
                 .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(2, 2, 2)
-                .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addComponent(jButton1)
                 .addContainerGap(69, Short.MAX_VALUE))
         );
@@ -180,15 +181,10 @@ public boolean esAdmin(String nombre) {
 
     }//GEN-LAST:event_jTextFieldUsuarioActionPerformed
 
-    private void jTextFieldContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldContraseñaActionPerformed
-
-
-    }//GEN-LAST:event_jTextFieldContraseñaActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String usuario, contraseñaLeida;
         usuario = jTextFieldUsuario.getText();
-        contraseñaLeida = jTextFieldContraseña.getText();
+        contraseñaLeida = jPF.getText();
         credenciales = comprobarCredenciales(usuario, contraseñaLeida);
         admin = esAdmin(usuario);
         
@@ -212,6 +208,10 @@ public boolean esAdmin(String nombre) {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         controladorUsuarios.cerrarConexion();
     }//GEN-LAST:event_formWindowClosed
+
+    private void jPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,10 +254,10 @@ public boolean esAdmin(String nombre) {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelinicioSesion;
+    private javax.swing.JPasswordField jPF;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextFieldContraseña;
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -457,7 +457,6 @@ public class Reservas extends javax.swing.JFrame {
         int id_reserva, id_cliente, id_empleado, id_servicio;
         String estado;
         try {
-
             id_reserva = Integer.parseInt(jTF_ID.getText());
             id_cliente = Integer.parseInt(jTextFieldIdCliente.getText());
             id_empleado = Integer.parseInt(jTextFieldIdEmpleado.getText());
@@ -470,7 +469,7 @@ public class Reservas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Todos los IDs deben ser mayores que cero.", "Error de validación", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, introduce solo números válidos en los campos de ID.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Por favor, introduce números válidos en los campos de ID.", "Error de formato", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton_AnadirActionPerformed

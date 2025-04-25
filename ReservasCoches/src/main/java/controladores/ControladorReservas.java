@@ -155,7 +155,7 @@ public class ControladorReservas {
             }
             System.out.println("Se han borrado todas las reservas");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algun error" + e.getMessage());
         }
         return correcto;
     }
@@ -169,13 +169,11 @@ public class ControladorReservas {
         try {
             //Inserto dos ejemplos de reservas.
             sentencia = con.createStatement();
-            sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 0, '2025-04-22 15:30:00', 2, 3, 4);";
-//                + "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('0', 'Jose', 'Rivera Martinez', '658524103', 'jose@gmail.com');";
+            sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 0, '2025-04-22 15:30:00', 1, 1, 1);";
             resultado = sentencia.executeUpdate(sql);
 
             sentencia = con.createStatement();
-            sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 1, '2025-04-22 15:30:00', 2, 3, 4) ;";
-//                    + "INSERT INTO Clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('1', 'Marcos', 'Gonzalez Garcia', '692410729', 'marcos@gmail.com');";
+            sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 1, '2025-04-22 15:30:00', 1, 1, 1) ;";
             resultado = sentencia.executeUpdate(sql2);
 
             if (resultado >= 0) {
@@ -183,7 +181,7 @@ public class ControladorReservas {
             }
             System.out.println("Se ha insertado la reserva");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algun error" + e.getMessage());
         }
         return correcto;
     }
@@ -230,7 +228,7 @@ public class ControladorReservas {
             }
             xmld.close();
         } catch (Exception e) {
-            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoClientes.xml");
+            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoReservas.xml " + e.getMessage());
         }
         return tabla;
     }
@@ -240,12 +238,12 @@ public class ControladorReservas {
         XMLEncoder xmle;
 
         try {
-            fos = new FileOutputStream("listadoClientes.xml");
+            fos = new FileOutputStream("listadoReservas.xml");
             xmle = new XMLEncoder(new BufferedOutputStream(fos));
             xmle.writeObject(datos);
             xmle.close();
         } catch (Exception e) {
-            System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoClientes.xml");
+            System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoReservas.xml" + e.getMessage());
         }
     }
 

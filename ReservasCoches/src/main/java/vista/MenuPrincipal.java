@@ -12,15 +12,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuPrincipal
+     * @param admin
      */
      public MenuPrincipal(boolean admin) {
         initComponents();
+        jButton4.setVisible(true);
 
         // Oculta el botón si el usuario no es "Admin"
 
     }
     public MenuPrincipal() {
        initComponents();
+       jButton4.setVisible(false);
     } 
             
     /**
@@ -65,6 +68,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
 
         jButton4.setText("Gestionar Usuarios");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -131,6 +139,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
             vent.setVisible(true);
             this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

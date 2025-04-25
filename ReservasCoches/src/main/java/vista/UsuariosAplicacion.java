@@ -11,69 +11,47 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author carlo
+ * @author Portatil
  */
 public class UsuariosAplicacion extends javax.swing.JFrame {
 
     String nomArchivo = "listadoUsuarios.dat";
 
     ControladorBDOUsuarios ctrlBDO = new ControladorBDOUsuarios();
-    String[] nomColumnas = {"NOMBRE", "CONTRASEÑA", "PERMISOS"};
+    String[] nomColumnas = {"NOMBRE", "CONTRASEÑA", "ADMIN"};
     Object[][] matrizDatos;
 
     DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas);
 
     /**
-     * Creates new form MiniAgenda
+     * Creates new form UsuariosAplicacion
      */
     public UsuariosAplicacion() {
         initComponents();
-//        actualizaTabla();
+        actualizaTabla();
 
     }
-
-
-//    private void actualizaTabla() {
-//        int id = 0;
-//        //agenda.a�adir(new Contacto("Ana","S�nchez","999333888", "ana@gmail.com"));
-//        matrizDatos = ctrlBDO.obtenerTodo();
-//        dtm = new DefaultTableModel(matrizDatos, nomColumnas);
-////        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
-////            //para impedir edici�n de las celdas
-////            @Override
-////            public boolean isCellEditable(int fila, int columna) {
-////                return false;
-////            }
-////        };
-//        tDatos.setModel(dtm);
-////        tDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-////        tDatos.getColumn("NOMBRE").setPreferredWidth(260);
-////        tDatos.getColumn("DEPORTE").setPreferredWidth(160);
-////        tDatos.getColumn("A�O NAC.").setPreferredWidth(100);
-////        tDatos.getColumn("ALTURA").setPreferredWidth(100);
-//
-//    }
 
     private void actualizaTabla() {
         int id = 0;
-        //agenda.a�adir(new Contacto("Ana","S�nchez","999333888", "ana@gmail.com"));
- //       matrizDatos = ctrlBDO.obtenerTodo();
+        matrizDatos = ctrlBDO.obtenerTodo();
         dtm = new DefaultTableModel(matrizDatos, nomColumnas);
-//        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
+        
+        dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
 //            //para impedir edici�n de las celdas
-//            @Override
-//            public boolean isCellEditable(int fila, int columna) {
-//                return false;
-//            }
-//        };
+            @Override
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
         tDatos.setModel(dtm);
-//        tDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-//        tDatos.getColumn("NOMBRE").setPreferredWidth(260);
-//        tDatos.getColumn("DEPORTE").setPreferredWidth(160);
-//        tDatos.getColumn("A�O NAC.").setPreferredWidth(100);
-//        tDatos.getColumn("ALTURA").setPreferredWidth(100);
+        tDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tDatos.getColumn("NOMBRE").setPreferredWidth(200);
+        tDatos.getColumn("CONTRASEÑA").setPreferredWidth(160);
+        tDatos.getColumn("ADMIN").setPreferredWidth(100);
 
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,18 +67,16 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         tfNombre = new javax.swing.JTextField();
         tfContraseña = new javax.swing.JTextField();
-        chVaciar = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         bVaciar = new javax.swing.JButton();
         bActualizar = new javax.swing.JButton();
         bAñadir = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        jTB_Admin = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tDatos = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        bGuardarDeFichero = new javax.swing.JButton();
-        bCargarDeFichero = new javax.swing.JButton();
+        bAñadirEjemplos = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         bBorrarPorID = new javax.swing.JButton();
         bBorrarTodo = new javax.swing.JButton();
@@ -125,13 +101,6 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
 
         tfContraseña.setToolTipText("");
 
-        chVaciar.setText("Vaciar después de añadir");
-        chVaciar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chVaciarActionPerformed(evt);
-            }
-        });
-
         jLabel3.setText("Permisos:");
 
         bVaciar.setText("Vaciar campos");
@@ -155,10 +124,10 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("Admin");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        jTB_Admin.setText("Admin");
+        jTB_Admin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                jTB_AdminActionPerformed(evt);
             }
         });
 
@@ -167,7 +136,6 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
@@ -180,13 +148,12 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
                             .addComponent(tfContraseña)
                             .addComponent(tfNombre)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(jTB_Admin, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 298, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(chVaciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bVaciar)
-                        .addGap(8, 8, 8)
+                        .addGap(18, 18, 18)
                         .addComponent(bAñadir)
                         .addGap(18, 18, 18)
                         .addComponent(bActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -206,11 +173,10 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jToggleButton1))
+                    .addComponent(jTB_Admin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bVaciar)
-                    .addComponent(chVaciar)
                     .addComponent(bActualizar)
                     .addComponent(bAñadir))
                 .addContainerGap())
@@ -257,19 +223,11 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        bGuardarDeFichero.setText("Guardar en fichero");
-        bGuardarDeFichero.setPreferredSize(new java.awt.Dimension(125, 23));
-        bGuardarDeFichero.addActionListener(new java.awt.event.ActionListener() {
+        bAñadirEjemplos.setText("Añadir Ejemplos");
+        bAñadirEjemplos.setPreferredSize(new java.awt.Dimension(125, 27));
+        bAñadirEjemplos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bGuardarDeFicheroActionPerformed(evt);
-            }
-        });
-
-        bCargarDeFichero.setText("Cargar de fichero");
-        bCargarDeFichero.setPreferredSize(new java.awt.Dimension(125, 23));
-        bCargarDeFichero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bCargarDeFicheroActionPerformed(evt);
+                bAñadirEjemplosActionPerformed(evt);
             }
         });
 
@@ -278,20 +236,16 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(bGuardarDeFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bCargarDeFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(174, 174, 174)
+                .addComponent(bAñadirEjemplos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(174, 174, 174))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bGuardarDeFichero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bCargarDeFichero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bAñadirEjemplos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -331,7 +285,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
                 .addComponent(bBorrarPorID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bBorrarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,19 +311,17 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(bCerrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bCerrar)
+                .addGap(426, 426, 426))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,27 +334,14 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bCerrar)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bCerrar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void chVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chVaciarActionPerformed
-        tfNombre.setText("");
-        tfContraseña.setText("");
-
-    //    tfPermisos.setText("");
-
-    }//GEN-LAST:event_chVaciarActionPerformed
-
-    private void bCargarDeFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCargarDeFicheroActionPerformed
-
-//        actualizaTabla(miniagendaBDR);
-    }//GEN-LAST:event_bCargarDeFicheroActionPerformed
 
 
     private void bBorrarPorIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarPorIDActionPerformed
@@ -410,18 +349,14 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         id = tDatos.getSelectedRow();
 
         if (id >= 0) {
-           
+
             String nombre = (String) matrizDatos[id][0];
 
             ctrlBDO.borrar(nombre);
-//            actualizaTabla();
+            actualizaTabla();
         } else
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un registro.");
     }//GEN-LAST:event_bBorrarPorIDActionPerformed
-
-    private void bGuardarDeFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarDeFicheroActionPerformed
-//        miniAgenda.guardarArchivoBin(nomArchivo);
-    }//GEN-LAST:event_bGuardarDeFicheroActionPerformed
 
     private void bBorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarTodoActionPerformed
         int resp;
@@ -430,11 +365,10 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         resp = JOptionPane.showConfirmDialog(rootPane, "¿Estás seguro de eliminar todo?", "Confirmar", 0);
         // si se ha contestado S� = 0
         if (resp == 0) {
-            
-            ctrlBDO.vaciar();
-//            actualizaTabla();
-        }
 
+            ctrlBDO.vaciar();
+            actualizaTabla();
+        }
 
     }//GEN-LAST:event_bBorrarTodoActionPerformed
 
@@ -442,15 +376,15 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         String nombre;
         boolean borrado = false;
 
-        nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre y apellido exacto del deportista a borrar:");
-
-   //     borrado = ctrlBDO.borrar(nombre);
-        actualizaTabla();
-
-        nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre del usuario a borrar:");
+//        nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre y apellido exacto del deportista a borrar:");
 //
 //        borrado = ctrlBDO.borrar(nombre);
 //        actualizaTabla();
+
+        nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre del usuario a borrar:");
+//
+        borrado = ctrlBDO.borrar(nombre);
+        actualizaTabla();
 
         if (borrado)
             System.out.println("Borrado");
@@ -461,33 +395,33 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     private void bVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVaciarActionPerformed
         tfNombre.setText("");
         tfContraseña.setText("");
-
-  //      tfPermisos.setText("");
+        jTB_Admin.setSelected(false);
 
     }//GEN-LAST:event_bVaciarActionPerformed
 
     private void tDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tDatosMouseClicked
         int id;
-        String nombre, contraseña, permisos;
+        String nombre, contraseña;
+        boolean esAdmin;
 
         id = tDatos.getSelectedRow();
 
         if (id >= 0) {
             nombre = (String) matrizDatos[tDatos.getSelectedRow()][0];
             contraseña = (String) matrizDatos[tDatos.getSelectedRow()][1];
-            permisos = (String) matrizDatos[tDatos.getSelectedRow()][2];
+            esAdmin = (boolean) matrizDatos[tDatos.getSelectedRow()][2];
             tfNombre.setText(nombre);
             tfContraseña.setText(contraseña);
+            jTB_Admin.setSelected(esAdmin);
 
-    //        tfPermisos.setText(permisos);
+
         }
     }//GEN-LAST:event_tDatosMouseClicked
 
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
         int id;
         String nomAux;
-
-        // si est� vac�o el campo nombre, necesario para cualquier inserci�n / actualizaci�n
+  
         if (tfNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
         } else {
@@ -497,19 +431,10 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
             if (id >= 0) {
                 nomAux = (String) matrizDatos[tDatos.getSelectedRow()][0];
                 ctrlBDO.borrar(nomAux);
-                // se a�ade a la agenda un nuevo deportista a partir de los datos de los campos de texto
+                // se a�ade a la BDO un nuevo usuario a partir de los datos de los campos de texto
 
-  //              ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
+                ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), jTB_Admin.isSelected());
                 actualizaTabla();
-
-//                ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
-//                actualizaTabla();
-
-                if (chVaciar.isSelected()) {
-                    tfNombre.setText("");
-                    tfContraseña.setText("");
-                    
-                }
             }
         }
     }//GEN-LAST:event_bActualizarActionPerformed
@@ -519,17 +444,16 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     }//GEN-LAST:event_tfNombreActionPerformed
 
     private void bAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAñadirActionPerformed
-        if (tfContraseña.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
+        if (tfContraseña.getText().isEmpty() || tfNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vacio.", "No a�adido", HEIGHT);
         } else {
-            // se a�ade a la agenda un nuevo deportista a partir de los datos de los campos de texto
-
-
-    //        ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
+            
+            boolean esAdmin = jTB_Admin.isSelected();
+            System.out.println("Estado boton admin: " + esAdmin);
+            
+            ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), esAdmin );
             actualizaTabla();
 
-//            ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), tfPermisos.getText());
-//            actualizaTabla();
 
         }
     }//GEN-LAST:event_bAñadirActionPerformed
@@ -538,9 +462,14 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_bCerrarActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    private void jTB_AdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTB_AdminActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_jTB_AdminActionPerformed
+
+    private void bAñadirEjemplosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAñadirEjemplosActionPerformed
+        ctrlBDO.crearUsuariosEjemplo();
+        actualizaTabla();
+    }//GEN-LAST:event_bAñadirEjemplosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -611,14 +540,12 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bActualizar;
     private javax.swing.JButton bAñadir;
+    private javax.swing.JButton bAñadirEjemplos;
     private javax.swing.JButton bBorrarPorID;
     private javax.swing.JButton bBorrarPorNombre;
     private javax.swing.JButton bBorrarTodo;
-    private javax.swing.JButton bCargarDeFichero;
     private javax.swing.JButton bCerrar;
-    private javax.swing.JButton bGuardarDeFichero;
     private javax.swing.JButton bVaciar;
-    private javax.swing.JCheckBox chVaciar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -627,7 +554,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jTB_Admin;
     private javax.swing.JTable tDatos;
     private javax.swing.JTextField tfContraseña;
     private javax.swing.JTextField tfNombre;
