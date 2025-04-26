@@ -37,6 +37,7 @@ public class Reservas extends javax.swing.JFrame {
         jDatos.getColumn("ID Empleado").setPreferredWidth(100);
         jDatos.getColumn("ID Servicio").setPreferredWidth(150);
         jDatos.getColumn("Estado").setPreferredWidth(150);
+        actualizaTabla();
     }
 
     private void actualizaTabla() {
@@ -93,6 +94,7 @@ public class Reservas extends javax.swing.JFrame {
         bCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("RESERVAS");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -284,7 +286,7 @@ public class Reservas extends javax.swing.JFrame {
 
         jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
-        jButton_GuardarFichreo.setText("Guardar en fichero");
+        jButton_GuardarFichreo.setText("Guardar en fichero XML");
         jButton_GuardarFichreo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
         jButton_GuardarFichreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -294,6 +296,11 @@ public class Reservas extends javax.swing.JFrame {
 
         jButton_CargarFichero.setText("Cargar de fichero ");
         jButton_CargarFichero.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        jButton_CargarFichero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_CargarFicheroActionPerformed(evt);
+            }
+        });
 
         jButton_CargarEjemplos.setText("Cargar ejemplos");
         jButton_CargarEjemplos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
@@ -436,24 +443,30 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarPorIDActionPerformed
 
     private void jButton_BorrarSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarSeleccionadoActionPerformed
-        // TODO add your handling code here:
+        int id;
+        id = jDatos.getSelectedRow();
+        if (id >= 0) {
+            //extraemos de la matriz de datos el nombre (campo 0) de la fila con n�mero igual al n�mero de fila seleccionada en la tabla tDatos
+            int reserva = (int) matrizDatos[id][0];
+
+            ctrlReservas.borrarPorID(reserva);
+            actualizaTabla();
+        } else
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un registro.");    
     }//GEN-LAST:event_jButton_BorrarSeleccionadoActionPerformed
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
         int resp;
-
         // tipo 0 : s�, no
         resp = JOptionPane.showConfirmDialog(rootPane, "�Est�s seguro de eliminar todo?", "Confirmar", 0);
-        // si se ha contestado S� = 0
         if (resp == 0) {
-
-            ctrlReservas.borrarTodo();
+           ctrlReservas.borrarTodo();
             actualizaTabla();
         }
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
 
     private void jButton_GuardarFichreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GuardarFichreoActionPerformed
-        // TODO add your handling code here:
+       ctrlReservas.guardarArchivoXML(matrizDatos);
     }//GEN-LAST:event_jButton_GuardarFichreoActionPerformed
 
     private void jButton_BorrarPorIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorIDMouseClicked
@@ -522,6 +535,11 @@ public class Reservas extends javax.swing.JFrame {
         vent.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_bMenuActionPerformed
+
+    private void jButton_CargarFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CargarFicheroActionPerformed
+       ctrlReservas.cargarArchivoXML();
+        actualizaTabla();
+    }//GEN-LAST:event_jButton_CargarFicheroActionPerformed
 
     /**
      * @param args the command line arguments

@@ -7,16 +7,18 @@ package controladores;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.lang.System.Logger;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.logging.Level;
 
 /**
  *
@@ -32,7 +34,9 @@ public class ControladorReservas {
     String url = "jdbc:mysql://192.168.0.30/proyecto_final";
 
     public ControladorReservas() {
+        leerConexion();
         conectarBD();
+        
     }
 
     public void conectarBD() {
@@ -224,12 +228,12 @@ public class ControladorReservas {
             int contador = 0;
 
             for (Object[] objects : tabla) {
-                sql = "INSERT INTO Reservas (`id_servicio`, `tipo`, `duracion`, `precio`) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3]+ " )";
+                sql = "INSERT INTO Reservas (`id_servicio`, `tipo`, `duracion`, `precio`) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + " )";
                 sentencia.executeUpdate(sql);
                 contador++;
             }
             xmld.close();
-        } catch (Exception e) {
+        } catch (FileNotFoundException | SQLException e) {
             System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoReservas.xml " + e.getMessage());
         }
         return tabla;
@@ -238,15 +242,40 @@ public class ControladorReservas {
     public void guardarArchivoXML(Object[][] datos) {
         FileOutputStream fos;
         XMLEncoder xmle;
-
         try {
             fos = new FileOutputStream("listadoReservas.xml");
             xmle = new XMLEncoder(new BufferedOutputStream(fos));
             xmle.writeObject(datos);
             xmle.close();
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoReservas.xml" + e.getMessage());
         }
     }
 
+    private void leerConexion() {
+
+        String cadena, nombreFich = "c:\\Documentos\\Conexión.txt";
+        final char SEPARADOR = ';';
+        String arrayCadenas[];
+
+        System.out.println("\nLEYENDO CONTENIDO DEL ARCHIVO '" + nombreFich + "':\n");
+        try (BufferedReader fichBuf = new BufferedReader(new FileReader(nombreFich))) {
+            cadena = fichBuf.readLine();
+            while (cadena != null) {
+                System.out.println(cadena);
+                arrayCadenas = cadena.split("" + SEPARADOR);
+                System.out.println("usuario: " + arrayCadenas[0] + " clave: " + arrayCadenas[1] + " url: " + arrayCadenas[2]);
+                usuario = arrayCadenas[0];
+                clave = arrayCadenas[1];
+                url = arrayCadenas[2];
+                cadena = fichBuf.readLine();
+            }
+            // se cierra el archivo
+            fichBuf.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("");
+    }
 }

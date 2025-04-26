@@ -84,7 +84,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         bCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("MINIAGENDA DE DEPORTISTAS");
+        setTitle("GESTOR BDO");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -342,12 +342,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    
-    @Override
-    public void setTitle(String title) {
-        super.setTitle("Gestor BDO");
-    }
+
 
     private void bBorrarPorIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarPorIDActionPerformed
         int id;
