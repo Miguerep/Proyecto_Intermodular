@@ -17,7 +17,7 @@ public class Reservas extends javax.swing.JFrame {
 
 //    String nomArchivo = "listadoDeportistas.dat";
     ControladorReservas ctrlReservas = new ControladorReservas();
-    String[] nomColumnas = {"ID Reserva", "ID Cliente", "ID Empleado", "ID Servicio", "Estado"};
+    String[] nomColumnas = {"ID Reserva", "Estado", "Fecha", "ID Cliente", "ID Empleado", "ID Servicio"};
     Object[][] matrizDatos;
     DefaultTableModel dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
         @Override
@@ -33,10 +33,12 @@ public class Reservas extends javax.swing.JFrame {
         jDatos.setModel(dtm);
 //        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jDatos.getColumn("ID Reserva").setPreferredWidth(70);
+        jDatos.getColumn("Estado").setPreferredWidth(150);
+        jDatos.getColumn("Fecha").setPreferredWidth(200);
         jDatos.getColumn("ID Cliente").setPreferredWidth(70);
         jDatos.getColumn("ID Empleado").setPreferredWidth(100);
         jDatos.getColumn("ID Servicio").setPreferredWidth(150);
-        jDatos.getColumn("Estado").setPreferredWidth(150);
+        
         actualizaTabla();
     }
 

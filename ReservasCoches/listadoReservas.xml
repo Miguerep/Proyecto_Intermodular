@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="22.0.2" class="java.beans.XMLDecoder">
+ <array class="[Ljava.lang.Object;" length="2">
+  <void index="0">
+   <array class="java.lang.Object" length="6">
+    <void index="0">
+     <int>1</int>
+    </void>
+    <void index="1">
+     <string>Sin Completar</string>
+    </void>
+    <void index="2">
+     <object class="java.sql.Timestamp">
+      <long>1745766078000</long>
+     </object>
+    </void>
+    <void index="3">
+     <int>1</int>
+    </void>
+    <void index="4">
+     <int>1</int>
+    </void>
+    <void index="5">
+     <int>1</int>
+    </void>
+   </array>
+  </void>
+  <void index="1">
+   <array class="java.lang.Object" length="6">
+    <void index="0">
+     <int>2</int>
+    </void>
+    <void index="1">
+     <string>Hecho</string>
+    </void>
+    <void index="2">
+     <object class="java.sql.Timestamp">
+      <long>1745766078000</long>
+     </object>
+    </void>
+    <void index="3">
+     <int>1</int>
+    </void>
+    <void index="4">
+     <int>1</int>
+    </void>
+    <void index="5">
+     <int>1</int>
+    </void>
+   </array>
+  </void>
+ </array>
+</java>

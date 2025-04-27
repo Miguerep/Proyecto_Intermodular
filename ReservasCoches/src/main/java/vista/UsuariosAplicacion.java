@@ -36,7 +36,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         int id = 0;
         matrizDatos = ctrlBDO.obtenerTodo();
         dtm = new DefaultTableModel(matrizDatos, nomColumnas);
-        
+
         dtm = new DefaultTableModel(matrizDatos, nomColumnas) {
 //            //para impedir edici�n de las celdas
             @Override
@@ -51,7 +51,6 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         tDatos.getColumn("ADMIN").setPreferredWidth(100);
 
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,6 +81,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         bBorrarTodo = new javax.swing.JButton();
         bBorrarPorNombre = new javax.swing.JButton();
         bCerrar = new javax.swing.JButton();
+        bMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GESTOR BDO");
@@ -306,6 +306,13 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
             }
         });
 
+        bMenu.setText("MENU");
+        bMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bMenuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -321,7 +328,9 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bCerrar)
-                .addGap(426, 426, 426))
+                .addGap(169, 169, 169)
+                .addComponent(bMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(167, 167, 167))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,8 +345,10 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bCerrar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(bCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -376,11 +387,6 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         String nombre;
         boolean borrado = false;
 
-//        nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre y apellido exacto del deportista a borrar:");
-//
-//        borrado = ctrlBDO.borrar(nombre);
-//        actualizaTabla();
-
         nombre = JOptionPane.showInputDialog(rootPane, "Introduce el nombre del usuario a borrar:");
 //
         borrado = ctrlBDO.borrar(nombre);
@@ -389,7 +395,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         if (borrado)
             System.out.println("Borrado");
         else
-            JOptionPane.showMessageDialog(rootPane, "No existe dicho deportista.");
+            JOptionPane.showMessageDialog(rootPane, "No existe dicho Usuario.");
     }//GEN-LAST:event_bBorrarPorNombreActionPerformed
 
     private void bVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVaciarActionPerformed
@@ -414,28 +420,23 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
             tfContraseña.setText(contraseña);
             jTB_Admin.setSelected(esAdmin);
 
-
         }
     }//GEN-LAST:event_tDatosMouseClicked
 
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
         int id;
         String nomAux;
-  
-        if (tfNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
-        } else {
 
-            // tomamos el registro seleccionado para borrarlo antes de a�adir los datos en los campos de texto
-            id = tDatos.getSelectedRow();
-            if (id >= 0) {
-                nomAux = (String) matrizDatos[tDatos.getSelectedRow()][0];
-                ctrlBDO.borrar(nomAux);
-                // se a�ade a la BDO un nuevo usuario a partir de los datos de los campos de texto
+        // tomamos el registro seleccionado para borrarlo antes de a�adir los datos en los campos de texto
+        id = tDatos.getSelectedRow();
+        if (id >= 0) {
+            nomAux = (String) matrizDatos[tDatos.getSelectedRow()][0];
+            ctrlBDO.borrar(nomAux);
+            // se a�ade a la BDO un nuevo usuario a partir de los datos de los campos de texto
 
-                ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), jTB_Admin.isSelected());
-                actualizaTabla();
-            }
+            ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), jTB_Admin.isSelected());
+            actualizaTabla();
+
         }
     }//GEN-LAST:event_bActualizarActionPerformed
 
@@ -444,16 +445,22 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     }//GEN-LAST:event_tfNombreActionPerformed
 
     private void bAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAñadirActionPerformed
-        if (tfContraseña.getText().isEmpty() || tfNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vacio.", "No a�adido", HEIGHT);
-        } else {
+        if (tfContraseña.getText().isEmpty() && tfNombre.getText().isEmpty()) {
+         JOptionPane.showMessageDialog(rootPane, "Los campos no pueden estar vacios.", "No añadido", HEIGHT);
+   
+        }else if (tfContraseña.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo Contraseña no puede estar vacio.", "No añadido", HEIGHT);
             
+        } else if (tfNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "El campo Contraseña no puede estar vacio.", "No añadido", HEIGHT);
+            
+        } else {
+
             boolean esAdmin = jTB_Admin.isSelected();
             System.out.println("Estado boton admin: " + esAdmin);
-            
-            ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), esAdmin );
-            actualizaTabla();
 
+            ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), esAdmin);
+            actualizaTabla();
 
         }
     }//GEN-LAST:event_bAñadirActionPerformed
@@ -470,6 +477,13 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
         ctrlBDO.crearUsuariosEjemplo();
         actualizaTabla();
     }//GEN-LAST:event_bAñadirEjemplosActionPerformed
+
+    private void bMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMenuActionPerformed
+        MenuPrincipal vent;
+        vent = new MenuPrincipal();
+        vent.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_bMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -545,6 +559,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
     private javax.swing.JButton bBorrarPorNombre;
     private javax.swing.JButton bBorrarTodo;
     private javax.swing.JButton bCerrar;
+    private javax.swing.JButton bMenu;
     private javax.swing.JButton bVaciar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
