@@ -38,7 +38,7 @@ public class Reservas extends javax.swing.JFrame {
         jDatos.getColumn("ID Cliente").setPreferredWidth(70);
         jDatos.getColumn("ID Empleado").setPreferredWidth(100);
         jDatos.getColumn("ID Servicio").setPreferredWidth(150);
-        
+
         actualizaTabla();
     }
 
@@ -454,7 +454,7 @@ public class Reservas extends javax.swing.JFrame {
             ctrlReservas.borrarPorID(reserva);
             actualizaTabla();
         } else
-            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un registro.");    
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un registro.");
     }//GEN-LAST:event_jButton_BorrarSeleccionadoActionPerformed
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
@@ -462,13 +462,13 @@ public class Reservas extends javax.swing.JFrame {
         // tipo 0 : s�, no
         resp = JOptionPane.showConfirmDialog(rootPane, "�Est�s seguro de eliminar todo?", "Confirmar", 0);
         if (resp == 0) {
-           ctrlReservas.borrarTodo();
+            ctrlReservas.borrarTodo();
             actualizaTabla();
         }
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
 
     private void jButton_GuardarFichreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GuardarFichreoActionPerformed
-       ctrlReservas.guardarArchivoXML(matrizDatos);
+        ctrlReservas.guardarArchivoXML(matrizDatos);
     }//GEN-LAST:event_jButton_GuardarFichreoActionPerformed
 
     private void jButton_BorrarPorIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorIDMouseClicked
@@ -539,7 +539,7 @@ public class Reservas extends javax.swing.JFrame {
     }//GEN-LAST:event_bMenuActionPerformed
 
     private void jButton_CargarFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CargarFicheroActionPerformed
-       ctrlReservas.cargarArchivoXML();
+        ctrlReservas.cargarArchivoXML();
         actualizaTabla();
     }//GEN-LAST:event_jButton_CargarFicheroActionPerformed
 

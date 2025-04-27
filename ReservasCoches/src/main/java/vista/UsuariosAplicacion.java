@@ -446,14 +446,14 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
 
     private void bAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAñadirActionPerformed
         if (tfContraseña.getText().isEmpty() && tfNombre.getText().isEmpty()) {
-         JOptionPane.showMessageDialog(rootPane, "Los campos no pueden estar vacios.", "No añadido", HEIGHT);
-   
-        }else if (tfContraseña.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Los campos no pueden estar vacios.", "No añadido", HEIGHT);
+
+        } else if (tfContraseña.getText().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "El campo Contraseña no puede estar vacio.", "No añadido", HEIGHT);
-            
+
         } else if (tfNombre.getText().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "El campo Contraseña no puede estar vacio.", "No añadido", HEIGHT);
-            
+
         } else {
 
             boolean esAdmin = jTB_Admin.isSelected();

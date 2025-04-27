@@ -38,7 +38,9 @@ public class ControladorReservas {
         conectarBD();
 
     }
-
+    /**
+     * Conexión a la BDR mediante driverManager
+     */
     public void conectarBD() {
         /**
          * Conectar con la base de datos
@@ -75,7 +77,10 @@ public class ControladorReservas {
             e.printStackTrace(System.err);
         }
     }
-
+    /**
+     * extaemos toda la informacion de la BDR y la combertimos en forma de tabla
+     * @return 
+     */
     public Object[][] obtenerTodo() {
         Object[][] tabla = null;
         ResultSet rs;
@@ -129,7 +134,11 @@ public class ControladorReservas {
         return tabla;
 
     }
-
+    /**
+     * Borramos la reserva por el ID que indique el usuario en la ventana
+     * @param id
+     * @return 
+     */
     public boolean borrarPorID(int id) {
         String sql;
         boolean correcto = false;
@@ -147,7 +156,10 @@ public class ControladorReservas {
         }
         return correcto;
     }
-
+    /**
+     * Borramos todos los registros de la tabla reservas de la BDR
+     * @return 
+     */
     public boolean borrarTodo() {
         String sql;
         boolean correcto = false;
@@ -165,7 +177,10 @@ public class ControladorReservas {
         }
         return correcto;
     }
-
+    /**
+     * Añadimos ejemplos en la BDR para comprobar el funcionamiento
+     * @return 
+     */
     public boolean añadirEjemplos() {
 
         String sql, sql2;
@@ -191,7 +206,15 @@ public class ControladorReservas {
         }
         return correcto;
     }
-
+    /**
+     * Añadimos una reserva con los datos obtenidos en la ventana
+     * @param id_reserva
+     * @param id_cliente
+     * @param id_empleado
+     * @param id_servicio
+     * @param estado
+     * @return 
+     */
     public boolean añadir(int id_reserva, int id_cliente, int id_empleado, int id_servicio, String estado) {
         String sql;
         boolean correcto = false;
@@ -215,7 +238,10 @@ public class ControladorReservas {
 
         return correcto;
     }
-
+    /**
+     * Cargamos la información guardada en un archivo XML
+     * @return 
+     */
     public Object[][] cargarArchivoXML() {
         FileInputStream fis;
         XMLDecoder xmld;
@@ -246,7 +272,10 @@ public class ControladorReservas {
         }
         return tabla;
     }
-
+    /**
+     * Guardamos la infomacion de la tabla en un archivo xml mediante XMLEncoder
+     * @param datos 
+     */
     public void guardarArchivoXML(Object[][] datos) {
         FileOutputStream fos;
         XMLEncoder xmle;
@@ -260,7 +289,9 @@ public class ControladorReservas {
             System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoReservas.xml" + e.getMessage());
         }
     }
-
+    /**
+     * leemos y sustituimos la conexion por la expecificada en el fichero de texto
+     */
     private void leerConexion() {
 
         String cadena, nombreFich = "c:\\Documentos\\Conexión.txt";

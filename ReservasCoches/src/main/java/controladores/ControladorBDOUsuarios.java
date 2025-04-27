@@ -130,6 +130,11 @@ public class ControladorBDOUsuarios {
         }
         return tabla;
     }
+  /**
+   * Borra el Usuario de la BDO segun el nombre
+   * @param nombre
+   * @return 
+   */
   public boolean borrar(String nombre) {
        boolean borrado = false;
        Query qBorrar;
@@ -159,7 +164,10 @@ public class ControladorBDOUsuarios {
        return borrado;
     
     }
-
+    /**
+     * Borra todos los objetos de la BDO
+     * @return 
+     */
     public boolean vaciar() {
         boolean correcto = false;
         Query qEliminar;
@@ -173,7 +181,12 @@ public class ControladorBDOUsuarios {
         }
         return correcto;
     }
-
+    /**
+     * Añade un Usuario con los parametros que registremos en la ventana
+     * @param nombre
+     * @param contraseña
+     * @param esAdmin 
+     */
     public void añadir(String nombre, String contraseña, boolean esAdmin) {
         em.getTransaction().begin();
         em.persist(new UsuariosAplicacion(nombre, contraseña, esAdmin));

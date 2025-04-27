@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class InicioSesion extends javax.swing.JFrame {
 
     boolean admin, credenciales;
-    
+
     ControladorBDOUsuarios controladorUsuarios = new ControladorBDOUsuarios();
 
     /**
@@ -28,38 +28,48 @@ public class InicioSesion extends javax.swing.JFrame {
 
     MenuPrincipal ven1;
 
+    /**
+     * Comprueba si el usuario y la contraseña coinciden con algun objeto de la BDO
+     *
+     * @param nombre
+     * @param contraseña
+     * @return
+     */
+    public boolean comprobarCredenciales(String nombre, String contraseña) {
+        boolean credendciales = false;
+        Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
 
-// Comprueba si el usuario y la contraseña coinciden
-public boolean comprobarCredenciales(String nombre, String contraseña) {
-    boolean credendciales = false;
-    Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
+        for (Object[] fila : usuarios) {
+            String nombreUsuario = (String) fila[0];
+            String contraseñaUsuario = (String) fila[1];
 
-    for (Object[] fila : usuarios) {
-        String nombreUsuario = (String) fila[0];
-        String contraseñaUsuario = (String) fila[1];
-
-        if (nombre.equalsIgnoreCase(nombreUsuario) && contraseña.equals(contraseñaUsuario)) {
-            credendciales = true;
+            if (nombre.equalsIgnoreCase(nombreUsuario) && contraseña.equals(contraseñaUsuario)) {
+                credendciales = true;
+            }
         }
+        return credendciales;
     }
-    return credendciales;
-}
 
-// Comprueba si el usuario tiene permisos de administrador
-public boolean esAdmin(String nombre) {
-    boolean esAdmin = false;
-    Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
+    /**
+     * Comprueba si el usuario tiene permisos de administrador
+     * @param nombre
+     * @return 
+     */
+    public boolean esAdmin(String nombre) {
+        boolean esAdmin = false;
+        Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
 
-    for (Object[] fila : usuarios) {
-        String nombreUsuario = (String) fila[0];
-        boolean permisosUsuario = (boolean) fila[2];
+        for (Object[] fila : usuarios) {
+            String nombreUsuario = (String) fila[0];
+            boolean permisosUsuario = (boolean) fila[2];
 
-        if (nombre.equalsIgnoreCase(nombreUsuario)) {
-            esAdmin = permisosUsuario;
+            if (nombre.equalsIgnoreCase(nombreUsuario)) {
+                esAdmin = permisosUsuario;
+            }
         }
+        return esAdmin;
     }
-    return esAdmin;
-}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -177,7 +187,7 @@ public boolean esAdmin(String nombre) {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
 
     private void jTextFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsuarioActionPerformed
 
@@ -190,20 +200,20 @@ public boolean esAdmin(String nombre) {
         contraseñaLeida = jPF.getText();
         credenciales = comprobarCredenciales(usuario, contraseñaLeida);
         admin = esAdmin(usuario);
-        
+
         // Abrir menu ADMIN
         if (credenciales && admin) {
             ven1 = new MenuPrincipal(admin);
             ven1.setVisible(true);
             this.dispose(); // cerrar ventana actual
-            
-        // Abrir menu NO ADMIN
+
+            // Abrir menu NO ADMIN
         } else if (credenciales) {
-             ven1 = new MenuPrincipal();
+            ven1 = new MenuPrincipal();
             ven1.setVisible(true);
             this.dispose();
-        }
-        else{ JOptionPane.showMessageDialog(rootPane, "Error en el inicio de sesión.");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Error en el inicio de sesión.");
         } // sino
 
     }//GEN-LAST:event_jButton1ActionPerformed
