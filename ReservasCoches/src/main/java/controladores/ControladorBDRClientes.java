@@ -192,7 +192,7 @@ public class ControladorBDRClientes {
             }
             System.out.println("Se ha borrado el cliente");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algun error" + e.getMessage());
         }
         return correcto;
     }
@@ -228,7 +228,7 @@ public class ControladorBDRClientes {
             int contador = 0;
             
             for (Object[] objects : tabla) {
-                sql = "INSERT INTO clientes (id_cliente, nombre, apellidos, telefono, correo) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
+                sql = "INSERT INTO clientes (`id_cliente`, `nombre`, `apellidos`, `telefono`, `correo`) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
                 sent.executeUpdate(sql);
                 contador++;
             }

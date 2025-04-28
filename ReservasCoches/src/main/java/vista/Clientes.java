@@ -427,7 +427,6 @@ public class Clientes extends javax.swing.JFrame {
     private void jButton_BorrarSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarSeleccionadoActionPerformed
         int id;
         id = jDatos.getSelectedRow();
-
         if (id >= 0) {
             //extraemos de la matriz de datos el nombre (campo 0) de la fila con n�mero igual al n�mero de fila seleccionada en la tabla tDatos
             String nombre = (String) matrizDatos[id][0];
@@ -448,7 +447,7 @@ public class Clientes extends javax.swing.JFrame {
 
         if (resp == JOptionPane.YES_OPTION) {
 
-            controladorBDRClientes.borrarTodo(resp);
+            controladorBDRClientes.vaciar();
             actualizaTabla();
         }
 
