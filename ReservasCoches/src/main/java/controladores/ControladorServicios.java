@@ -4,6 +4,7 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import modelos.Servicio;
@@ -21,6 +23,7 @@ public class ControladorServicios {
     private String clave = "96WFjTsdglPkS!R(";
     private String url = "jdbc:mysql://192.168.0.30/proyecto_final";
     Statement sent;
+    Statement sentencia;
 
     public ControladorServicios() {
         conectarBD();
@@ -99,20 +102,20 @@ public class ControladorServicios {
         return listaServicios;
     }
     
-    public boolean vaciar() {
-        boolean correcto = false;
+    public boolean borrarTodo() {
         String sql;
+        boolean correcto = false;
         int resultado;
         try {
-            sent =con.createStatement();
-            sql = "DELETE FROM servicios";
-            resultado = sent.executeUpdate(sql);
-            if (resultado >= 0) {
+            sentencia = con.createStatement();
+            sql = "DELETE FROM servicio ";
+            resultado = sentencia.executeUpdate(sql);
+            if (resultado == 1) {
                 correcto = true;
             }
-            System.out.println("Se han eliminado " + resultado + " servicios.");
+            System.out.println("Se han borrado todos los servicios");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error.");
+            System.out.println("Ha ocurrido algun error" + e.getMessage());
         }
         return correcto;
     }
@@ -245,20 +248,27 @@ public class ControladorServicios {
         XMLDecoder xmld;
         Object[][] tabla = null;
         try {
-            fis = new FileInputStream("listadoServicios.xml");
+            fis = new FileInputStream("listadoServicio.xml");
             xmld = new XMLDecoder(fis);
             tabla = (Object[][]) xmld.readObject();
             String sql;
             int contador = 0;
-            
+
             for (Object[] objects : tabla) {
-                sql = "INSERT INTO servicio (id_servicio, tipo, duracion, precio) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '";
-                sent.executeUpdate(sql);
+                
+                sql = "INSERT INTO servicio (`id_servicio`, `tipo`, `duracion`, `precio`) VALUES ('"
+                        + tabla[contador][0] + "', '"
+                        + tabla[contador][1] + "', '"                        
+                        + tabla[contador][2] + "', '"
+                        + tabla[contador][3] + "', '";
+                        
+                sentencia.executeUpdate(sql);
                 contador++;
             }
+
             xmld.close();
-        } catch (Exception e) {
-            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoServicios.xml");
+        } catch (FileNotFoundException | SQLException e) {
+            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoServicio.xml " + e.getMessage());
         }
         return tabla;
     }

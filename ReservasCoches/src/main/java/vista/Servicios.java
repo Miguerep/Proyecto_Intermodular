@@ -383,10 +383,20 @@ public class Servicios extends javax.swing.JFrame {
 
     private void jButton_BorrarSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarSeleccionadoActionPerformed
         // TODO add your handling code here:
+        int id;
+        id = jDatos.getSelectedRow();
+        if (id >= 0) {
+            //extraemos de la matriz de datos el nombre (campo 0) de la fila con n�mero igual al n�mero de fila seleccionada en la tabla tDatos
+            int servicio = (int) matrizDatos[id][0];
+
+            ctrlServicios.borrarPorId(servicio);
+            actualizaTabla();
+        } else
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un registro.");
     }//GEN-LAST:event_jButton_BorrarSeleccionadoActionPerformed
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
-       ctrlServicios.vaciar();
+       ctrlServicios.borrarTodo();
        actualizaTabla();
        
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
