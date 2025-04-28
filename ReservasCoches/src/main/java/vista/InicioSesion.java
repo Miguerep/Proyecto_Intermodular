@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class InicioSesion extends javax.swing.JFrame {
 
     boolean admin, credenciales;
-    
+
     ControladorBDOUsuarios controladorUsuarios = new ControladorBDOUsuarios();
 
     /**
@@ -23,42 +23,53 @@ public class InicioSesion extends javax.swing.JFrame {
     public InicioSesion() {
         initComponents();
 
-//        controladorUsuarios.crearUsuariosEjemplo();
+        controladorUsuarios.crearUsuariosEjemplo();
     }
 
     MenuPrincipal ven1;
 
-// Comprueba si el usuario y la contraseña coinciden
-public boolean comprobarCredenciales(String nombre, String contraseña) {
-    boolean credendciales = false;
-    Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
+    /**
+     * Comprueba si el usuario y la contraseña coinciden con algun objeto de la BDO
+     *
+     * @param nombre
+     * @param contraseña
+     * @return
+     */
+    public boolean comprobarCredenciales(String nombre, String contraseña) {
+        boolean credendciales = false;
+        Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
 
-    for (Object[] fila : usuarios) {
-        String nombreUsuario = (String) fila[0];
-        String contraseñaUsuario = (String) fila[1];
+        for (Object[] fila : usuarios) {
+            String nombreUsuario = (String) fila[0];
+            String contraseñaUsuario = (String) fila[1];
 
-        if (nombre.equalsIgnoreCase(nombreUsuario) && contraseña.equals(contraseñaUsuario)) {
-            credendciales = true;
+            if (nombre.equalsIgnoreCase(nombreUsuario) && contraseña.equals(contraseñaUsuario)) {
+                credendciales = true;
+            }
         }
+        return credendciales;
     }
-    return credendciales;
-}
 
-// Comprueba si el usuario tiene permisos de administrador
-public boolean esAdmin(String nombre) {
-    boolean esAdmin = false;
-    Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
+    /**
+     * Comprueba si el usuario tiene permisos de administrador
+     * @param nombre
+     * @return 
+     */
+    public boolean esAdmin(String nombre) {
+        boolean esAdmin = false;
+        Object[][] usuarios = controladorUsuarios.obtenerTodoInicioSesion();
 
-    for (Object[] fila : usuarios) {
-        String nombreUsuario = (String) fila[0];
-        boolean permisosUsuario = (boolean) fila[2];
+        for (Object[] fila : usuarios) {
+            String nombreUsuario = (String) fila[0];
+            boolean permisosUsuario = (boolean) fila[2];
 
-        if (nombre.equalsIgnoreCase(nombreUsuario)) {
-            esAdmin = permisosUsuario;
+            if (nombre.equalsIgnoreCase(nombreUsuario)) {
+                esAdmin = permisosUsuario;
+            }
         }
+        return esAdmin;
     }
-    return esAdmin;
-}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,16 +84,17 @@ public boolean esAdmin(String nombre) {
         jPanel1 = new javax.swing.JPanel();
         jLabelinicioSesion = new javax.swing.JLabel();
         jTextFieldUsuario = new javax.swing.JTextField();
-        jTextFieldContraseña = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jPF = new javax.swing.JPasswordField();
 
         jPasswordField1.setText("jPasswordField1");
 
         jPasswordField2.setText("jPasswordField2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("INICIO DE SESION");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -99,12 +111,6 @@ public boolean esAdmin(String nombre) {
             }
         });
 
-        jTextFieldContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldContraseñaActionPerformed(evt);
-            }
-        });
-
         jButton1.setBackground(new java.awt.Color(153, 153, 153));
         jButton1.setText("Iniciar Sesión");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +123,12 @@ public boolean esAdmin(String nombre) {
 
         jLabel2.setText("Contraseña");
 
+        jPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -127,18 +139,19 @@ public boolean esAdmin(String nombre) {
                         .addGap(103, 103, 103)
                         .addComponent(jLabelinicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(169, 169, 169)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(158, 158, 158)
                         .addComponent(jLabel2)))
                 .addContainerGap(117, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPF)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldUsuario))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,9 +164,9 @@ public boolean esAdmin(String nombre) {
                 .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(2, 2, 2)
-                .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
                 .addComponent(jButton1)
                 .addContainerGap(69, Short.MAX_VALUE))
         );
@@ -175,36 +188,32 @@ public boolean esAdmin(String nombre) {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void jTextFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsuarioActionPerformed
 
 
     }//GEN-LAST:event_jTextFieldUsuarioActionPerformed
 
-    private void jTextFieldContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldContraseñaActionPerformed
-
-
-    }//GEN-LAST:event_jTextFieldContraseñaActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String usuario, contraseñaLeida;
         usuario = jTextFieldUsuario.getText();
-        contraseñaLeida = jTextFieldContraseña.getText();
+        contraseñaLeida = jPF.getText();
         credenciales = comprobarCredenciales(usuario, contraseñaLeida);
         admin = esAdmin(usuario);
-        
+
         // Abrir menu ADMIN
         if (credenciales && admin) {
             ven1 = new MenuPrincipal(admin);
             ven1.setVisible(true);
             this.dispose(); // cerrar ventana actual
-            
-        // Abrir menu NO ADMIN
+
+            // Abrir menu NO ADMIN
         } else if (credenciales) {
-             ven1 = new MenuPrincipal();
+            ven1 = new MenuPrincipal();
             ven1.setVisible(true);
             this.dispose();
-        }
-        else{ JOptionPane.showMessageDialog(rootPane, "Error en el inicio de sesión.");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Error en el inicio de sesión.");
         } // sino
 
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -212,6 +221,10 @@ public boolean esAdmin(String nombre) {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         controladorUsuarios.cerrarConexion();
     }//GEN-LAST:event_formWindowClosed
+
+    private void jPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,10 +267,10 @@ public boolean esAdmin(String nombre) {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelinicioSesion;
+    private javax.swing.JPasswordField jPF;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextFieldContraseña;
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 }

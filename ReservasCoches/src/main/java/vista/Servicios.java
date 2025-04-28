@@ -34,9 +34,10 @@ public class Servicios extends javax.swing.JFrame {
     public Servicios() {
         initComponents();
         jDatos.setEnabled(true);
-        jTextField1.setEnabled(true);
-        jTextField2.setEnabled(true);
-        jTextField3.setEditable(false);
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        jTextField3.setEnabled(true);
+        
 
         // Conectar y desconectar BD (solo para ejemplo)
         ctrlServicios.conectarBD();
@@ -54,11 +55,11 @@ public class Servicios extends javax.swing.JFrame {
     }
     private void configurarTiposDeServicio() {
         // Agregar tipos de servicio con sus id, duraciones y precios
-        servicios.put("Limpieza Interna", new String[]{"1","60 minutos", "50 €"});
-        servicios.put("Limpieza Externa", new String[]{"2","45 minutos", "35 €"});
-        servicios.put("Lavado Completo", new String[]{"3","90 minutos", "75 €"});
-        servicios.put("Pulido de Tapicería", new String[]{"4","120 minutos", "100 €"});
-        servicios.put("Tratamiento de Piel", new String[]{"5","30 minutos", "25 €"});
+        servicios.put("Limpieza Interna", new String[]{"1","60 minutos", "50 "});
+        servicios.put("Limpieza Externa", new String[]{"2","45 minutos", "35 "});
+        servicios.put("Lavado Completo", new String[]{"3","90 minutos", "75 "});
+        servicios.put("Pulido de Tapicería", new String[]{"4","120 minutos", "100 "});
+        servicios.put("Tratamiento de Piel", new String[]{"5","30 minutos", "25 "});
 
         // Establecer los elementos del JComboBox
         tipoServicios.setModel(new DefaultComboBoxModel<>(servicios.keySet().toArray(new String[0])));
@@ -109,6 +110,7 @@ public class Servicios extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel2.setBackground(new java.awt.Color(204, 255, 204));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
         jButton_VaciarCampos.setFont(new java.awt.Font("Alef", 1, 12)); // NOI18N
@@ -148,6 +150,8 @@ public class Servicios extends javax.swing.JFrame {
 
         jTextField3.setText("txtId");
 
+        jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(51, 255, 51));
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jTextArea1.setText("                                                                            SELECCIONA EL TIPO DE SERVICIO QUE PREFIERA");
@@ -158,26 +162,28 @@ public class Servicios extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton_VaciarCampos)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
                         .addComponent(tipoServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
+                        .addGap(49, 49, 49)
+                        .addComponent(jButton_VaciarCampos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton_Anadir, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(152, 152, 152)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton_Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2))
@@ -185,8 +191,8 @@ public class Servicios extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tipoServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,9 +206,10 @@ public class Servicios extends javax.swing.JFrame {
                 .addGap(40, 40, 40))
         );
 
+        jPanel1.setBackground(new java.awt.Color(51, 255, 51));
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
-        jButton_BorrarPorNombre.setText("Borrar por nombre");
+        jButton_BorrarPorNombre.setText("Borrar por ID");
         jButton_BorrarPorNombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
         jButton_BorrarPorNombre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -241,13 +248,13 @@ public class Servicios extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(45, 45, 45)
                 .addComponent(jButton_BorrarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jButton_BorrarSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(90, 90, 90)
+                .addComponent(jButton_BorrarSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton_BorrarTodo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addGap(47, 47, 47))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,6 +267,7 @@ public class Servicios extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(new java.awt.Color(51, 255, 0));
         jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
 
         jButton_GuardarFichreo.setText("Guardar en fichero");
@@ -286,13 +294,13 @@ public class Servicios extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(43, 43, 43)
                 .addComponent(jButton_GuardarFichreo, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jButton_CargarFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(94, 94, 94)
+                .addComponent(jButton_CargarFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton_CargarEjemplos, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(47, 47, 47))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,8 +377,8 @@ public class Servicios extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
     private void jButton_BorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreActionPerformed
-    //    ctrlServicios.borrarPorNombre(nomArchivo);
-      //  actualizaTabla();
+      // ctrlServicios.borrarPorNombre(nombre);
+      // actualizaTabla();
     }//GEN-LAST:event_jButton_BorrarPorNombreActionPerformed
 
     private void jButton_BorrarSeleccionadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarSeleccionadoActionPerformed
@@ -384,21 +392,32 @@ public class Servicios extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarTodoActionPerformed
 
     private void jButton_GuardarFichreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GuardarFichreoActionPerformed
-        // TODO add your handling code here:
+        ctrlServicios.guardarArchivoXML(matrizDatos);
     }//GEN-LAST:event_jButton_GuardarFichreoActionPerformed
 
     private void jButton_BorrarPorNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarPorNombreMouseClicked
 //        ctrlReservas.borrarPorNombre(nomArchivo);
-String nombre;
-        boolean borrado;
-        nombre = JOptionPane.showInputDialog(rootPane, "Introduce el tipo de servicio exacto que quiere borrar:");
+        String idStr = JOptionPane.showInputDialog(rootPane, "Introduce el ID del servicio que quieres borrar:");
 
-        borrado = ctrlServicios.borrarPorNombre(nombre);
+    if (idStr == null || idStr.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(rootPane, "Debes introducir un ID.");
+        return;
+    }
+
+    try {
+        int id = Integer.parseInt(idStr.trim());
+
+        boolean borrado = ctrlServicios.borrarPorId(id);
+
         if (borrado) {
             actualizaTabla();
+            JOptionPane.showMessageDialog(rootPane, "Servicio borrado correctamente.");
         } else {
-            JOptionPane.showMessageDialog(rootPane, "No existe ese servicio.");
+            JOptionPane.showMessageDialog(rootPane, "No se encontró ningún servicio con ese ID.");
         }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(rootPane, "El ID debe ser un número válido.");
+    }
     }//GEN-LAST:event_jButton_BorrarPorNombreMouseClicked
 
     private void jButton_BorrarTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoMouseClicked
@@ -407,36 +426,45 @@ String nombre;
     }//GEN-LAST:event_jButton_BorrarTodoMouseClicked
 
     private void jButton_CargarEjemplosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CargarEjemplosActionPerformed
-//        ctrlReservas.exportarEjemplos();
-//        actualizaTabla();
+        ctrlServicios.añadirEjemplos();
+        actualizaTabla();
     }//GEN-LAST:event_jButton_CargarEjemplosActionPerformed
 
     private void jButton_AnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AnadirActionPerformed
         
-    if (jTextField3.getText().isEmpty()
-                || jTextField1.getText().isEmpty()
-                || jTextField2.getText().isEmpty()
-            )
-            {
-            JOptionPane.showMessageDialog(rootPane, "El campo nombre no puede estar vac�o.", "No a�adido", HEIGHT);
-        } else {
-            try {
-                int id = Integer.parseInt(jTextField3.getText());
+   if (jTextField3.getText().isEmpty()
+            || jTextField1.getText().isEmpty()
+            || jTextField2.getText().isEmpty()
+    ) {
+        JOptionPane.showMessageDialog(rootPane, "Ningún campo puede estar vacío.", "No añadido", HEIGHT);
+    } else {
+        try {
+            int id_servicio = Integer.parseInt(jTextField3.getText());
 
-                ctrlServicios.añadirServicio(
-                        id,
-                        jTextField3.getText(),
-                        jTextField1.getText(),
-                        jTextField2.getText())
-                        
-                ;
-                actualizaTabla();
+            // Limpiar el texto de duración (por ejemplo "60 minutos" -> "60")
+            String duracionTexto = jTextField1.getText().toLowerCase().replace("minutos", "").trim();
+            int duracion = Integer.parseInt(duracionTexto);
 
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(rootPane, "El ID del cliente debe ser un número válido.", "Error", HEIGHT);
-            }
+            // Obtener tipo del ComboBox
+            String tipo = tipoServicios.getSelectedItem().toString();
 
+
+            // Convertir precio a número (
+            String precio = jTextField2.getText().replace("€", "").trim();
+
+            ctrlServicios.añadirServicio(
+                    id_servicio,
+                    duracion,
+                    tipo,
+                    precio
+            );
+
+            actualizaTabla();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, "El ID del servicio y la duración deben ser números válidos.", "Error", HEIGHT);
         }
+    }
     }//GEN-LAST:event_jButton_AnadirActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed

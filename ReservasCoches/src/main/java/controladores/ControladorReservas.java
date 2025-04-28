@@ -7,15 +7,18 @@ package controladores;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.lang.System.Logger;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
+import java.sql.Timestamp;
 
 /**
  *
@@ -31,9 +34,13 @@ public class ControladorReservas {
     String url = "jdbc:mysql://192.168.0.30/proyecto_final";
 
     public ControladorReservas() {
+        leerConexion();
         conectarBD();
-    }
 
+    }
+    /**
+     * Conexión a la BDR mediante driverManager
+     */
     public void conectarBD() {
         /**
          * Conectar con la base de datos
@@ -57,7 +64,6 @@ public class ControladorReservas {
     /**
      * Desconectar de la base de datos
      */
-
     public void desconectarBD() {
         // cierre de la conexión
         try {
@@ -71,7 +77,10 @@ public class ControladorReservas {
             e.printStackTrace(System.err);
         }
     }
-
+    /**
+     * extaemos toda la informacion de la BDR y la combertimos en forma de tabla
+     * @return 
+     */
     public Object[][] obtenerTodo() {
         Object[][] tabla = null;
         ResultSet rs;
@@ -79,10 +88,11 @@ public class ControladorReservas {
         int numRegistros;
         int contador = 0;
         String estado;
-        int id_reserva, id_cliente, id_empleado, id_servicio, fecha_hora;
+        int id_reserva, id_cliente, id_empleado, id_servicio;
+        Timestamp fecha_hora;
 
         try {
-
+            sentencia = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = sentencia.executeQuery(sql);
             //vamos al último registro y obtenemos su posición para saber cuantos registros ha
             rs.last();
@@ -100,19 +110,19 @@ public class ControladorReservas {
 
                 // preparamos los datos
                 id_reserva = rs.getInt("id_reserva");
+                estado = rs.getString("estado");
+                fecha_hora = rs.getTimestamp("fecha_hora");
                 id_cliente = rs.getInt("id_cliente");
                 id_empleado = rs.getInt("id_empleado");
                 id_servicio = rs.getInt("id_servicio");
-                estado = rs.getString("estado");
-                fecha_hora = rs.getInt("fecha_hora");
 
                 // guardamos los datos en la tabla a devolver
                 tabla[contador][0] = id_reserva;
-                tabla[contador][1] = id_cliente;
-                tabla[contador][2] = id_empleado;
-                tabla[contador][3] = id_servicio;
-                tabla[contador][4] = estado;
-                tabla[contador][5] = fecha_hora;
+                tabla[contador][1] = estado;
+                tabla[contador][2] = fecha_hora;
+                tabla[contador][3] = id_cliente;
+                tabla[contador][4] = id_empleado;
+                tabla[contador][5] = id_servicio;
 
                 contador++;
 
@@ -124,25 +134,32 @@ public class ControladorReservas {
         return tabla;
 
     }
-
+    /**
+     * Borramos la reserva por el ID que indique el usuario en la ventana
+     * @param id
+     * @return 
+     */
     public boolean borrarPorID(int id) {
         String sql;
         boolean correcto = false;
         int resultado;
         try {
             sentencia = con.createStatement();
-            sql = "DELETE FROM reserva WHERE id_reserva = " + "'" + id + "'";
+            sql = "DELETE FROM reservas WHERE id_reserva = " + "'" + id + "'";
             resultado = sentencia.executeUpdate(sql);
             if (resultado == 1) {
                 correcto = true;
             }
             System.out.println("Se ha borrado la reserva");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algún error: " + e.getMessage());
         }
         return correcto;
     }
-
+    /**
+     * Borramos todos los registros de la tabla reservas de la BDR
+     * @return 
+     */
     public boolean borrarTodo() {
         String sql;
         boolean correcto = false;
@@ -156,11 +173,14 @@ public class ControladorReservas {
             }
             System.out.println("Se han borrado todas las reservas");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algun error" + e.getMessage());
         }
         return correcto;
     }
-
+    /**
+     * Añadimos ejemplos en la BDR para comprobar el funcionamiento
+     * @return 
+     */
     public boolean añadirEjemplos() {
 
         String sql, sql2;
@@ -170,41 +190,58 @@ public class ControladorReservas {
         try {
             //Inserto dos ejemplos de reservas.
             sentencia = con.createStatement();
-            sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 1, '2025-04-22 15:30:00', 2, 3, 4) ;";
+            sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (1, 'Sin Completar', CURRENT_TIMESTAMP, 1, 1, 1);";
             resultado = sentencia.executeUpdate(sql);
 
             sentencia = con.createStatement();
-            sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 2, '2025-04-22 15:30:00', 2, 3, 4) ;";
+            sql2 = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES (2, 'Hecho', CURRENT_TIMESTAMP, 1, 1, 1) ;";
             resultado = sentencia.executeUpdate(sql2);
 
             if (resultado >= 0) {
                 correcto = true;
             }
-            System.out.println("Se ha insertado la reserva");
+            System.out.println("Se ha insertado el servicio");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.err.println("Ha ocurrido algun error" + e.getMessage());
         }
         return correcto;
     }
-
+    /**
+     * Añadimos una reserva con los datos obtenidos en la ventana
+     * @param id_reserva
+     * @param id_cliente
+     * @param id_empleado
+     * @param id_servicio
+     * @param estado
+     * @return 
+     */
     public boolean añadir(int id_reserva, int id_cliente, int id_empleado, int id_servicio, String estado) {
         String sql;
         boolean correcto = false;
         int resultado;
+
         try {
             sentencia = con.createStatement();
-            sql = "INSERT INTO Reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES ('" + id_reserva + "', '" + id_cliente + "', '" + id_empleado + "', '" + id_servicio + "', '" + estado + "', '" + "' TIMESTAMP DEFAULT CURRENT_TIMESTAMP'" + "')";
+            sql = "INSERT INTO Reservas (id_reserva, estado, fecha_hora, id_cliente, id_empleado, id_servicio) "
+                    + "VALUES (" + id_reserva + ", '" + estado + "', CURRENT_TIMESTAMP, " + id_cliente + ", " + id_empleado + ", " + id_servicio + ")";
+
             resultado = sentencia.executeUpdate(sql);
-            if (resultado >= 0) {
+
+            if (resultado > 0) {
                 correcto = true;
             }
-            System.out.println("Se ha insertado el cliente");
+
+            System.out.println("Se ha insertado la reserva");
         } catch (SQLException e) {
-            System.out.println("Ha ocurrido algun error");
+            System.out.println("Ha ocurrido algún error: " + e.getMessage());
         }
+
         return correcto;
     }
-
+    /**
+     * Cargamos la información guardada en un archivo XML
+     * @return 
+     */
     public Object[][] cargarArchivoXML() {
         FileInputStream fis;
         XMLDecoder xmld;
@@ -217,29 +254,68 @@ public class ControladorReservas {
             int contador = 0;
 
             for (Object[] objects : tabla) {
-                sql = "INSERT INTO Reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES ('" + tabla[contador][0] + "', '" + tabla[contador][1] + "', '" + tabla[contador][2] + "', '" + tabla[contador][3] + "', '" + tabla[contador][4] + "')";
+                Timestamp timestampActual = new Timestamp(System.currentTimeMillis());
+                sql = "INSERT INTO reservas (`id_reserva`, `estado`, `fecha_hora`, `id_cliente`,`id_empleado`,`id_servicio`) VALUES ('"
+                        + tabla[contador][0] + "', '"
+                        + tabla[contador][1] + "', '"
+                        + timestampActual.toString() + "', '"
+                        + tabla[contador][3] + "', '"
+                        + tabla[contador][4] + "', '"
+                        + tabla[contador][5] + "')";
                 sentencia.executeUpdate(sql);
                 contador++;
             }
+
             xmld.close();
-        } catch (Exception e) {
-            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoClientes.xml");
+        } catch (FileNotFoundException | SQLException e) {
+            System.err.println("\tERROR en la lectura de datos del archivo: " + "listadoReservas.xml " + e.getMessage());
         }
         return tabla;
     }
-
+    /**
+     * Guardamos la infomacion de la tabla en un archivo xml mediante XMLEncoder
+     * @param datos 
+     */
     public void guardarArchivoXML(Object[][] datos) {
         FileOutputStream fos;
         XMLEncoder xmle;
-
         try {
-            fos = new FileOutputStream("listadoClientes.xml");
+            fos = new FileOutputStream("listadoReservas.xml");
             xmle = new XMLEncoder(new BufferedOutputStream(fos));
             xmle.writeObject(datos);
             xmle.close();
-        } catch (Exception e) {
-            System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoClientes.xml");
+            System.out.println("guardado correctamente");
+        } catch (FileNotFoundException e) {
+            System.err.println("\tERROR en la escritura de datos del archivo: " + "listadoReservas.xml" + e.getMessage());
         }
     }
+    /**
+     * leemos y sustituimos la conexion por la expecificada en el fichero de texto
+     */
+    private void leerConexion() {
 
+        String cadena, nombreFich = "c:\\Documentos\\Conexión.txt";
+        final char SEPARADOR = ';';
+        String arrayCadenas[];
+
+        System.out.println("\nLEYENDO CONTENIDO DEL ARCHIVO '" + nombreFich + "':\n");
+        try (BufferedReader fichBuf = new BufferedReader(new FileReader(nombreFich))) {
+            cadena = fichBuf.readLine();
+            while (cadena != null) {
+                System.out.println(cadena);
+                arrayCadenas = cadena.split("" + SEPARADOR);
+                System.out.println("usuario: " + arrayCadenas[0] + " clave: " + arrayCadenas[1] + " url: " + arrayCadenas[2]);
+                usuario = arrayCadenas[0];
+                clave = arrayCadenas[1];
+                url = arrayCadenas[2];
+                cadena = fichBuf.readLine();
+            }
+            // se cierra el archivo
+            fichBuf.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("");
+    }
 }
