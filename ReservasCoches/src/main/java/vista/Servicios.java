@@ -78,6 +78,12 @@ public class Servicios extends javax.swing.JFrame {
             }
         });
     }
+    private void vaciar() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -370,6 +376,7 @@ public class Servicios extends javax.swing.JFrame {
 
     private void jButton_VaciarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_VaciarCamposActionPerformed
         // TODO add your handling code here:
+        vaciar();
     }//GEN-LAST:event_jButton_VaciarCamposActionPerformed
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed

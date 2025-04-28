@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="23" class="java.beans.XMLDecoder">
+ <array class="[Ljava.lang.Object;" length="3">
+  <void index="0">
+   <array class="java.lang.Object" length="4">
+    <void index="0">
+     <int>1</int>
+    </void>
+    <void index="1">
+     <string>Limpieza Interna</string>
+    </void>
+    <void index="2">
+     <string>60.0</string>
+    </void>
+    <void index="3">
+     <string>50.0</string>
+    </void>
+   </array>
+  </void>
+  <void index="1">
+   <array class="java.lang.Object" length="4">
+    <void index="0">
+     <int>2</int>
+    </void>
+    <void index="1">
+     <string>Pulido de Tapicería</string>
+    </void>
+    <void index="2">
+     <string>120.0</string>
+    </void>
+    <void index="3">
+     <string>100.0</string>
+    </void>
+   </array>
+  </void>
+  <void index="2">
+   <array class="java.lang.Object" length="4">
+    <void index="0">
+     <int>5</int>
+    </void>
+    <void index="1">
+     <string>Tratamiento de Piel</string>
+    </void>
+    <void index="2">
+     <string>30.0</string>
+    </void>
+    <void index="3">
+     <string>25.0</string>
+    </void>
+   </array>
+  </void>
+ </array>
+</java>
