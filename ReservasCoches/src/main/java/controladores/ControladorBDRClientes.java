@@ -196,18 +196,21 @@ public class ControladorBDRClientes {
         }
         return correcto;
     }
-    public boolean borrarTodo() {
+    public boolean borrarTodo(int resp) {
         String sql;
         boolean correcto = false;
         int resultado;
         try {
-            sent = con.createStatement();
-            sql = "DELETE FROM clientes ";
-            resultado = sent.executeUpdate(sql);
-            if (resultado >=0) {
-                correcto = true;
+            if (resp == 0) {
+
+//            sent = con.createStatement();
+                sql = "DELETE FROM clientes ";
+                resultado = sent.executeUpdate(sql);
+                if (resultado >= 0) {
+                    correcto = true;
+                }
+                System.out.println("Se han borrado todos los clientes.");
             }
-            System.out.println("Se han borrado todos los clientes.");
         } catch (SQLException e) {
             System.out.println("Ha ocurrido algun error");
         }

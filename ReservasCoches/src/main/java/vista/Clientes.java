@@ -443,11 +443,12 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_BorrarTodoMouseClicked
 
     private void jButton_BorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BorrarTodoActionPerformed
-        int resp = JOptionPane.showConfirmDialog(rootPane, "�Est�s seguro de eliminar todo?", "Confirmar", JOptionPane.YES_NO_OPTION);
+//        int resp = JOptionPane.showConfirmDialog(rootPane, "�Est�s seguro de eliminar todo?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(rootPane, "Estas seguro de borrar todo?");
 
         if (resp == JOptionPane.YES_OPTION) {
 
-            controladorBDRClientes.borrarTodo();
+            controladorBDRClientes.borrarTodo(resp);
             actualizaTabla();
         }
 
