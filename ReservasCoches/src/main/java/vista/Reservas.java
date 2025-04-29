@@ -32,12 +32,12 @@ public class Reservas extends javax.swing.JFrame {
 
         jDatos.setModel(dtm);
 //        jDatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jDatos.getColumn("ID Reserva").setPreferredWidth(70);
+        jDatos.getColumn("ID Reserva").setPreferredWidth(50);
         jDatos.getColumn("Estado").setPreferredWidth(150);
-        jDatos.getColumn("Fecha").setPreferredWidth(200);
-        jDatos.getColumn("ID Cliente").setPreferredWidth(70);
-        jDatos.getColumn("ID Empleado").setPreferredWidth(100);
-        jDatos.getColumn("ID Servicio").setPreferredWidth(150);
+        jDatos.getColumn("Fecha").setPreferredWidth(300);
+        jDatos.getColumn("ID Cliente").setPreferredWidth(50);
+        jDatos.getColumn("ID Empleado").setPreferredWidth(50);
+        jDatos.getColumn("ID Servicio").setPreferredWidth(50);
 
         actualizaTabla();
     }

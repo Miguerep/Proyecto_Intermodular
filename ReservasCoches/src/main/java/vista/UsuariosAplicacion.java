@@ -353,8 +353,8 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-
+    
+    
     private void bBorrarPorIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarPorIDActionPerformed
         int id;
         id = tDatos.getSelectedRow();

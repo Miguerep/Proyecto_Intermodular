@@ -78,7 +78,7 @@ public class ControladorReservas {
         }
     }
     /**
-     * extaemos toda la informacion de la BDR y la combertimos en forma de tabla
+     * extaemos toda la informacion de la BDR y la convertimos en forma de tabla
      * @return 
      */
     public Object[][] obtenerTodo() {
@@ -290,11 +290,11 @@ public class ControladorReservas {
         }
     }
     /**
-     * leemos y sustituimos la conexion por la expecificada en el fichero de texto
+     * leemos y sustituimos la conexión default por la expecificada en el fichero de texto
      */
     private void leerConexion() {
 
-        String cadena, nombreFich = "c:\\Documentos\\Conexión.txt";
+        String cadena, nombreFich = "Conexión.txt";
         final char SEPARADOR = ';';
         String arrayCadenas[];
 
