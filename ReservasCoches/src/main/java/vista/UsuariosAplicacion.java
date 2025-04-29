@@ -459,7 +459,7 @@ public class UsuariosAplicacion extends javax.swing.JFrame {
             boolean esAdmin = jTB_Admin.isSelected();
             System.out.println("Estado boton admin: " + esAdmin);
 
-            ctrlBDO.añadir(tfNombre.getText(), tfContraseña.getText(), esAdmin);
+            ctrlBDO.añadir(tfNombre.getText().trim(), tfContraseña.getText().trim(), esAdmin);
             actualizaTabla();
 
         }
