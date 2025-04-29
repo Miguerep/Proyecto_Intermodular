@@ -7,16 +7,16 @@
      <int>1</int>
     </void>
     <void index="1">
-     <string>Ana</string>
+     <string>Jose</string>
     </void>
     <void index="2">
-     <string>López</string>
+     <string>Rivera Martinez</string>
     </void>
     <void index="3">
-     <string>1234567890</string>
+     <string>658524103</string>
     </void>
     <void index="4">
-     <string>ana.lopez@example.com</string>
+     <string>jose@gmail.com</string>
     </void>
    </array>
   </void>
@@ -26,16 +26,16 @@
      <int>2</int>
     </void>
     <void index="1">
-     <string>Luis</string>
+     <string>Marcos</string>
     </void>
     <void index="2">
-     <string>Martínez</string>
+     <string>Gonzalez Garcia</string>
     </void>
     <void index="3">
-     <string>0987654321</string>
+     <string>692410729</string>
     </void>
     <void index="4">
-     <string>luis.martinez@example.com</string>
+     <string>marcos@gmail.com</string>
     </void>
    </array>
   </void>
